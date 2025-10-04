@@ -102,7 +102,8 @@ public class DefinePageStage extends Stage {
 
         Alert successAlert = new Alert(Alert.AlertType.WARNING);
         successAlert.setTitle("Success");
-        successAlert.setHeaderText("Submit Successfully");
+        successAlert.setHeaderText(null);
+        successAlert.setContentText("Submit Successfully");
         successAlert.showAndWait();
         db.save();
         this.close();
