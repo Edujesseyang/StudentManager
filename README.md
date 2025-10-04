@@ -1,5 +1,15 @@
-# CS151 Project - Version 0.2  
+# CS151 Term Project - Version 0.2  
 **Students' Knowledgebase for Faculties**
+
+## Team Info
+- **Team Number:** 21  
+- **Team Members:**  
+  - Jesse Yang (Main structure, data handling, file IO setup)  
+  - Julian Christian Simmons (UI design, Git setup, )  
+  - Ryan Monazzami (Navigation logic, Home page setup)  
+  - Daniel Khant (Code documentation, testing, cleanup)
+
+---
 
 ## Project Description
 This project is a desktop application designed for faculty members to record and manage students’ information such as programming skills, academic status, and evaluation notes.
@@ -54,7 +64,6 @@ src/
     ├── stage/
     | ├── HomePageStage.java
     | └── DefinePageStage.java
-    | ├── StudentShowStage.java
     ├── model/
     | └── Student.java
     | └── StudentList.java
