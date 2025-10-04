@@ -8,19 +8,28 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class HomePageStage extends Stage {
+    Button definePageBtn;
+    Button displayBtn;
+    Label welcomeText;
 
     public HomePageStage(int height, int width, String title) {
         // create button and button action
-        Button btn = new Button("Go to Define Page");
-        btn.setOnAction(e -> btnActionOnClick());
+        definePageBtn = new Button("Go to Define Page");
+        definePageBtn.setOnAction(e -> defineBtnAct());
+
+        // create button for display students
+        displayBtn = new Button("Show all students");
+        displayBtn.setOnAction(e -> displayBtnAct());
 
         // create welcome label
-        Label welcomeText = new Label("Welcome to use our application");
+        welcomeText = new Label("Welcome to use our application");
 
         // handle layout
         VBox layout = new VBox(20);
-        layout.getChildren().addAll(welcomeText, btn);
+        layout.getChildren().addAll(welcomeText, definePageBtn, displayBtn);
         layout.setAlignment(Pos.CENTER);
+        layout.setSpacing(50);
+
 
         // set scene
         Scene homePageScene = new Scene(layout, height, width);
@@ -31,8 +40,13 @@ public class HomePageStage extends Stage {
     /**
      * Create a new stage and show it
      */
-    private void btnActionOnClick() {
-        DefinePageStage definePage = new DefinePageStage(400, 200, "Define coding language");
+    private void defineBtnAct() {
+        DefinePageStage definePage = new DefinePageStage(400, 250, "Define coding language");
         definePage.show();
+    }
+
+    private void displayBtnAct() {
+        StudentsShowPage showPage = new StudentsShowPage(700, 300, "All Students");
+        showPage.show();
     }
 }

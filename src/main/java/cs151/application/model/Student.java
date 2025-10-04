@@ -1,4 +1,4 @@
-package cs151.application.Model;
+package cs151.application.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,17 +9,15 @@ public class Student {
     private String academicStatus; // Freshman, Sophomore, etc.
     private boolean employed;
     private String jobDetails;
+    private String preferredRole;  // front end/ back end etc.
 
     private List<String> programmingLanguages; // coding language
     private List<String> databases;             // database skill
-    private String preferredRole;               // Front-End, Back-End, etc.
-
     private List<String> comments;              // prof's comments
-    private boolean whitelist;
-    private boolean blacklist;
+    private boolean whitelist = true;
+    private boolean blacklist = false;
 
-    public Student(String name) {
-        this.name = name;
+    public Student() {
         this.programmingLanguages = new ArrayList<>();
         this.databases = new ArrayList<>();
         this.comments = new ArrayList<>();
@@ -114,18 +112,16 @@ public class Student {
     }
 
     public String toString() {
-        return "Student{" +
-                "fullName='" + name + '\'' +
-                "preferName='" + preferName + '\'' +
-                ", academicStatus='" + academicStatus + '\'' +
-                ", employed=" + employed +
-                ", jobDetails='" + jobDetails + '\'' +
-                ", programmingLanguages=" + programmingLanguages +
-                ", databases=" + databases +
-                ", preferredRole='" + preferredRole + '\'' +
-                ", whitelist=" + whitelist +
-                ", blacklist=" + blacklist +
-                ", comments=" + comments +
-                '}';
+        return "FullName : " + name +
+                "\nPreferName : " + preferName +
+                "\nAcademicStatus : " + academicStatus +
+                "\nEmployed : " + employed +
+                "\nJobDetails : " + jobDetails +
+                "\nProgrammingLanguages : " + programmingLanguages +
+                "\nDatabases : " + databases +
+                "\nPreferredRole : " + preferredRole +
+                "\nWhitelist : " + whitelist +
+                "\nBlacklist : " + blacklist +
+                "\nComments : " + comments;
     }
 }

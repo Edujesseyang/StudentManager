@@ -1,0 +1,16 @@
+[
+  {
+    "name": "asdf",
+    "employed": false,
+    "programmingLanguages": [
+      "",
+      "f",
+      "f",
+      "f"
+    ],
+    "databases": [],
+    "comments": [],
+    "whitelist": true,
+    "blacklist": false
+  }
+]

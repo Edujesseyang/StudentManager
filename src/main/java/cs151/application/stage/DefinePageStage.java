@@ -1,7 +1,7 @@
 package cs151.application.stage;
 
-import cs151.application.Model.Student;
-import cs151.application.Model.StudentList;
+import cs151.application.model.Student;
+import cs151.application.model.StudentList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,12 +12,12 @@ import javafx.stage.Stage;
 
 
 public class DefinePageStage extends Stage {
-    private Label infoLabel;
-    private TextField studentName;
-    private TextField programLanguageName;
-    private Button submit;
-    private Button clear;
-    private Button cancel;
+    private final Label infoLabel;
+    private final TextField studentName;
+    private final TextField programLanguageName;
+    private final Button submit;
+    private final Button clear;
+    private final Button cancel;
 
     public DefinePageStage(int height, int width, String title) {
         // create label
@@ -29,18 +29,17 @@ public class DefinePageStage extends Stage {
 
         // create info input box
         programLanguageName = new TextField();
-        programLanguageName.setPromptText("Please enter programming languages, separate by whitespace");
+        programLanguageName.setPromptText("Enter programming languages, separate by whitespace");
 
         // create buttons
-        submit = new Button("Submit");
+        submit = new Button("Submit"); // 1
         submit.setOnAction(e -> submitAction());
-
-        clear = new Button("Clear");
+        clear = new Button("Clear"); // 2
         clear.setOnAction(e -> clearAction());
-
-        cancel = new Button("Cancel");
+        cancel = new Button("Cancel"); // 3
         cancel.setOnAction(e -> cancelAction());
 
+        // input area layout
         VBox inputLayout = new VBox(infoLabel, studentName, programLanguageName);
         inputLayout.setPadding(new Insets(20));
         inputLayout.setSpacing(10);
@@ -57,22 +56,25 @@ public class DefinePageStage extends Stage {
         pageLayout.setPadding(new Insets(25));
 
         // set scene
-        Scene definePageScene = new Scene(pageLayout);
+        Scene definePageScene = new Scene(pageLayout, height, width);
         this.setTitle(title);
         this.setScene(definePageScene);
     }
 
+    /**
+     * check if form are filled correctly
+     */
     private void submitAction() {
-        if (studentName.getText().isBlank()) {
+        if (studentName.getText().isBlank()) { // pop alert for blank nane
             Alert blankInputAlert = new Alert(Alert.AlertType.ERROR);
             blankInputAlert.setTitle("Error");
             blankInputAlert.setHeaderText(null);
             blankInputAlert.setContentText("The input can not be empty!");
             blankInputAlert.showAndWait();
-        } else {
+        } else { // pop alert for confirm
             Alert blankInputAlert = new Alert(Alert.AlertType.CONFIRMATION);
             blankInputAlert.setTitle("Confirm");
-            blankInputAlert.setHeaderText("Please Confirm");
+            blankInputAlert.setHeaderText(null);
             blankInputAlert.setContentText("Are you sure to submit?");
             blankInputAlert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
@@ -82,8 +84,13 @@ public class DefinePageStage extends Stage {
         }
     }
 
+    /**
+     * submit input and create student obj then put it into the db
+     */
     private void submitData() {
-        Student newStudent = new Student(studentName.getText());
+        Student newStudent = new Student();
+        newStudent.setName(studentName.getText());
+
         String inputString = programLanguageName.getText();
         String[] languages = inputString.split("\\s+");
         for (String word : languages) {
@@ -97,6 +104,7 @@ public class DefinePageStage extends Stage {
         successAlert.setTitle("Success");
         successAlert.setHeaderText("Submit Successfully");
         successAlert.showAndWait();
+        db.save();
         this.close();
     }
 
