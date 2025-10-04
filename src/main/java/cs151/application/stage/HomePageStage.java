@@ -38,13 +38,16 @@ public class HomePageStage extends Stage {
     }
 
     /**
-     * Create a new stage and show it
+     * Create a define page stage and show it
      */
     private void defineBtnAct() {
         DefinePageStage definePage = new DefinePageStage(400, 250, "Define coding language");
         definePage.show();
     }
 
+    /**
+     * create students list show stage and show it
+     */
     private void displayBtnAct() {
         StudentsShowPage showPage = new StudentsShowPage(700, 300, "All Students");
         showPage.show();

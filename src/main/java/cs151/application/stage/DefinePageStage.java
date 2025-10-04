@@ -65,7 +65,7 @@ public class DefinePageStage extends Stage {
      * check if form are filled correctly
      */
     private void submitAction() {
-        if (studentName.getText().isBlank()) { // pop alert for blank nane
+        if (studentName.getText().isBlank() || programLanguageName.getText().isBlank()) { // pop alert for blank nane
             Alert blankInputAlert = new Alert(Alert.AlertType.ERROR);
             blankInputAlert.setTitle("Error");
             blankInputAlert.setHeaderText(null);
@@ -109,11 +109,17 @@ public class DefinePageStage extends Stage {
         this.close();
     }
 
+    /**
+     * clear add text area
+     */
     private void clearAction() {
         studentName.clear();
         programLanguageName.clear();
     }
 
+    /**
+     * close stage
+     */
     private void cancelAction() {
         this.close();
     }

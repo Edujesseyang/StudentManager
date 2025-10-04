@@ -10,18 +10,28 @@ import java.util.List;
 public class StudentList {
     private static final StudentList instance = new StudentList();
 
+    // json building to for parse
     private final JsonFileStoreTool<List<Student>> store = new JsonFileStoreTool<>(Paths.get("localData", "studentsDB.json"), new TypeToken<List<Student>>() {
     }.getType());
 
-    private StudentList() {
+    private StudentList() { // singleton private constructor
     }
+
+    public List<Student> getList() {
+        return list;
+    } // getter
 
     public static StudentList getInstance() {
         return instance;
-    }
+    } // getInstance expose to public
 
     private List<Student> list = new ArrayList();
 
+    /**
+     * add a student object ot list
+     * @param std Student
+     * @return boolean if adding success
+     */
     public boolean addStudent(Student std) {
         if (std != null) {
             list.add(std);
@@ -30,10 +40,9 @@ public class StudentList {
         return false;
     }
 
-    public List<Student> getList() {
-        return list;
-    }
-
+    /**
+     * load json file to the student list
+     */
     public void load() {
         list.clear();
         List<Student> loaded = store.load(new ArrayList<>());
@@ -43,6 +52,9 @@ public class StudentList {
 
     }
 
+    /**
+     * save the list to json file
+     */
     public void save() {
         store.save(list);
     }

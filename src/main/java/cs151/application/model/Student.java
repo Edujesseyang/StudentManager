@@ -111,6 +111,10 @@ public class Student {
         this.blacklist = blacklist;
     }
 
+    /**
+     * convert to string for test use
+     * @return
+     */
     public String toString() {
         return "FullName : " + name +
                 "\nPreferName : " + preferName +

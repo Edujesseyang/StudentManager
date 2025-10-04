@@ -48,6 +48,9 @@ public class StudentsShowPage extends Stage {
         this.setScene(pageScene);
     }
 
+    /**
+     * close stage
+     */
     private void closeBtnAction() {
         this.close();
     }

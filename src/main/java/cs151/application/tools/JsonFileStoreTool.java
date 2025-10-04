@@ -17,11 +17,16 @@ public class JsonFileStoreTool<T> {
         this.type = type;
     }
 
+    /**
+     * load from json
+     * @param defaultValue : T
+     * @return T
+     */
     public T load(T defaultValue) {
         try {
             if (!Files.exists(file)) { // if file is not exists
                 Files.createDirectories(file.getParent()); // create director
-                Files.writeString(file, "[]");
+                Files.writeString(file, "[]"); // init default
                 try (var write = Files.newBufferedWriter(file)) { // write a new file
                     gson.toJson(defaultValue, write);
                 }
@@ -31,13 +36,16 @@ public class JsonFileStoreTool<T> {
             try (var read = Files.newBufferedReader(file)) {
                 return gson.fromJson(read, type);  // read that file
             }
-
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return defaultValue;
         }
     }
 
+    /**
+     * save to json
+     * @param data T
+     */
     public void save(T data) {
         try {
             Files.createDirectories(file.getParent()); // try to create a directory

@@ -15,11 +15,10 @@ public class Main extends Application {
     @Override
     public void init() {
         studentDB.load();
-    }
+    } // init the program, load json file to singleton
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
         HomePageStage homePage = new HomePageStage(400, 300, "Home Page");
         homePage.show();
     }
@@ -27,7 +26,7 @@ public class Main extends Application {
     @Override
     public void stop() {
         studentDB.save();
-    }
+    } // when program close, save data to json
 
 
 }
