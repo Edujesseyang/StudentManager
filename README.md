@@ -63,6 +63,7 @@ src/
     ├── Main.java
     ├── stage/
     | ├── HomePageStage.java
+    | ├── StudenstShowStage.java
     | └── DefinePageStage.java
     ├── model/
     | └── Student.java
