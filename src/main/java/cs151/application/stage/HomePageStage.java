@@ -60,7 +60,7 @@ public class HomePageStage extends Stage {
      * create students list show stage and show it
      */
     private void displayBtnAct() {
-        StudentsListPage showPage = new StudentsListPage(550, 600, "All Students");
+        StudentsListPage showPage = new StudentsListPage( "All Students");
         showPage.show();
     }
 

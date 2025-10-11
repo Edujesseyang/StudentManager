@@ -2,7 +2,6 @@ package cs151.application.model;
 
 import com.google.gson.reflect.TypeToken;
 import cs151.application.tools.JsonFileStoreTool;
-
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,19 +24,17 @@ public class StudentList {
         return instance;
     } // getInstance expose to public
 
-    private List<Student> list = new ArrayList();
+    private final List<Student> list = new ArrayList<>();
 
     /**
      * add a student object ot list
+     *
      * @param std Student
-     * @return boolean if adding success
      */
-    public boolean addStudent(Student std) {
+    public void addStudent(Student std) {
         if (std != null) {
             list.add(std);
-            return true;
         }
-        return false;
     }
 
     /**
@@ -49,7 +46,6 @@ public class StudentList {
         if (loaded != null) {
             list.addAll(loaded);
         }
-
     }
 
     /**
@@ -58,6 +54,4 @@ public class StudentList {
     public void save() {
         store.save(list);
     }
-
-
 }

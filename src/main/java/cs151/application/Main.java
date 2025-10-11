@@ -8,17 +8,13 @@ import javafx.stage.Stage;
 public class Main extends Application {
     private static final StudentList studentDB = StudentList.getInstance();  // singleton db
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
     @Override
     public void init() {
         studentDB.load();
     } // init the program, load json file to singleton
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         HomePageStage homePage = new HomePageStage(700, 320, "Home Page");
         homePage.show();
     }

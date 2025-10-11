@@ -10,49 +10,12 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 public class StudentsListPage extends Stage {
-    public StudentsListPage(int width, int height, String title) {
-        StudentList db = StudentList.getInstance();
+    StudentList database = StudentList.getInstance();
+    VBox studentListBox = new VBox();
 
-        // label
-        Label labelText = new Label("   List Of Students   ");
-        labelText.getStyleClass().add("subtitle");
-        // content area
-        VBox studentListBox = new VBox();
-        studentListBox.getStyleClass().add("sectionLayout");
-
-        int counter = 1;
-        for (Student std : db.getList()) {
-            Label text = new Label("    Student " + counter + ": ");
-            Label name = new Label("        " + std.getName());
-            name.setPrefWidth(350);
-
-            Button select = new Button("Information");
-            select.setOnAction(event -> selectAct(std));
-
-            HBox nameLine = new HBox(name, select);
-            //setDisplay(nameLine);
-            VBox section = new VBox(text, nameLine, new Label(), new Separator());
-            //setDisplay(section);
-
-            studentListBox.getChildren().add(section);
-            counter++;
-        }
-
-
-        // student Pane
-        ScrollPane studentListPane = new ScrollPane(studentListBox);
-        studentListPane.setFitToWidth(true);
-        // close button
-        Button closeBtn = new Button("Close");
-        closeBtn.setOnAction(e -> closeBtnAction());
-
-        // layout
-        VBox pageLayout = new VBox(labelText, studentListPane, closeBtn);
-        pageLayout.getStyleClass().add("pageLayout");
-
+    public StudentsListPage(String title) {
         // set scene
-        Scene pageScene = new Scene(pageLayout, width, height);
-        pageScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style/homePage.css")).toExternalForm());
+        Scene pageScene = buildScene();
         this.setTitle(title);
         this.setScene(pageScene);
     }
@@ -64,6 +27,59 @@ public class StudentsListPage extends Stage {
     private void selectAct(Student std) {
         StudentInfoPage infoPage = new StudentInfoPage(std);
         infoPage.show();
+    }
+
+    private void deleteAct(Student std) {
+        this.close();
+        database.getList().remove(std);
+        Scene reloadPage = buildScene();
+        this.setScene(reloadPage);
+        this.show();
+    }
+
+    private Scene buildScene() {
+        // label
+        Label labelText = new Label("   List Of Students   ");
+        labelText.getStyleClass().add("subtitle");
+
+        // bloc
+        studentListBox = makeStdLine();
+        studentListBox.getStyleClass().add("sectionLayout");
+
+        // student Pane
+        ScrollPane studentListPane = new ScrollPane(studentListBox);
+        studentListPane.setFitToWidth(true);
+        // close button
+        Button closeBtn = new Button("Close");
+        closeBtn.setOnAction(e -> closeBtnAction());
+
+        // layout
+        VBox pageLayout = new VBox(labelText, studentListPane, closeBtn);
+        pageLayout.getStyleClass().add("pageLayout");
+        Scene result = new Scene(pageLayout, 650, 600);
+        result.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style/homePage.css")).toExternalForm());
+        return result;
+    }
+
+    private VBox makeStdLine() {
+        int counter = 1;
+        VBox block = new VBox();
+        for (Student std : database.getList()) {
+            Label text = new Label(" Student " + (counter++) + ": ");
+            Label name = new Label("        " + std.getName());
+            name.setPrefWidth(400);
+
+            Button select = new Button("Detail");
+            select.setOnAction(event -> selectAct(std));
+
+            Button delete = new Button("Remove");
+            delete.setOnAction(event -> deleteAct(std));
+
+            HBox nameLine = new HBox(name, select, delete);
+            VBox section = new VBox(text, nameLine, new Label(), new Separator());
+            block.getChildren().add(section);
+        }
+        return block;
     }
 
 }

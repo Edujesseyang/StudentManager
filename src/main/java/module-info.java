@@ -3,6 +3,7 @@ module cs151project {
     requires javafx.fxml;
     requires com.google.gson;
     requires javafx.graphics;
+    requires java.sql;
 
 
     opens cs151.application to javafx.fxml;

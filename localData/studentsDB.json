@@ -1,84 +1,9 @@
 [
   {
-    "name": "Tom Cat",
+    "name": "asf",
     "employed": false,
     "programmingLanguages": [
-      "Alpha",
-      "Basic",
-      "Javascript",
-      "Rust"
-    ],
-    "databases": [],
-    "comments": [],
-    "whitelist": true,
-    "blacklist": false
-  },
-  {
-    "name": "Jesse Yang",
-    "employed": false,
-    "programmingLanguages": [
-      "C",
-      "C++",
-      "CSS",
-      "HTML",
-      "JS",
-      "Java"
-    ],
-    "databases": [],
-    "comments": [],
-    "whitelist": true,
-    "blacklist": false
-  },
-  {
-    "name": "Chloe Jiang",
-    "employed": false,
-    "programmingLanguages": [
-      "C",
-      "C++",
-      "Java",
-      "SQL"
-    ],
-    "databases": [],
-    "comments": [],
-    "whitelist": true,
-    "blacklist": false
-  },
-  {
-    "name": "Lucky",
-    "employed": false,
-    "programmingLanguages": [
-      "Meow",
-      "Python"
-    ],
-    "databases": [],
-    "comments": [],
-    "whitelist": true,
-    "blacklist": false
-  },
-  {
-    "name": "Sushi Meow",
-    "employed": false,
-    "programmingLanguages": [
-      "C",
-      "C++",
-      "Java",
-      "Python",
-      "x86"
-    ],
-    "databases": [],
-    "comments": [],
-    "whitelist": true,
-    "blacklist": false
-  },
-  {
-    "name": "Cookey Silly",
-    "employed": false,
-    "programmingLanguages": [
-      "ARM",
-      "Assembly",
-      "Basic",
-      "Dos",
-      "RiscV"
+      "asd"
     ],
     "databases": [],
     "comments": [],
