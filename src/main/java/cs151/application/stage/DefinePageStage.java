@@ -6,22 +6,20 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.Objects;
 
 public class DefinePageStage extends Stage {
-    private final Label infoLabel;
     private final TextField studentName;
     private final TextField programLanguageName;
-    private final Button submit;
-    private final Button clear;
-    private final Button cancel;
 
-    public DefinePageStage(int height, int width, String title) {
+    public DefinePageStage(int width, int height, String title) {
         // create label
-        infoLabel = new Label("Please enter the program language name:");
+        Label infoLabel = new Label("   Define a Student Programming Language   ");
 
         // create name input box
         studentName = new TextField();
@@ -32,33 +30,33 @@ public class DefinePageStage extends Stage {
         programLanguageName.setPromptText("Enter programming languages, separate by whitespace");
 
         // create buttons
-        submit = new Button("Submit"); // 1
+        Button submit = new Button("Submit"); // 1
         submit.setOnAction(e -> submitAction());
-        clear = new Button("Clear"); // 2
+        Button clear = new Button("Clear"); // 2
         clear.setOnAction(e -> clearAction());
-        cancel = new Button("Cancel"); // 3
+        Button cancel = new Button("Cancel"); // 3
         cancel.setOnAction(e -> cancelAction());
 
         // input area layout
         VBox inputLayout = new VBox(infoLabel, studentName, programLanguageName);
-        inputLayout.setPadding(new Insets(20));
-        inputLayout.setSpacing(10);
-        inputLayout.setAlignment(Pos.CENTER);
-
+        inputLayout.getStyleClass().add("inputLayout");
         // layout buttons
         HBox btnLayout = new HBox(submit, clear, cancel);
-        btnLayout.setPadding(new Insets(25));
-        btnLayout.setSpacing(10);
         btnLayout.setAlignment(Pos.CENTER);
+        btnLayout.setSpacing(25);
 
         // layout page
         VBox pageLayout = new VBox(inputLayout, btnLayout);
         pageLayout.setPadding(new Insets(25));
+        pageLayout.setId("pageLayout");
+        BorderPane root = new BorderPane(pageLayout);
+
 
         // set scene
-        Scene definePageScene = new Scene(pageLayout, height, width);
+        Scene pageScene = new Scene(root, width, height);
+        pageScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style/homePage.css")).toExternalForm());
         this.setTitle(title);
-        this.setScene(definePageScene);
+        this.setScene(pageScene);
     }
 
     /**

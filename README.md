@@ -19,7 +19,7 @@ It focuses on implementing the **"Define Programming Languages"** page described
 
 ---
 
-## Implemented Features (v0.2) :
+## Implemented Features (v0.3) :
 
 ### Required features:
 
@@ -33,14 +33,14 @@ It focuses on implementing the **"Define Programming Languages"** page described
 - Sstores entered languages in memory or text/JSON file (for testing only, will be replaced by database).  
 - Includes a Back button to return to the Home page.
 
-### Extra features (Non required):
+### Extra features (Not required):
 
-#### 3. Show All Exsist Students
+#### 3. Show All Existing Students
 - A button on the home page. 
 - Allow user to check all students by clicking.
 - A close butto on the showing page, allow user to close window by clicking.
 
-#### 4. Local Data Storing feature
+#### 4. Local Data Storing Feature
 - A json file on local for storing all students' data.
 - When the program is launched, program will load data from the json file. When add a student and close the program, that json file will be updated.
 - Make sure the data will not be lost when close the program.

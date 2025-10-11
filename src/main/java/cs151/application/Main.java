@@ -19,7 +19,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        HomePageStage homePage = new HomePageStage(400, 300, "Home Page");
+        HomePageStage homePage = new HomePageStage(700, 320, "Home Page");
         homePage.show();
     }
 
@@ -27,6 +27,4 @@ public class Main extends Application {
     public void stop() {
         studentDB.save();
     } // when program close, save data to json
-
-
 }

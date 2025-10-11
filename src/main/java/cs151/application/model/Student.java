@@ -1,6 +1,7 @@
 package cs151.application.model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Student {
@@ -113,7 +114,6 @@ public class Student {
 
     /**
      * convert to string for test use
-     * @return
      */
     public String toString() {
         return "FullName : " + name +
@@ -127,5 +127,16 @@ public class Student {
                 "\nWhitelist : " + whitelist +
                 "\nBlacklist : " + blacklist +
                 "\nComments : " + comments;
+    }
+
+    /**
+     * make a string for all list that student skilled
+     */
+    public String getLanguageList_String() {
+        programmingLanguages.sort(Comparator.naturalOrder()); // sort first
+        StringBuilder sb = new StringBuilder();   // build a string
+        for (String lang : programmingLanguages) sb.append(lang).append(", ");
+        if (sb.length() > 0) sb.deleteCharAt(sb.length() - 2);
+        return sb.toString();
     }
 }
