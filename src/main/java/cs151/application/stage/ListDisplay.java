@@ -16,7 +16,6 @@ public class ListDisplay extends Stage {
         Label title = new Label(displayStrings.get(0));
 
         HBox line = new HBox();
-        line.getStyleClass().add("sectionLayout");
         for (int i = 1; i < displayStrings.size(); i++) {
             Text text = new Text(displayStrings.get(i));
             line.getChildren().add(text);
