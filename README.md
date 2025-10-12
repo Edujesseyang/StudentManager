@@ -1,14 +1,6 @@
 # CS151 Term Project - Version 0.2  
 **Students' Knowledgebase for Faculties**
 
-## Team Info
-- **Team Number:** 21  
-- **Team Members:**  
-  - Jesse Yang (Main structure, data handling, file IO setup)  
-  - Julian Christian Simmons (UI design, Git setup, )  
-  - Ryan Monazzami (Navigation logic, Home page setup)  
-  - Daniel Khant (Code documentation, testing, cleanup)
-
 ---
 
 ## Project Description
@@ -17,11 +9,12 @@ This project is a desktop application designed for faculty members to record and
 This version (**v0.2**) is the first working prototype.  
 It focuses on implementing the **"Define Programming Languages"** page described in the project problem statement (Section 2.1.1, item 1).
 
+This version (**v0.3**) is the second working prototype.  
+It focuses on implementing the **"Show All Programming Languages"** page described in the project problem statement (Section 2.1.1, item 2).
+
 ---
 
 ## Implemented Features (v0.3) :
-
-### Required features:
 
 #### 1. Home Page
 - Displays a welcome message.
@@ -33,14 +26,16 @@ It focuses on implementing the **"Define Programming Languages"** page described
 - Sstores entered languages in memory or text/JSON file (for testing only, will be replaced by database).  
 - Includes a Back button to return to the Home page.
 
-### Extra features (Not required):
+#### 3. Show All Student Page
+- Allows the user to check the list of all students.  
+- There is a Information button allows use to check a student's information.  
+- Includes a Back button to return to the Home page.
 
-#### 3. Show All Existing Students
-- A button on the home page. 
-- Allow user to check all students by clicking.
-- A close butto on the showing page, allow user to close window by clicking.
+#### 4. Show Students' Programming Language Status.
+- Allows the user to check the programming languages of all students.  
+- Includes a Back button to return to the Home page.
 
-#### 4. Local Data Storing Feature
+#### 5. Local Data Storing Feature
 - A json file on local for storing all students' data.
 - When the program is launched, program will load data from the json file. When add a student and close the program, that json file will be updated.
 - Make sure the data will not be lost when close the program.
@@ -54,22 +49,33 @@ It focuses on implementing the **"Define Programming Languages"** page described
 - **Build Tool:** Maven  
 - **JDK:** ZuluFX 21 (verified working under Zulu 23)  
 - **Main Class:** `cs151.application.Main`
+- **Style:** CSS
 
 ### Package Structure
 ```text
-src/
-└── main/java/
-  └── cs151/application/
-    ├── Main.java
-    ├── stage/
-    | ├── HomePageStage.java
-    | ├── StudenstShowStage.java
-    | └── DefinePageStage.java
-    ├── model/
-    | └── Student.java
-    | └── StudentList.java
-    └── tool/
-      └── JsonFileStoreTool.java
+src/main/
+  └── java/
+    ├─── cs151/application/
+    | ├── Main.java
+    | ├── stage/
+    | | ├── HomePageStage.java
+    | | ├── StudenstListPage.java
+    | | ├── StudenstInfoPage.java
+    | | ├── LanguagesShowStage.java
+    | | ├── ListDisplay.java
+    | | └── DefinePageStage.java
+    | ├── model/
+    | | └── Student.java
+    | | └── Student.java
+    | └── tool/
+    |   └── JsonFileStoreTool.java
+    └─ source/
+        ├── img/
+        |  ├── bg.png
+        |  ├── inputBg.png
+        |  └── sectionBg.png
+        └── style/
+           └── homePage.css
 ```
   
 
