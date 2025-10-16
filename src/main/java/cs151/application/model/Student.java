@@ -6,7 +6,6 @@ import java.util.List;
 
 public class Student {
     private String name;
-    private String preferName;
     private String academicStatus; // Freshman, Sophomore, etc.
     private boolean employed;
     private String jobDetails;
@@ -30,14 +29,6 @@ public class Student {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getPreferName() {
-        return preferName;
-    }
-
-    public void setPreferName(String preferName) {
-        this.preferName = preferName;
     }
 
     public String getAcademicStatus() {
@@ -117,7 +108,6 @@ public class Student {
      */
     public String toString() {
         return "FullName : " + name +
-                "\nPreferName : " + preferName +
                 "\nAcademicStatus : " + academicStatus +
                 "\nEmployed : " + employed +
                 "\nJobDetails : " + jobDetails +

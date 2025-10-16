@@ -15,7 +15,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        HomePageStage homePage = new HomePageStage(700, 320, "Home Page");
+        HomePageStage homePage = new HomePageStage();
         homePage.show();
     }
 

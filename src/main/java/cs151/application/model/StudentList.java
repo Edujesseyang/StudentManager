@@ -54,4 +54,13 @@ public class StudentList {
     public void save() {
         store.save(list);
     }
+
+    public boolean isPresent(String name){
+        for(Student std : list){
+            if(std.getName().equals(name)){
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -1,23 +1,33 @@
 package cs151.application.stage;
 
+import cs151.application.tools.Tools;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class HomePageStage extends Stage {
     Button definePageBtn;
     Button displayBtn;
     Button displayLanguageBtn;
+    Button defineStudentBtn;
     Label welcomeText;
+    Tools tool = new Tools();
 
-    public HomePageStage(int width, int height, String title) {
+    public HomePageStage() {
+        ensureDefaultLang(); // preload default languages
+
         // create button and button action
-        definePageBtn = new Button("Define a student");
+        definePageBtn = new Button("Define programming languages");
         definePageBtn.setOnAction(e -> defineBtnAct());
+
+        defineStudentBtn = new Button("Define student");
+        defineStudentBtn.setOnAction(e -> defineStudentAct());
 
         // create button for display students
         displayBtn = new Button("Show all students");
@@ -34,17 +44,17 @@ public class HomePageStage extends Stage {
         // set page layout
         VBox btnLayout = new VBox();
         btnLayout.getStyleClass().add("inputLayout");
-        btnLayout.getChildren().addAll(definePageBtn,displayBtn,displayLanguageBtn);
-        VBox pageLayout = new VBox(welcomeText,btnLayout);
+        btnLayout.getChildren().addAll(definePageBtn, defineStudentBtn, displayBtn);
+        VBox pageLayout = new VBox(welcomeText, btnLayout);
         pageLayout.setId("pageLayout");
 
         // set scene
         BorderPane root = new BorderPane(pageLayout);
         root.setId("background");
-        Scene pageScene = new Scene(root, width, height);
-        pageScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style/homePage.css")).toExternalForm());
+        Scene pageScene = new Scene(root, 500, 400);
+        tool.setPageStyle(pageScene);
 
-        this.setTitle(title);
+        this.setTitle("Home Page");
         this.setScene(pageScene);
     }
 
@@ -52,7 +62,7 @@ public class HomePageStage extends Stage {
      * Create a define page stage and show it
      */
     private void defineBtnAct() {
-        DefinePageStage definePage = new DefinePageStage(600, 250, "Define coding language");
+        DefineLanguagePage definePage = new DefineLanguagePage();
         definePage.show();
     }
 
@@ -60,12 +70,29 @@ public class HomePageStage extends Stage {
      * create students list show stage and show it
      */
     private void displayBtnAct() {
-        StudentsListPage showPage = new StudentsListPage( "All Students");
+        StudentsListPage showPage = new StudentsListPage();
         showPage.show();
     }
 
     private void displayLanguageBtnAct() {
-        LanguagesShowPage showPage = new LanguagesShowPage(500, 400, "All Languages");
+        LanguagesShowPage showPage = new LanguagesShowPage();
         showPage.show();
+    }
+
+    private void defineStudentAct() {
+        DefineStudentPage showPage = new DefineStudentPage();
+        showPage.show();
+    }
+
+    private void ensureDefaultLang() {
+        List<String> lang = tool.loadLanguageList();
+        List<String> defaultLang = new ArrayList<>(Arrays.asList("Java", "C++", "Python", "Html", "Javascript", "Rust"));
+        for (String s : defaultLang) {
+            if (lang.size() >= 3) {
+                break;
+            }
+            lang.add(s);
+        }
+        tool.writeLanguageList(lang); // ensure there are 3 languages
     }
 }

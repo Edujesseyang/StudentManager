@@ -2,6 +2,7 @@ package cs151.application.stage;
 
 import cs151.application.model.Student;
 import cs151.application.model.StudentList;
+import cs151.application.tools.Tools;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -11,12 +12,15 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 public class LanguagesShowPage extends Stage {
-    public LanguagesShowPage(int width, int height, String title) {
+    Tools tool = new Tools();
+
+    public LanguagesShowPage() {
         // label
         Label labelText = new Label("   Skilled Languages Status   ");
         labelText.getStyleClass().add("subtitle");
         VBox listBox = new VBox();
-        listBox.getStyleClass().add("sectionLayout");;
+        listBox.getStyleClass().add("sectionLayout");
+        ;
         // content area
         StudentList db = StudentList.getInstance();
         for (Student std : db.getList()) {
@@ -36,9 +40,9 @@ public class LanguagesShowPage extends Stage {
         VBox pageLayout = new VBox(labelText, box, closeBtn);
         pageLayout.getStyleClass().add("pageLayout");
         // set scene
-        Scene pageScene = new Scene(pageLayout, width, height);
-        pageScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style/homePage.css")).toExternalForm());
-        this.setTitle(title);
+        Scene pageScene = new Scene(pageLayout, 500, 400);
+        tool.setPageStyle(pageScene);
+        this.setTitle("Language List");
         this.setScene(pageScene);
     }
 

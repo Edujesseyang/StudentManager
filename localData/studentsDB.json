@@ -12,5 +12,36 @@
     "comments": [],
     "whitelist": true,
     "blacklist": false
+  },
+  {
+    "name": "asdf",
+    "academicStatus": "",
+    "employed": true,
+    "jobDetails": "Enter student\u0027s job asdfrole",
+    "preferredRole": "Enter the role the student preferred",
+    "programmingLanguages": [
+      "html",
+      "python"
+    ],
+    "databases": [],
+    "comments": [],
+    "whitelist": true,
+    "blacklist": false
+  },
+  {
+    "name": "Enterll name",
+    "academicStatus": "",
+    "employed": true,
+    "jobDetails": "EnterCofsdfsdfasdfnt\u0027s job role",
+    "preferredRole": "Enter the role the student preferred",
+    "programmingLanguages": [
+      "C++",
+      "html",
+      "python"
+    ],
+    "databases": [],
+    "comments": [],
+    "whitelist": true,
+    "blacklist": false
   }
 ]

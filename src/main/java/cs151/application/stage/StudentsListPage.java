@@ -2,21 +2,24 @@ package cs151.application.stage;
 
 import cs151.application.model.Student;
 import cs151.application.model.StudentList;
+import cs151.application.tools.Tools;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 import java.util.Objects;
 
 public class StudentsListPage extends Stage {
     StudentList database = StudentList.getInstance();
     VBox studentListBox = new VBox();
+    Tools tool = new Tools();
 
-    public StudentsListPage(String title) {
+    public StudentsListPage() {
         // set scene
         Scene pageScene = buildScene();
-        this.setTitle(title);
+        this.setTitle("Student List");
         this.setScene(pageScene);
     }
 
@@ -38,6 +41,7 @@ public class StudentsListPage extends Stage {
     }
 
     private Scene buildScene() {
+
         // label
         Label labelText = new Label("   List Of Students   ");
         labelText.getStyleClass().add("subtitle");
@@ -57,7 +61,7 @@ public class StudentsListPage extends Stage {
         VBox pageLayout = new VBox(labelText, studentListPane, closeBtn);
         pageLayout.getStyleClass().add("pageLayout");
         Scene result = new Scene(pageLayout, 650, 600);
-        result.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style/homePage.css")).toExternalForm());
+        tool.setPageStyle(result);
         return result;
     }
 
