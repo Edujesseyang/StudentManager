@@ -44,7 +44,6 @@ public class DefineLanguagePage extends Stage {
         allLang.setMaxWidth(400);
         allLang.setMinWidth(400);
         for (String lang : languageList) allLang.appendText(lang + "   ");
-        allLang.setEditable(false);
         VBox showList = new VBox(allLang);
 
         // create buttons
@@ -56,14 +55,14 @@ public class DefineLanguagePage extends Stage {
         clear.setOnAction(e -> clearAction());
         Button back = new Button("Back"); // 4
         back.setOnAction(e -> cancelAction());
-
-        // input area layout
-        VBox inputLayout = new VBox(infoLabel, showList, programLanguageName);
-        inputLayout.getStyleClass().add("sectionLayout");
         // layout buttons
         HBox btnLayout = new HBox(add, delete, clear, back);
         btnLayout.getStyleClass().add("buttonLayout");
         btnLayout.setAlignment(Pos.CENTER);
+
+        // input area layout
+        VBox inputLayout = new VBox(infoLabel, showList, programLanguageName);
+        inputLayout.getStyleClass().add("sectionLayout");
 
         // layout page
         VBox pageLayout = new VBox(inputLayout, btnLayout);

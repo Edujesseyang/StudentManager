@@ -51,7 +51,7 @@ public class AddCommentPage extends Stage {
             tool.popAlert(Alert.AlertType.ERROR, "Comment can not be blank").showAndWait();
             return;
         }
-        targetStudent.addComment(comText);
+        targetStudent.addComment(" <" + tool.getTimeString() + ">\n" + comText);
         tool.popAlert(Alert.AlertType.INFORMATION, "Added successfully").showAndWait();
         StudentInfoPage newInfoPage = new StudentInfoPage(targetStudent);
         this.close();

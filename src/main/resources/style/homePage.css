@@ -71,7 +71,7 @@
     -fx-alignment: center;
     -fx-spacing: 20;
     -fx-background-color: #fff9f4;
-    -fx-background-radius: 5;
+    -fx-background-radius: 15;
     -fx-background-size: 100% 100%;
 }
 
@@ -80,7 +80,7 @@
     -fx-padding: 20;
     -fx-alignment: center;
     -fx-spacing: 10;
-    -fx-background-radius: 5;
+    -fx-background-radius: 15;
     -fx-background-size: 100% 100%;
 }
 

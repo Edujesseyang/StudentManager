@@ -171,7 +171,10 @@ public class DefineStudentPage extends Stage {
                     stdDB.addStudent(std);
                     std.setProgrammingLanguages(getResultOfSelectBoxes(langCheckBoxes));
                     std.setDatabases(getResultOfSelectBoxes(dataCheckBoxes));
-                    std.addComment(commentArea.getText());
+                    String comText = commentArea.getText();
+                    if (!comText.isBlank()) {
+                        std.addComment(" <" + tool.getTimeString() + ">\n" + comText);
+                    }
                 }
             }
         });

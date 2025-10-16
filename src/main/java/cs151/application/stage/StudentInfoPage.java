@@ -47,20 +47,23 @@ public class StudentInfoPage extends Stage {
         HBox langLayout = new HBox(lang, langBtn, dbBtn);
         langLayout.setSpacing(15);
         VBox commentAreaBox = new VBox();
+        commentAreaBox.setSpacing(5);
+        commentAreaBox.setAlignment(Pos.CENTER);
         // comment area
         Label commentTitle = new Label("Comments: ");
         int counter = 1;
         for (String comment : displaying.getComments()) {
-            TextArea text = new TextArea("Comment " + counter + ": \n" + comment + "\n");
+            TextArea text = new TextArea("Comment " + counter + ":  " + comment + "\n");
             text.setEditable(false);
-            text.setMaxWidth(498);
-            text.setMinWidth(498);
+            text.setMaxWidth(483);
+            text.setMinWidth(483);
             text.setMaxHeight(100);
             text.getStyleClass().add("showText");
             commentAreaBox.getChildren().add(text);
             counter++;
         }
         ScrollPane commentArea = new ScrollPane(commentAreaBox);
+        commentArea.getStyleClass().add("showText");
         VBox commentBox = new VBox(commentTitle, commentArea);
         commentArea.setMaxWidth(500);
         commentArea.setMinWidth(500);

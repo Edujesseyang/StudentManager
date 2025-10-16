@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,7 +16,6 @@ import java.util.List;
 public class HomePageStage extends Stage {
     Button definePageBtn;
     Button displayBtn;
-    Button displayLanguageBtn;
     Button defineStudentBtn;
     Label welcomeText;
     Tools tool = new Tools();
@@ -44,13 +44,11 @@ public class HomePageStage extends Stage {
         btnLayout.setAlignment(Pos.CENTER);
 
         VBox pageLayout = new VBox(welcomeText, btnLayout);
-        pageLayout.setId("sectionLayout");
-
+        pageLayout.setSpacing(30);
 
         // set scene
         BorderPane root = new BorderPane(pageLayout);
-        root.setId("background");
-        Scene pageScene = new Scene(root, 500, 400);
+        Scene pageScene = new Scene(root, 800, 600);
         tool.setPageStyle(pageScene);
 
         this.setTitle("Home Page");

@@ -10,6 +10,8 @@ import java.nio.file.Path;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -62,5 +64,10 @@ public class Tools {
     public void setPageStyle(Scene scene) {
         String stylePath = "/style/homePage.css";
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(stylePath)).toExternalForm());
+    }
+
+    public String getTimeString(){
+        ZonedDateTime now = ZonedDateTime.now();
+        return now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z"));
     }
 }
