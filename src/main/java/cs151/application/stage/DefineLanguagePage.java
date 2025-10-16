@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -35,13 +36,16 @@ public class DefineLanguagePage extends Stage {
         // create info input box
         programLanguageName = new TextField();
         programLanguageName.setPromptText("Enter programming languages name");
-
         // showing area to show all languages
         TextArea allLang = new TextArea("Language List:\n");
+        allLang.setEditable(false);
+        allLang.getStyleClass().add("showText");
+        allLang.setWrapText(true);
+        allLang.setMaxWidth(400);
+        allLang.setMinWidth(400);
         for (String lang : languageList) allLang.appendText(lang + "   ");
         allLang.setEditable(false);
         VBox showList = new VBox(allLang);
-        showList.getStyleClass().add("pageLayout");
 
         // create buttons
         Button add = new Button("Add"); // 1
@@ -55,27 +59,23 @@ public class DefineLanguagePage extends Stage {
 
         // input area layout
         VBox inputLayout = new VBox(infoLabel, showList, programLanguageName);
-        inputLayout.getStyleClass().add("inputLayout");
+        inputLayout.getStyleClass().add("sectionLayout");
         // layout buttons
         HBox btnLayout = new HBox(add, delete, clear, back);
+        btnLayout.getStyleClass().add("buttonLayout");
         btnLayout.setAlignment(Pos.CENTER);
-        btnLayout.setSpacing(25);
 
         // layout page
         VBox pageLayout = new VBox(inputLayout, btnLayout);
         pageLayout.setPadding(new Insets(25));
-        pageLayout.setId("pageLayout");
         BorderPane root = new BorderPane(pageLayout);
 
         // return a scene
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root, 600, 500);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style/homePage.css")).toExternalForm());
         return scene;
     }
 
-    /**
-     * check if form are filled correctly
-     */
     private void addAction() {
         if (programLanguageName.getText().isBlank()) { // pop alert for blank nane
             tool.popAlert(Alert.AlertType.ERROR, "Input can not be empty!").showAndWait();
@@ -98,7 +98,6 @@ public class DefineLanguagePage extends Stage {
         this.show();
     }
 
-
     private void deleteAction() {
         if (!languageList.contains(programLanguageName.getText())) {
             tool.popAlert(Alert.AlertType.ERROR, "Can not find the language").showAndWait();
@@ -117,17 +116,10 @@ public class DefineLanguagePage extends Stage {
         this.show();
     }
 
-
-    /**
-     * clear add text area
-     */
     private void clearAction() {
         programLanguageName.clear();
     }
 
-    /**
-     * close stage
-     */
     private void cancelAction() {
         this.close();
     }

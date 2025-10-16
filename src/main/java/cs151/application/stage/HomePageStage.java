@@ -1,6 +1,7 @@
 package cs151.application.stage;
 
 import cs151.application.tools.Tools;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -33,20 +34,18 @@ public class HomePageStage extends Stage {
         displayBtn = new Button("Show all students");
         displayBtn.setOnAction(e -> displayBtnAct());
 
-        // create button for display languages
-        displayLanguageBtn = new Button("Show all languages");
-        displayLanguageBtn.setOnAction(e -> displayLanguageBtnAct());
-
         // create welcome label
         welcomeText = new Label(" Welcome Back ");
         welcomeText.getStyleClass().add("title");
 
         // set page layout
-        VBox btnLayout = new VBox();
-        btnLayout.getStyleClass().add("inputLayout");
-        btnLayout.getChildren().addAll(definePageBtn, defineStudentBtn, displayBtn);
+        VBox btnLayout = new VBox(definePageBtn, defineStudentBtn, displayBtn);
+        btnLayout.getStyleClass().add("buttonLayout");
+        btnLayout.setAlignment(Pos.CENTER);
+
         VBox pageLayout = new VBox(welcomeText, btnLayout);
-        pageLayout.setId("pageLayout");
+        pageLayout.setId("sectionLayout");
+
 
         // set scene
         BorderPane root = new BorderPane(pageLayout);
@@ -74,11 +73,6 @@ public class HomePageStage extends Stage {
         showPage.show();
     }
 
-    private void displayLanguageBtnAct() {
-        LanguagesShowPage showPage = new LanguagesShowPage();
-        showPage.show();
-    }
-
     private void defineStudentAct() {
         DefineStudentPage showPage = new DefineStudentPage();
         showPage.show();
@@ -86,7 +80,7 @@ public class HomePageStage extends Stage {
 
     private void ensureDefaultLang() {
         List<String> lang = tool.loadLanguageList();
-        List<String> defaultLang = new ArrayList<>(Arrays.asList("Java", "C++", "Python", "Html", "Javascript", "Rust"));
+        List<String> defaultLang = new ArrayList<>(Arrays.asList("Java", "C++", "Python", "Javascript", "Rust"));
         for (String s : defaultLang) {
             if (lang.size() >= 3) {
                 break;

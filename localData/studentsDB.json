@@ -1,46 +1,66 @@
 [
   {
-    "name": "sdfasd",
-    "employed": false,
-    "programmingLanguages": [
-      "asdf",
-      "asdf",
-      "asdfasdfdf",
-      "asf"
-    ],
-    "databases": [],
-    "comments": [],
-    "whitelist": true,
-    "blacklist": false
-  },
-  {
-    "name": "asdf",
-    "academicStatus": "",
+    "name": "Jesse Yang",
+    "academicStatus": "sophomore",
     "employed": true,
-    "jobDetails": "Enter student\u0027s job asdfrole",
-    "preferredRole": "Enter the role the student preferred",
+    "jobDetails": "Cool",
+    "preferredRole": "Security",
     "programmingLanguages": [
-      "html",
-      "python"
-    ],
-    "databases": [],
-    "comments": [],
-    "whitelist": true,
-    "blacklist": false
-  },
-  {
-    "name": "Enterll name",
-    "academicStatus": "",
-    "employed": true,
-    "jobDetails": "EnterCofsdfsdfasdfnt\u0027s job role",
-    "preferredRole": "Enter the role the student preferred",
-    "programmingLanguages": [
+      "Java",
       "C++",
-      "html",
-      "python"
+      "Python"
     ],
-    "databases": [],
-    "comments": [],
+    "databases": [
+      "SQLite",
+      "MySQL"
+    ],
+    "comments": [
+      "You are so good"
+    ],
+    "whitelist": true,
+    "blacklist": false
+  },
+  {
+    "name": "Jesee",
+    "academicStatus": "Junior",
+    "employed": false,
+    "jobDetails": "",
+    "preferredRole": "QA",
+    "programmingLanguages": [
+      "Python"
+    ],
+    "databases": [
+      "PostgresSQL"
+    ],
+    "comments": [
+      "asdfasdf\nasdfasdf\nasdfasdfasdf"
+    ],
+    "whitelist": true,
+    "blacklist": false
+  },
+  {
+    "name": "jeseasdg",
+    "academicStatus": "Senior",
+    "employed": false,
+    "jobDetails": "",
+    "preferredRole": "QA",
+    "programmingLanguages": [
+      "Python",
+      "Rust",
+      "Python",
+      "Rust",
+      "CSS"
+    ],
+    "databases": [
+      "PostgresSQL",
+      "MySQL",
+      "MongoDB"
+    ],
+    "comments": [
+      "asdfasdfasdf",
+      "asdfasdfasdgasdgasdgasdg",
+      "asdfasdf"
+    ],
     "whitelist": true,
     "blacklist": false
   }

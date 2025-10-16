@@ -29,6 +29,7 @@ public class StudentsListPage extends Stage {
 
     private void selectAct(Student std) {
         StudentInfoPage infoPage = new StudentInfoPage(std);
+        database.save();
         infoPage.show();
     }
 
@@ -37,11 +38,11 @@ public class StudentsListPage extends Stage {
         database.getList().remove(std);
         Scene reloadPage = buildScene();
         this.setScene(reloadPage);
+        database.save();
         this.show();
     }
 
     private Scene buildScene() {
-
         // label
         Label labelText = new Label("   List Of Students   ");
         labelText.getStyleClass().add("subtitle");
@@ -56,11 +57,15 @@ public class StudentsListPage extends Stage {
         // close button
         Button closeBtn = new Button("Close");
         closeBtn.setOnAction(e -> closeBtnAction());
+        HBox btnLayout = new HBox(closeBtn);
+        btnLayout.getStyleClass().add("buttonLayout");
+
+        VBox contentBox = new VBox(studentListPane);
+        contentBox.getStyleClass().add("inputLayout");
 
         // layout
-        VBox pageLayout = new VBox(labelText, studentListPane, closeBtn);
-        pageLayout.getStyleClass().add("pageLayout");
-        Scene result = new Scene(pageLayout, 650, 600);
+        VBox pageLayout = new VBox(labelText, contentBox, btnLayout);
+        Scene result = new Scene(pageLayout, 800, 600);
         tool.setPageStyle(result);
         return result;
     }
@@ -71,7 +76,7 @@ public class StudentsListPage extends Stage {
         for (Student std : database.getList()) {
             Label text = new Label(" Student " + (counter++) + ": ");
             Label name = new Label("        " + std.getName());
-            name.setPrefWidth(400);
+            name.setPrefWidth(450);
 
             Button select = new Button("Detail");
             select.setOnAction(event -> selectAct(std));

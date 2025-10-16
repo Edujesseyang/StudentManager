@@ -129,4 +129,8 @@ public class Student {
         if (sb.length() > 0) sb.deleteCharAt(sb.length() - 2);
         return sb.toString();
     }
+
+    public void addComment(String comment) {
+        this.comments.add(comment);
+    }
 }
