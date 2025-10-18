@@ -1,5 +1,6 @@
 package cs151.application.tools;
 
+import cs151.application.model.Student;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 
@@ -66,8 +67,11 @@ public class Tools {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(stylePath)).toExternalForm());
     }
 
-    public String getTimeString(){
+    public String getTimeString() {
         ZonedDateTime now = ZonedDateTime.now();
         return now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z"));
     }
+
+
+
 }

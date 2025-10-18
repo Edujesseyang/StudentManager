@@ -57,7 +57,7 @@ public class DefineStudentPage extends Stage {
         // academic status line
         Label academicStatus = new Label("Academic Status: ");
         statusInput = new ComboBox<>();
-        statusInput.getItems().addAll("Freshman", "sophomore", "Junior", "Senior");
+        statusInput.getItems().addAll("Freshman", "sophomore", "Junior", "Senior", "Graduate");
         statusInput.setPromptText("Choose academic status");
         statusInput.setVisibleRowCount(4);
         HBox academicStatusLine = new HBox(academicStatus, statusInput);      // line 2
@@ -73,16 +73,16 @@ public class DefineStudentPage extends Stage {
         HBox employLine = new HBox(employedText, employed, notEmployed); // line 3
 
         // job line
-        Label job = new Label("Job Role: ");
+        Label job = new Label("Job Detail: ");
         jobInput = new TextField();
-        jobInput.setPromptText("Enter student's job role");
+        jobInput.setPromptText("Enter student's current position");
         HBox jobLine = new HBox(job, jobInput);
         jobLine.disableProperty().bind(notEmployed.selectedProperty());   // line 4
 
         // role line
         Label role = new Label("Preferred Role: ");
         roleInput = new ComboBox<>();
-        roleInput.getItems().addAll("Backend", "Frontend", "QA", "Security", "Database", "UI/UX", "DevOps");
+        roleInput.getItems().addAll("Backend", "Frontend", "QA", "Security", "Database", "UI/UX", "DevOps", "Network", "IT support", "Other");
         roleInput.setPromptText("Enter the role the student preferred");
         HBox roleLine = new HBox(role, roleInput);   // line 5
 
@@ -175,10 +175,11 @@ public class DefineStudentPage extends Stage {
                     if (!comText.isBlank()) {
                         std.addComment(" <" + tool.getTimeString() + ">\n" + comText);
                     }
+                    tool.popAlert(Alert.AlertType.INFORMATION, "Student Added");
                 }
             }
         });
-        tool.popAlert(Alert.AlertType.INFORMATION, "Student Added");
+        stdDB.sort();
         stdDB.save();
         this.close();
     }

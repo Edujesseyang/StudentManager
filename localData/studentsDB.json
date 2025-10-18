@@ -1,5 +1,66 @@
 [
   {
+    "name": "ama",
+    "employed": false,
+    "jobDetails": "",
+    "programmingLanguages": [],
+    "databases": [],
+    "comments": [],
+    "whitelist": true,
+    "blacklist": false
+  },
+  {
+    "name": "caaaaa",
+    "employed": false,
+    "jobDetails": "",
+    "programmingLanguages": [],
+    "databases": [],
+    "comments": [],
+    "whitelist": true,
+    "blacklist": false
+  },
+  {
+    "name": "caca",
+    "employed": false,
+    "jobDetails": "",
+    "programmingLanguages": [],
+    "databases": [],
+    "comments": [],
+    "whitelist": true,
+    "blacklist": false
+  },
+  {
+    "name": "Chloe Jiang",
+    "academicStatus": "Senior",
+    "employed": true,
+    "jobDetails": "SQDF",
+    "preferredRole": "Database",
+    "programmingLanguages": [
+      "C++",
+      "Python",
+      "Html",
+      "CSS"
+    ],
+    "databases": [
+      "SQLite",
+      "MySQL",
+      "PostgresSQL"
+    ],
+    "comments": [],
+    "whitelist": true,
+    "blacklist": false
+  },
+  {
+    "name": "cooka",
+    "employed": false,
+    "jobDetails": "",
+    "programmingLanguages": [],
+    "databases": [],
+    "comments": [],
+    "whitelist": true,
+    "blacklist": false
+  },
+  {
     "name": "Jesse Yang",
     "academicStatus": "Junior",
     "employed": false,
@@ -27,22 +88,11 @@
     "blacklist": false
   },
   {
-    "name": "Chloe Jiang",
-    "academicStatus": "Senior",
-    "employed": true,
-    "jobDetails": "SQDF",
-    "preferredRole": "Database",
-    "programmingLanguages": [
-      "C++",
-      "Python",
-      "Html",
-      "CSS"
-    ],
-    "databases": [
-      "SQLite",
-      "MySQL",
-      "PostgresSQL"
-    ],
+    "name": "zica",
+    "employed": false,
+    "jobDetails": "",
+    "programmingLanguages": [],
+    "databases": [],
     "comments": [],
     "whitelist": true,
     "blacklist": false
