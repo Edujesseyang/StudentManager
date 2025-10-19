@@ -7,10 +7,10 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 import java.util.List;
-import java.util.Objects;
 
 public class ListDisplay extends Stage {
     Tools tool = new Tools();
@@ -18,12 +18,14 @@ public class ListDisplay extends Stage {
     public ListDisplay(List<String> displayStrings, String title) {
         Label titleLabel = new Label(title);
 
-        HBox line = new HBox();
-        for (int i = 1; i < displayStrings.size(); i++) {
-            Text text = new Text(displayStrings.get(i) + "   ");
-            line.getChildren().add(text);
+
+        TextFlow tx = new TextFlow();
+        for (String displayString : displayStrings) {
+            Text text = new Text(displayString + "   ");
+            tx.getChildren().add(text);
         }
 
+        HBox line = new HBox(tx);
         VBox sectionLayout = new VBox(titleLabel, new Separator(), line);
         sectionLayout.getStyleClass().add("sectionLayout");
 
