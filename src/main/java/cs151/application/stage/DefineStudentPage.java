@@ -33,7 +33,7 @@ public class DefineStudentPage extends Stage {
     private List<CheckBox> langCheckBoxes = new ArrayList<>();
 
     // for database check box
-    private List<String> dataList = new ArrayList<>(Arrays.asList("SQLite", "MySQL", "PostgresSQL", "MongoDB", "AWS", ""));
+    private List<String> dataList = new ArrayList<>(Arrays.asList("SQLite", "MySQL", "PostgresSQL", "MongoDB", "AWS", "Joins", "Indexing", "Transactions", "ACID", "Normalization", "Schema Design", "Primary Keys", "Foreign Keys", "Views", "Stored Procedures", "Query Optimization", "Execution Plans", "Replication", "Backup Strategies"));
     private List<CheckBox> dataCheckBoxes = new ArrayList<>();
 
     TextArea commentArea;
