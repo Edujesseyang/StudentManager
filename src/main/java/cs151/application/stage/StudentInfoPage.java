@@ -2,22 +2,16 @@ package cs151.application.stage;
 
 import cs151.application.model.Student;
 import cs151.application.model.StudentList;
-import cs151.application.tools.Tools;
+import cs151.application.services.Tools;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.Flow;
 
 
 public class StudentInfoPage extends Stage {

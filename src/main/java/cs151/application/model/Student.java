@@ -83,10 +83,6 @@ public class Student {
         return comments;
     }
 
-    public void setComments(List<String> comments) {
-        this.comments = comments;
-    }
-
     public boolean isWhitelist() {
         return whitelist;
     }
@@ -101,6 +97,18 @@ public class Student {
 
     public void setBlacklist(boolean blacklist) {
         this.blacklist = blacklist;
+    }
+
+    public void addLanguages(List<String> lang) {
+        programmingLanguages.addAll(lang);
+    }
+
+    public void addDbs(List<String> db) {
+        databases.addAll(db);
+    }
+
+    public void addComments(List<String> c) {
+        comments.addAll(c);
     }
 
     /**
@@ -132,6 +140,25 @@ public class Student {
 
     public void addComment(String comment) {
         this.comments.add(comment);
+    }
+
+    public void setDatabasesString(String str) {
+        char[] chars = str.toCharArray();
+        for (Character c : chars) {
+            StringBuilder sb = new StringBuilder();
+            if (c.equals('|')) {
+                databases.add(sb.toString());
+            }
+            sb.append(c);
+        }
+    }
+
+    public String getDatabasesString() {
+        StringBuilder sb = new StringBuilder();
+        for (String s : databases) {
+            sb.append(s).append("|");
+        }
+        return sb.toString();
     }
 
 }

@@ -1,7 +1,7 @@
 package cs151.application.model;
 
 import com.google.gson.reflect.TypeToken;
-import cs151.application.tools.JsonFileStoreTool;
+import cs151.application.services.JsonFileStoreTool;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;

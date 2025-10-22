@@ -2,7 +2,7 @@ package cs151.application.stage;
 
 import cs151.application.model.Student;
 import cs151.application.model.StudentList;
-import cs151.application.tools.Tools;
+import cs151.application.services.Tools;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;

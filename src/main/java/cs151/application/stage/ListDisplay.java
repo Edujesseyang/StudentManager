@@ -1,6 +1,6 @@
 package cs151.application.stage;
 
-import cs151.application.tools.Tools;
+import cs151.application.services.Tools;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
@@ -10,7 +10,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.List;
-import java.util.Objects;
 
 public class ListDisplay extends Stage {
     Tools tool = new Tools();

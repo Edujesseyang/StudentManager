@@ -2,14 +2,12 @@ package cs151.application.stage;
 
 import cs151.application.model.Student;
 import cs151.application.model.StudentList;
-import cs151.application.tools.Tools;
+import cs151.application.services.Tools;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.util.Objects;
 
 public class StudentsListPage extends Stage {
     StudentList database = StudentList.getInstance();
