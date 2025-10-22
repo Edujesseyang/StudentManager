@@ -6,6 +6,9 @@ target/
 
 # local data
 /localData
+*.css
+*.json
+*.txt
 
 ### IntelliJ IDEA ###
 .idea/modules.xml

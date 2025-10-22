@@ -13,7 +13,7 @@
     -fx-text-fill: #232526;
     -fx-spacing: 5;
     -fx-font-size: 15;
-    -fx-font-family: "Lucida Handwriting";
+    -fx-font-family: "system-ui";
     -fx-font-weight: bold;
 }
 
@@ -27,6 +27,8 @@
     -fx-border-width: 1;
     -fx-spacing: 5;
     -fx-padding: 5;
+    -fx-font-family: "Roboto Light";
+    -fx-font-weight: bold;
 }
 
 .button:hover {
@@ -58,8 +60,8 @@
 
 .showText {
     -fx-spacing: 10;
-    -fx-control-inner-background: rgba(232, 214, 193, 0.91);
-    -fx-background-color: #ecd8c8;
+    -fx-control-inner-background: rgba(245, 230, 202, 0.91);
+    -fx-background-color: #eedfd3;
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
 }
