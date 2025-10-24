@@ -1,5 +1,6 @@
-package cs151.application.stage;
+package cs151.application.view;
 
+import cs151.application.controller.AddCommentPageController;
 import cs151.application.model.Student;
 import cs151.application.services.Tools;
 import javafx.geometry.Pos;
@@ -30,10 +31,11 @@ public class AddCommentPage extends Stage {
         commentText.setPrefHeight(300);
         VBox textArea = new VBox(commentText);
 
+        AddCommentPageController controller = new AddCommentPageController(this, targetStudent);
         Button addBtn = new Button("Add");
-        addBtn.setOnAction(e -> addAct());
+        addBtn.setOnAction(e -> controller.addAct(commentText));
         Button cancelBtn = new Button("Cancel");
-        cancelBtn.setOnAction(e -> cancelAct());
+        cancelBtn.setOnAction(e -> controller.cancelAct());
         HBox btnBox = new HBox(addBtn, cancelBtn);
         btnBox.getStyleClass().add("buttonLayout");
         btnBox.setAlignment(Pos.CENTER);
@@ -45,20 +47,5 @@ public class AddCommentPage extends Stage {
         return pageScene;
     }
 
-    private void addAct() {
-        String comText = commentText.getText();
-        if (comText.isBlank()) {
-            tool.popAlert(Alert.AlertType.ERROR, "Comment can not be blank").showAndWait();
-            return;
-        }
-        targetStudent.addComment(" <" + tool.getTimeString() + ">\n" + comText);
-        tool.popAlert(Alert.AlertType.INFORMATION, "Added successfully").showAndWait();
-        StudentInfoPage newInfoPage = new StudentInfoPage(targetStudent);
-        this.close();
-        newInfoPage.show();
-    }
 
-    private void cancelAct() {
-        this.close();
-    }
 }

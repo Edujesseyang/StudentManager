@@ -1,7 +1,6 @@
-package cs151.application.stage;
+package cs151.application.view;
 
-import cs151.application.model.Student;
-import cs151.application.model.StudentList;
+import cs151.application.controller.StudentsListPageController;
 import cs151.application.services.Tools;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -9,44 +8,30 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.List;
+
 public class StudentsListPage extends Stage {
-    StudentList database = StudentList.getInstance();
+
     VBox studentListBox = new VBox();
     Tools tool = new Tools();
+    private final StudentsListPageController controller;
 
     public StudentsListPage() {
         // set scene
-        Scene pageScene = buildScene();
+        this.controller = new StudentsListPageController(this);
+
+        Scene pageScene = buildScene(controller.getStudentNameList());
         this.setTitle("Student List");
         this.setScene(pageScene);
     }
 
-    private void closeBtnAction() {
-        this.close();
-    }
-
-    private void selectAct(Student std) {
-        StudentInfoPage infoPage = new StudentInfoPage(std);
-        database.save();
-        infoPage.show();
-    }
-
-    private void deleteAct(Student std) {
-        this.close();
-        database.getList().remove(std);
-        Scene reloadPage = buildScene();
-        this.setScene(reloadPage);
-        database.save();
-        this.show();
-    }
-
-    private Scene buildScene() {
+    public Scene buildScene(List<String> allStudent) {
         // label
         Label labelText = new Label("   List Of Students   ");
         labelText.getStyleClass().add("subtitle");
 
         // bloc
-        studentListBox = makeStdLine();
+        studentListBox = makeStdLine(allStudent);
         studentListBox.getStyleClass().add("sectionLayout");
 
         // student Pane
@@ -54,7 +39,7 @@ public class StudentsListPage extends Stage {
         studentListPane.setFitToWidth(true);
         // close button
         Button closeBtn = new Button("Close");
-        closeBtn.setOnAction(e -> closeBtnAction());
+        closeBtn.setOnAction(e -> controller.closeBtnAction());
         HBox btnLayout = new HBox(closeBtn);
         btnLayout.getStyleClass().add("buttonLayout");
 
@@ -68,19 +53,19 @@ public class StudentsListPage extends Stage {
         return result;
     }
 
-    private VBox makeStdLine() {
+    private VBox makeStdLine(List<String> allStudent) {
         int counter = 1;
         VBox block = new VBox();
-        for (Student std : database.getList()) {
+        for (String std : allStudent) {
             Label text = new Label(" Student " + (counter++) + ": ");
-            Label name = new Label("        " + std.getName());
+            Label name = new Label("        " + std);
             name.setPrefWidth(450);
 
             Button select = new Button("Detail");
-            select.setOnAction(event -> selectAct(std));
+            select.setOnAction(event -> controller.selectAct(std));
 
             Button delete = new Button("Remove");
-            delete.setOnAction(event -> deleteAct(std));
+            delete.setOnAction(event -> controller.deleteAct(std));
 
             HBox nameLine = new HBox(name, select, delete);
             VBox section = new VBox(text, nameLine, new Label(), new Separator());

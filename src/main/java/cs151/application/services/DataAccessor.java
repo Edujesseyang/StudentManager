@@ -1,42 +1,38 @@
 package cs151.application.services;
 
 import cs151.application.model.Student;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
-public class DataAccessor {
+public class DataAccessor implements AutoCloseable {
     Path path = Paths.get("localData", "database.db");
     String url = "jdbc:sqlite:" + path;
     Connection conn;
 
-    DataAccessor() throws Exception {
+    public DataAccessor() throws Exception {
         Files.createDirectories(path.getParent());
         try {
             conn = DriverManager.getConnection(url);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage() + " 1 ");
         }
 
-        if (conn == null) throw new SQLException("Connection lost");
-
-        conn.setAutoCommit(false);
+        conn.setAutoCommit(true);
         try (Statement st = conn.createStatement()) {
             st.execute("PRAGMA foreign_keys = ON");
             st.execute("PRAGMA journal_mode = WAL");
             st.execute("PRAGMA busy_timeout = 5000");
-        }
-
-        try (Statement st = conn.createStatement()) {
+            conn.setAutoCommit(false);
             st.execute("""
                         CREATE TABLE IF NOT EXISTS students(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
-                            name TEXT NOT NULL,
+                            name TEXT NOT NULL UNIQUE COLLATE NOCASE,
                             academic_status TEXT,
                             is_employed INTEGER DEFAULT 0 CHECK (is_employed IN (0,1)),
                             job_detail TEXT,
@@ -48,25 +44,39 @@ public class DataAccessor {
             st.execute("""
                         CREATE TABLE IF NOT EXISTS languages(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
-                            lang_name TEXT NOT NULL UNIQUE
+                            lang_name TEXT NOT NULL COLLATE NOCASE UNIQUE
                         )
                     """);
 
             st.execute("""
                         CREATE TABLE IF NOT EXISTS student_language_map(
-                            student_id INTEGER NOT NULL,
-                            lang_name TEXT
+                            student_id INTEGER NOT NULL REFERENCES students(id) ON DELETE CASCADE,
+                            lang_id INTEGER NOT NULL REFERENCES languages(id),
+                            PRIMARY KEY(student_id, lang_id)
                         )
                     """);
 
             st.execute("""
                         CREATE TABLE IF NOT EXISTS comments(
-                            student_id INTEGER NOT NULL,
+                            student_id INTEGER NOT NULL REFERENCES students(id) ON DELETE CASCADE,
                             comment TEXT
                         )
                     """);
         }
+
         conn.commit();
+        conn.setAutoCommit(true);
+    }
+
+    public void ensureDefaultLanguage() throws SQLException {
+        List<String> defaultLanguages = new ArrayList<>(Arrays.asList("Java", "C++", "Python"));
+        for (String str : defaultLanguages) {
+            if (languagesSize() >= 3) return;
+            try {
+                addLanguage(str);
+            } catch (Exception ignored) {
+            }
+        }
     }
 
     public List<String> getLanguageList() throws SQLException {
@@ -75,15 +85,57 @@ public class DataAccessor {
                 """;
 
         List<String> res = new ArrayList<>();
-        try (PreparedStatement ps = conn.prepareStatement(sqlComment);) {
+
+        try (PreparedStatement ps = conn.prepareStatement(sqlComment)) {
             try (ResultSet set = ps.executeQuery()) {
                 while (set.next()) {
-                    res.add(set.getString("lang_name"));
+                    res.add(set.getString(1));
                 }
             }
         }
         return res;
     }
+
+    public Long languagesSize() throws SQLException {
+        String sql = """
+                SELECT COUNT(*) FROM languages
+                """;
+        long size;
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ResultSet report = ps.executeQuery();
+            size = report.next() ? report.getLong(1) : 0L;
+        }
+        return size;
+    }
+
+    public boolean addLanguage(String langName) throws SQLException {
+        String sql = """
+                INSERT INTO languages(lang_name)
+                VALUES (?)
+                """;
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, langName.trim());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean deleteLanguage(String langName) throws SQLException {
+        if (langName == null) return false;
+        String sql = """
+                DELETE FROM languages WHERE lang_name = ? COLLATE NOCASE
+                """;
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, langName.trim());
+            int deleteReport = ps.executeUpdate();
+            if (deleteReport <= 0) return false;
+            System.out.println("LanguageId=" + deleteReport + " is deleted");
+        }
+        return true;
+    }
+
 
     public Long findStudentId(String studentName) throws SQLException {
         String sql = """
@@ -91,7 +143,7 @@ public class DataAccessor {
                 WHERE name = ? COLLATE NOCASE
                 LIMIT 1
                 """;
-        long res = -1;
+        Long res = null;
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, studentName);
             try (ResultSet set = ps.executeQuery()) {
@@ -104,16 +156,18 @@ public class DataAccessor {
     }
 
     public Student getStudent(String stdName) throws SQLException {
-        Long id = findStudentId(stdName);
+        if (stdName == null) return null;
         Student res = new Student();
+        res.setName("data accessor issue");
         String sqlComment = """
-                SELECT id, name, academic_status, is_Employed, job_detail, prefer_role
+                SELECT id, name, academic_status, is_employed, job_detail, prefer_role, db_list
                 FROM students
-                WHERE id = ?
+                WHERE name = ?
                 LIMIT 1
                 """;
+        long id;
         try (PreparedStatement ps = conn.prepareStatement(sqlComment)) {
-            ps.setLong(1, id);
+            ps.setString(1, stdName);
             try (ResultSet set = ps.executeQuery()) {
                 if (!set.next()) {
                     return null;
@@ -123,7 +177,8 @@ public class DataAccessor {
                 res.setEmployed(set.getInt("is_employed") != 0);
                 res.setJobDetails(set.getString("job_detail"));
                 res.setPreferredRole(set.getString("prefer_role"));
-                res.setDatabasesString(set.getString("db_list"));
+                res.setDatabases(set.getString("db_list"));
+                id = set.getInt("id");
             }
         }
 
@@ -136,13 +191,49 @@ public class DataAccessor {
         return res;
     }
 
-    public List<String> getLanguageListByStudent(Long studentId) throws SQLException {
+    public List<String> getStudentNameList() throws SQLException {
+        List<String> stdNameList = new ArrayList<>();
+        String sql = """
+                SELECT name FROM students ORDER BY name
+                """;
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ResultSet allNameSet = ps.executeQuery();
+            while (allNameSet.next()) {
+                stdNameList.add(allNameSet.getString("name"));
+            }
+        }
+        return stdNameList;
+    }
+
+    public boolean deleteStudent(String stdName) throws SQLException {
+        String sql = """
+                DELETE FROM students WHERE name = ? COLLATE NOCASE
+                """;
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, stdName);
+            int deleteLine = ps.executeUpdate();
+            if (deleteLine <= 0) return false;
+            System.out.println("Student " + stdName + " is deleted successful");
+        }
+
+        String deleteLang = """
+                DELETE FROM student_language_map WHERE name = ? COLLATE NOCASE
+                """;
+        try (PreparedStatement ps = conn.prepareStatement(deleteLang)) {
+            ps.setString(1, stdName);
+            ps.executeUpdate();
+        }
+
+        return true;
+    }
+
+    public List<String> getLanguageListByStudent(long id) throws SQLException {
         final String sql = """
-                SELECT lang_name FROM student_language_map WHERE id = ?
+                SELECT lang_name FROM student_language_map WHERE student_id = ? COLLATE NOCASE
                 """;
         List<String> res = new ArrayList<>();
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setLong(1, studentId);
+            ps.setLong(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) res.add(rs.getString("lang_name"));
             }
@@ -150,13 +241,13 @@ public class DataAccessor {
         return res;
     }
 
-    public List<String> getCommentList(Long studentId) throws SQLException {
+    public List<String> getCommentList(long id) throws SQLException {
         List<String> res = new ArrayList<>();
         String sql = """
                 SELECT comment FROM comments WHERE student_id = ?
                 """;
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setLong(1, studentId);
+            ps.setLong(1, id);
             try (ResultSet set = ps.executeQuery()) {
                 while (set.next()) {
                     res.add(set.getString("comment"));
@@ -166,12 +257,23 @@ public class DataAccessor {
         return res;
     }
 
-    public void insertStudent(Student std) throws SQLException {
+    public boolean isPresent(String name) throws SQLException {
+        String sql = """
+                SELECT name FROM students WHERE name = ? COLLATE NOCASE
+                """;
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, name.trim());
+            ResultSet set = ps.executeQuery();
+            return set.next();
+        }
+    }
+
+    public void addStudent(Student std) throws SQLException {
         if (std.getName().isBlank()) return;
 
         long newId = -1;
         String sql = """
-                INSERT INTO students(name, academic_status, isEmployed, job_detail, prefer_role, db_list)
+                INSERT INTO students(name, academic_status, is_employed, job_detail, prefer_role, db_list)
                 VALUES (?, ?, ?, ?, ?, ?)
                 RETURNING id
                 """;
@@ -182,7 +284,7 @@ public class DataAccessor {
             ps.setInt(3, (std.isEmployed() ? 1 : 0));
             ps.setString(4, std.getJobDetails());
             ps.setString(5, std.getPreferredRole());
-            ps.setString(6, std.getDatabasesString());
+            ps.setString(6, std.getDatabases());
             try (ResultSet set = ps.executeQuery()) {
                 if (set.next()) newId = set.getLong("id");
             }
@@ -190,11 +292,9 @@ public class DataAccessor {
         if (newId != -1 && !std.getProgrammingLanguages().isEmpty()) {
             insertStudentLangMap(newId, std.getProgrammingLanguages());
         }
-        if (newId != -1 && !std.getComments().isEmpty()) {
+        if (newId != -1  && !std.getComments().isEmpty()) {
             insertComments(newId, std.getComments());
         }
-
-        conn.commit();
     }
 
     private void insertStudentLangMap(Long id, List<String> langList) throws SQLException {
@@ -203,14 +303,7 @@ public class DataAccessor {
                 VALUES (?, ?)
                 """;
 
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            for (String str : langList) {
-                ps.setLong(1, id);
-                ps.setString(2, str);
-                ps.addBatch();
-            }
-            ps.executeBatch();
-        }
+        insertList(id, langList, sql);
     }
 
     private void insertComments(Long id, List<String> comment) throws SQLException {
@@ -218,9 +311,12 @@ public class DataAccessor {
                 INSERT INTO comments(student_id, comment)
                 VALUES (?, ?)
                 """;
+        insertList(id, comment, sql);
+    }
 
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            for (String c : comment) {
+    private void insertList(Long id, List<String> list, String sqlCommand) throws SQLException {
+        try (PreparedStatement ps = conn.prepareStatement(sqlCommand)) {
+            for (String c : list) {
                 ps.setLong(1, id);
                 ps.setString(2, c);
                 ps.addBatch();
@@ -236,7 +332,8 @@ public class DataAccessor {
         insertComments(id, input);
     }
 
-
-
-
+    @Override
+    public void close() throws Exception {
+        conn.close();
+    }
 }

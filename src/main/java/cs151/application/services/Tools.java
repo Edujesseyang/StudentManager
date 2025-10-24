@@ -2,24 +2,12 @@ package cs151.application.services;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-
-import java.io.IOException;
-import java.io.UncheckedIOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Objects;
 
 public class Tools {
-    private final Path languageListFilePath = Paths.get("localData", "languages.txt");
-
     public Tools() {
-
     }
 
     public Alert popAlert(Alert.AlertType type, String message) {
@@ -28,35 +16,6 @@ public class Tools {
         alert.setHeaderText(type.name());
         alert.setTitle("Attention");
         return alert;
-    }
-
-    public List<String> loadLanguageList() {
-        List<String> res;
-        try {
-            ensureFileExists(languageListFilePath);
-            res = Files.readAllLines(languageListFilePath, StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            throw new UncheckedIOException("Failed to load file: " + languageListFilePath, e);
-        }
-        return res;
-    }
-
-    public void writeLanguageList(List<String> list) {
-        try {
-            Files.write(languageListFilePath, list,
-                    StandardCharsets.UTF_8,
-                    StandardOpenOption.CREATE,
-                    StandardOpenOption.TRUNCATE_EXISTING,
-                    StandardOpenOption.WRITE);
-        } catch (IOException e) {
-            throw new UncheckedIOException("Failed to write file: " + languageListFilePath, e);
-        }
-    }
-
-    private void ensureFileExists(Path path) throws IOException {
-        if (Files.notExists(path)) {
-            Files.createFile(path);
-        }
     }
 
     public void setPageStyle(Scene scene) {
@@ -68,7 +27,4 @@ public class Tools {
         ZonedDateTime now = ZonedDateTime.now();
         return now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z"));
     }
-
-
-
 }

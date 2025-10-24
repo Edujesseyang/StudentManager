@@ -1,4 +1,4 @@
-package cs151.application.stage;
+package cs151.application.view;
 
 import cs151.application.services.Tools;
 import javafx.scene.Scene;

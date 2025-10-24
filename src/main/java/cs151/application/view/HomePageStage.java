@@ -1,5 +1,6 @@
-package cs151.application.stage;
+package cs151.application.view;
 
+import cs151.application.controller.HomePageController;
 import cs151.application.services.Tools;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,30 +10,27 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class HomePageStage extends Stage {
     Button definePageBtn;
     Button displayBtn;
     Button defineStudentBtn;
     Label welcomeText;
+    HomePageController control = new HomePageController();
     Tools tool = new Tools();
 
-    public HomePageStage() {
-        ensureDefaultLang(); // preload default languages
 
+    public HomePageStage() {
         // create button and button action
         definePageBtn = new Button("Define programming languages");
-        definePageBtn.setOnAction(e -> defineBtnAct());
+        definePageBtn.setOnAction(e -> control.defineBtnAct());
 
         defineStudentBtn = new Button("Define student");
-        defineStudentBtn.setOnAction(e -> defineStudentAct());
+        defineStudentBtn.setOnAction(e -> control.defineStudentAct());
 
         // create button for display students
         displayBtn = new Button("Show all students");
-        displayBtn.setOnAction(e -> displayBtnAct());
+        displayBtn.setOnAction(e -> control.displayBtnAct());
 
         // create welcome label
         welcomeText = new Label(" Welcome Back ");
@@ -55,36 +53,4 @@ public class HomePageStage extends Stage {
         this.setScene(pageScene);
     }
 
-    /**
-     * Create a define page stage and show it
-     */
-    private void defineBtnAct() {
-        DefineLanguagePage definePage = new DefineLanguagePage();
-        definePage.show();
-    }
-
-    /**
-     * create students list show stage and show it
-     */
-    private void displayBtnAct() {
-        StudentsListPage showPage = new StudentsListPage();
-        showPage.show();
-    }
-
-    private void defineStudentAct() {
-        DefineStudentPage showPage = new DefineStudentPage();
-        showPage.show();
-    }
-
-    private void ensureDefaultLang() {
-        List<String> lang = tool.loadLanguageList();
-        List<String> defaultLang = new ArrayList<>(Arrays.asList("Java", "C++", "Python", "Javascript", "Rust"));
-        for (String s : defaultLang) {
-            if (lang.size() >= 3) {
-                break;
-            }
-            lang.add(s);
-        }
-        tool.writeLanguageList(lang); // ensure there are 3 languages
-    }
 }

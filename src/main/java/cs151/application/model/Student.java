@@ -12,14 +12,13 @@ public class Student {
     private String preferredRole;  // front end/ back end etc.
 
     private List<String> programmingLanguages; // coding language
-    private List<String> databases;             // database skill
+    private String databases;             // database skill
     private List<String> comments;              // prof's comments
     private boolean whitelist = true;
     private boolean blacklist = false;
 
     public Student() {
         this.programmingLanguages = new ArrayList<>();
-        this.databases = new ArrayList<>();
         this.comments = new ArrayList<>();
     }
 
@@ -63,11 +62,11 @@ public class Student {
         this.programmingLanguages = programmingLanguages;
     }
 
-    public List<String> getDatabases() {
+    public String getDatabases() {
         return databases;
     }
 
-    public void setDatabases(List<String> databases) {
+    public void setDatabases(String databases) {
         this.databases = databases;
     }
 
@@ -103,10 +102,6 @@ public class Student {
         programmingLanguages.addAll(lang);
     }
 
-    public void addDbs(List<String> db) {
-        databases.addAll(db);
-    }
-
     public void addComments(List<String> c) {
         comments.addAll(c);
     }
@@ -130,35 +125,11 @@ public class Student {
     /**
      * make a string for all list that student skilled
      */
-    public String getLanguageList_String() {
-        programmingLanguages.sort(Comparator.naturalOrder()); // sort first
-        StringBuilder sb = new StringBuilder();   // build a string
-        for (String lang : programmingLanguages) sb.append(lang).append(", ");
-        if (sb.length() > 0) sb.deleteCharAt(sb.length() - 2);
-        return sb.toString();
-    }
 
     public void addComment(String comment) {
         this.comments.add(comment);
     }
 
-    public void setDatabasesString(String str) {
-        char[] chars = str.toCharArray();
-        for (Character c : chars) {
-            StringBuilder sb = new StringBuilder();
-            if (c.equals('|')) {
-                databases.add(sb.toString());
-            }
-            sb.append(c);
-        }
-    }
 
-    public String getDatabasesString() {
-        StringBuilder sb = new StringBuilder();
-        for (String s : databases) {
-            sb.append(s).append("|");
-        }
-        return sb.toString();
-    }
 
 }

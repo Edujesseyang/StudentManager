@@ -1,7 +1,7 @@
-package cs151.application.stage;
+package cs151.application.view;
 
+import cs151.application.controller.StudentInfoPageController;
 import cs151.application.model.Student;
-import cs151.application.model.StudentList;
 import cs151.application.services.Tools;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -15,16 +15,24 @@ import java.util.Objects;
 
 
 public class StudentInfoPage extends Stage {
-    private static final StudentList studentDB = StudentList.getInstance();  // singleton db
 
-    private final Student displayingStudent;
-    Tools tool = new Tools();
+    private final StudentInfoPageController controller;
 
     public StudentInfoPage(Student displaying) {
-        this.displayingStudent = displaying;
+        controller = new StudentInfoPageController(this, displaying);
         // title
         Label title = new Label("Information of Student");
+        HBox btnLayout = buildButtons();
+        VBox section = buildSection(displaying);
+        VBox pageLayout = new VBox(title, section, btnLayout);
+        Scene pageScene = new Scene(pageLayout, 800, 900);
+        Tools tool = new Tools();
+        tool.setPageStyle(pageScene);
+        this.setTitle("Student Information");
+        this.setScene(pageScene);
+    }
 
+    private VBox buildSection(Student displaying){
         // basic info area
         HBox name = makeLine("Full name: ", displaying.getName());
         HBox edu = makeLine("Academic Status: ", displaying.getAcademicStatus());
@@ -33,17 +41,36 @@ public class StudentInfoPage extends Stage {
         HBox preferRole = makeLine("Preferred Professional Role: ", Objects.equals(displaying.getPreferredRole(), "") ? "N/A" : displaying.getPreferredRole());
 
         // language area
+        HBox langLayout = buildLanguageArea();
+
+        // comment area
+        VBox commentBox = buildCommentArea(displaying);
+        VBox section = new VBox(name, edu, employment, job, preferRole, langLayout, commentBox);
+        section.getStyleClass().add("sectionLayout");
+        section.setSpacing(20);
+        return section;
+    }
+
+    private HBox makeLine(String text, String data) {
+        Label name = new Label(text);
+        Text nameInfo = new Text(data);
+        return new HBox(name, nameInfo);
+    }
+    private HBox buildLanguageArea(){
         Label lang = new Label("Student skilled in: ");
         Button langBtn = new Button("Programming language list");
-        langBtn.setOnAction(e -> langBtnAct());
+        langBtn.setOnAction(e -> controller.langBtnAct());
         Button dbBtn = new Button("Database skill list");
-        dbBtn.setOnAction(e -> dbBtnAct());
+        dbBtn.setOnAction(e -> controller.dbBtnAct());
         HBox langLayout = new HBox(lang, langBtn, dbBtn);
         langLayout.setSpacing(15);
+        return langLayout;
+    }
+
+    private VBox buildCommentArea(Student displaying) {
         VBox commentAreaBox = new VBox();
         commentAreaBox.setSpacing(5);
         commentAreaBox.setAlignment(Pos.CENTER);
-        // comment area
         Label commentTitle = new Label("Comments: ");
         int counter = 1;
         for (String comment : displaying.getComments()) {
@@ -63,54 +90,19 @@ public class StudentInfoPage extends Stage {
         commentArea.setMinWidth(500);
         commentArea.setMaxHeight(400);
         commentArea.setMinHeight(400);
+        return commentBox;
+    }
 
-
-        // btn area
+    private HBox buildButtons() {
         Button closeBtn = new Button("Close");
-        closeBtn.setOnAction(e -> closeBtnAct());
-
+        closeBtn.setOnAction(e -> controller.closeBtnAct());
         Button addCommentBtn = new Button("Add New Comment");
-        addCommentBtn.setOnAction(e -> addCommentAct());
+        addCommentBtn.setOnAction(e -> controller.addCommentAct());
         HBox btnLayout = new HBox(addCommentBtn, closeBtn);
         btnLayout.setAlignment(Pos.CENTER);
         btnLayout.getStyleClass().add("buttonLayout");
-
-        VBox section = new VBox(name, edu, employment, job, preferRole, langLayout, commentBox);
-        section.getStyleClass().add("sectionLayout");
-        section.setSpacing(20);
-
-        VBox pageLayout = new VBox(title, section, btnLayout);
-        Scene pageScene = new Scene(pageLayout, 800, 900);
-        tool.setPageStyle(pageScene);
-        this.setTitle("Student Information");
-        this.setScene(pageScene);
+        return btnLayout;
     }
 
-    private HBox makeLine(String text, String data) {
-        Label name = new Label(text);
-        Text nameInfo = new Text(data);
-        return new HBox(name, nameInfo);
-    }
 
-    private void langBtnAct() {
-        Stage showPage = new ListDisplay(displayingStudent.getProgrammingLanguages(), "    Student's Programming Languages:");
-        showPage.show();
-    }
-
-    private void dbBtnAct() {
-        Stage showPage = new ListDisplay(displayingStudent.getDatabases(), "    Student's database skills: ");
-        showPage.show();
-    }
-
-    private void addCommentAct() {
-        AddCommentPage addNewCommentPage = new AddCommentPage(displayingStudent);
-        addNewCommentPage.show();
-        studentDB.save();
-        this.close();
-    }
-
-    private void closeBtnAct() {
-        studentDB.save();
-        this.close();
-    }
 }

@@ -1,17 +1,24 @@
 package cs151.application;
 
-import cs151.application.model.StudentList;
-import cs151.application.stage.HomePageStage;
+import cs151.application.services.DataAccessor;
+import cs151.application.view.HomePageStage;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+
 public class Main extends Application {
-    private static final StudentList studentDB = StudentList.getInstance();  // singleton db
 
     @Override
     public void init() {
-        studentDB.load();
-    } // init the program, load json file to singleton
+
+        try (DataAccessor da = new DataAccessor()) {
+            if(da.languagesSize() <3 ){
+                da.ensureDefaultLanguage();
+            }
+        } catch (Exception e) {
+            System.out.println("Database initialization fails: " + e.getMessage());
+        }
+    } // init the program, load database
 
     @Override
     public void start(Stage primaryStage) {
@@ -19,8 +26,4 @@ public class Main extends Application {
         homePage.show();
     }
 
-    @Override
-    public void stop() {
-        studentDB.save();
-    } // when program close, save data to json
 }
