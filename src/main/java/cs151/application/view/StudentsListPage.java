@@ -1,7 +1,7 @@
 package cs151.application.view;
 
 import cs151.application.controller.StudentsListPageController;
-import cs151.application.services.Tools;
+import cs151.application.services.ViewUtility;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,13 +10,12 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import java.util.List;
 
 public class StudentsListPage extends Stage {
-    Tools tool = new Tools();
+    private final ViewUtility tool = new ViewUtility();
     private final StudentsListPageController controller;
-    private List<String> stdNames;
+    private final List<String> stdNames;
 
     public StudentsListPage(List<String> stdNames) {
         // set scene
@@ -73,7 +72,7 @@ public class StudentsListPage extends Stage {
                 setGraphic(null);
             }
         });
-        idxCol.setMinWidth(90);
+        idxCol.setMinWidth(80);
 
         // 2) stdName
         TableColumn<String, String> nameCol = new TableColumn<>("Student Name");
@@ -81,7 +80,7 @@ public class StudentsListPage extends Stage {
         nameCol.setMinWidth(220);
 
         // 3) viewBtn
-        TableColumn<String, Void> viewCol = new TableColumn<>("Click To View Details");
+        TableColumn<String, Void> viewCol = new TableColumn<>("Click to view");
         viewCol.setCellFactory(col -> new TableCell<>() {
             private final Button btn = new Button("View");
 
@@ -106,7 +105,7 @@ public class StudentsListPage extends Stage {
         viewCol.setMinWidth(90);
 
         // 4) removeBtn
-        TableColumn<String, Void> removeCol = new TableColumn<>("Click To Remove");
+        TableColumn<String, Void> removeCol = new TableColumn<>("Click to remove");
         removeCol.setCellFactory(col -> new TableCell<>() {
             private final Button btn = new Button("Remove");
 

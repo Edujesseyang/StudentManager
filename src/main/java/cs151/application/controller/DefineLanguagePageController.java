@@ -1,7 +1,7 @@
 package cs151.application.controller;
 
+import cs151.application.services.ControllerUtility;
 import cs151.application.services.DataAccessor;
-import cs151.application.services.Tools;
 import cs151.application.view.DefineLanguagePage;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DefineLanguagePageController {
-    Tools tool = new Tools();
-    DefineLanguagePage page;
+    private final ControllerUtility tool = new ControllerUtility();
+    private final DefineLanguagePage page;
 
     public DefineLanguagePageController(DefineLanguagePage page) {
         this.page = page;
@@ -50,10 +50,7 @@ public class DefineLanguagePageController {
     public void deleteAction(TextField programLanguageName) {
         try (DataAccessor da = new DataAccessor()) {
             if (da.deleteLanguage(programLanguageName.getText())) {
-                Alert confirm = tool.popAlert(Alert.AlertType.CONFIRMATION, "Found the language! Are you sure you want to delete it?");
-                confirm.showAndWait().ifPresent(response -> {
-                    tool.popAlert(Alert.AlertType.INFORMATION, "Delete successful").showAndWait();
-                });
+                tool.popAlert(Alert.AlertType.INFORMATION, "Delete successful").showAndWait();
             } else {
                 tool.popAlert(Alert.AlertType.ERROR, "Can not find the language").showAndWait();
                 return;
@@ -72,7 +69,7 @@ public class DefineLanguagePageController {
         try (DataAccessor da = new DataAccessor()) {
             res = da.getLanguageList();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         return res;
     }

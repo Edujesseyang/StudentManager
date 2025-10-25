@@ -10,26 +10,24 @@ import java.util.*;
 
 
 public class DataAccessor implements AutoCloseable {
-    Path path = Paths.get("localData", "database.db");
-    String url = "jdbc:sqlite:" + path;
-    Connection conn;
-    private final List<String> dataList = new ArrayList<>(Arrays.asList("SQLite", "MySQL", "PostgresSQL", "MongoDB", "AWS", "Joins", "Indexing", "Transactions", "ACID", "Normalization", "Schema Design", "Primary Keys", "Foreign Keys", "Views", "Stored Procedures", "Query Optimization", "Execution Plans", "Replication", "Backup Strategies"));
+    private final Path path = Paths.get("localData", "database.db");
+    private final String url = "jdbc:sqlite:" + path;
+    private final Connection conn;
 
-
-    public DataAccessor() throws Exception {
-        Files.createDirectories(path.getParent());
-        try {
-            conn = DriverManager.getConnection(url);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage() + " 1 ");
-        }
-
-        conn.setAutoCommit(true);
+    public DataAccessor() throws SQLException {
+        this.conn = DriverManager.getConnection(url);
         try (Statement st = conn.createStatement()) {
             st.execute("PRAGMA foreign_keys = ON");
             st.execute("PRAGMA journal_mode = WAL");
             st.execute("PRAGMA busy_timeout = 5000");
-            conn.setAutoCommit(false);
+        }
+    }
+
+    public void initDatabase() throws Exception {
+        Files.createDirectories(path.getParent());
+        conn.setAutoCommit(false);
+        try (Statement st = conn.createStatement()) {
+
             st.execute("""
                         CREATE TABLE IF NOT EXISTS students(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -82,28 +80,15 @@ public class DataAccessor implements AutoCloseable {
         conn.setAutoCommit(true);
     }
 
-    public void ensureDefaultLanguage() throws SQLException {
-        List<String> defaultLanguages = new ArrayList<>(Arrays.asList("Java", "C++", "Python"));
-        for (String str : defaultLanguages) {
-            if (languagesSize() >= 3) return;
-            try {
-                addLanguage(str);
-            } catch (Exception ignored) {
-            }
-        }
-    }
-
-    public void ensureDefaultDatabases() throws SQLException {
-        for (String dbName : dataList) {
-            String sql = """
-                    INSERT INTO databases(database_name)
-                    VALUES (?)
-                    ON CONFLICT(database_name) DO NOTHING
-                    """;
-            try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setString(1, dbName.trim());
-                ps.executeUpdate();
-            }
+    public void addDatabaseSkill(String name) throws SQLException {
+        String sql = """
+                INSERT INTO databases(database_name)
+                VALUES (?)
+                ON CONFLICT(database_name) DO NOTHING
+                """;
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, name.trim());
+            ps.executeUpdate();
         }
     }
 
@@ -189,7 +174,6 @@ public class DataAccessor implements AutoCloseable {
         }
         return true;
     }
-
 
     public Long findStudentId(String studentName) throws SQLException {
         String sql = """
@@ -368,8 +352,9 @@ public class DataAccessor implements AutoCloseable {
             ps.setInt(3, (std.isEmployed() ? 1 : 0));
             ps.setString(4, std.getJobDetails());
             ps.setString(5, std.getPreferredRole());
-            try (ResultSet set = ps.executeQuery()) {
-                if (set.next()) newId = set.getLong(1);
+            ps.executeUpdate();
+            try (ResultSet gk = ps.getGeneratedKeys()) {
+                if (gk.next()) newId = gk.getLong(1);
             }
         }
         if (newId != -1 && !std.getProgrammingLanguages().isEmpty()) {
@@ -527,7 +512,6 @@ public class DataAccessor implements AutoCloseable {
 
     private void addStdIdToSetFromDbId(Set<Long> set, Long dbId) throws SQLException {
         if (dbId == null) return;
-        System.out.println("I made here...");
         String sql = """
                 SELECT student_id FROM student_database_map
                 WHERE database_id = ?

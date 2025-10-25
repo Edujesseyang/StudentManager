@@ -2,7 +2,7 @@ package cs151.application.view;
 
 import cs151.application.controller.DefineStudentPageController;
 import cs151.application.services.DataAccessor;
-import cs151.application.services.Tools;
+import cs151.application.services.ViewUtility;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -10,14 +10,13 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class DefineStudentPage extends Stage {
     private final DefineStudentPageController controller = new DefineStudentPageController(this);
-    private final Tools tool = new Tools();
+    private final ViewUtility tool = new ViewUtility();
 
     // for language check box
     private List<String> languageList;
@@ -25,6 +24,9 @@ public class DefineStudentPage extends Stage {
 
     // for database check box
     private final List<CheckBox> dataCheckBoxes = new ArrayList<>();
+
+    // role drop down
+    private final List<String> roleList = new ArrayList<>(Arrays.asList("Backend", "Frontend", "QA", "Security", "Database", "UI/UX", "DevOps", "Network", "IT support", "Other"));
 
     public DefineStudentPage() {
         try (DataAccessor da = new DataAccessor()) {
@@ -75,7 +77,7 @@ public class DefineStudentPage extends Stage {
         // role line
         Label role = new Label("Preferred Role: ");
         ComboBox<String> roleInput = new ComboBox<>();
-        roleInput.getItems().addAll("Backend", "Frontend", "QA", "Security", "Database", "UI/UX", "DevOps", "Network", "IT support", "Other");
+        roleInput.getItems().addAll(roleList);
         roleInput.setPromptText("Enter the role the student preferred");
         HBox roleLine = new HBox(role, roleInput);   // line 5
 

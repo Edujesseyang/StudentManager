@@ -1,6 +1,6 @@
 package cs151.application.view;
 
-import cs151.application.services.Tools;
+import cs151.application.services.ViewUtility;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
@@ -13,11 +13,10 @@ import javafx.stage.Stage;
 import java.util.List;
 
 public class ListDisplay extends Stage {
-    Tools tool = new Tools();
+    ViewUtility tool = new ViewUtility();
 
     public ListDisplay(List<String> displayStrings, String title) {
         Label titleLabel = new Label(title);
-
 
         TextFlow tx = new TextFlow();
         for (String displayString : displayStrings) {

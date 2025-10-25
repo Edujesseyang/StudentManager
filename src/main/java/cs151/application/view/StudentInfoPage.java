@@ -2,7 +2,7 @@ package cs151.application.view;
 
 import cs151.application.controller.StudentInfoPageController;
 import cs151.application.model.Student;
-import cs151.application.services.Tools;
+import cs151.application.services.ViewUtility;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -26,7 +26,7 @@ public class StudentInfoPage extends Stage {
         VBox section = buildSection(displaying);
         VBox pageLayout = new VBox(title, section, btnLayout);
         Scene pageScene = new Scene(pageLayout, 800, 900);
-        Tools tool = new Tools();
+        ViewUtility tool = new ViewUtility();
         tool.setPageStyle(pageScene);
         this.setTitle("Student Information");
         this.setScene(pageScene);

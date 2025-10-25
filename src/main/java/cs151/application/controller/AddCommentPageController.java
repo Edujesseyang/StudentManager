@@ -1,8 +1,8 @@
 package cs151.application.controller;
 
 import cs151.application.model.Student;
+import cs151.application.services.ControllerUtility;
 import cs151.application.services.DataAccessor;
-import cs151.application.services.Tools;
 import cs151.application.view.AddCommentPage;
 import cs151.application.view.StudentInfoPage;
 import javafx.scene.control.Alert;
@@ -18,7 +18,7 @@ public class AddCommentPageController {
     }
 
     public void addAct(TextArea commentText) {
-        Tools tool = new Tools();
+        ControllerUtility tool = new ControllerUtility();
         String comText = commentText.getText();
         if (comText.isBlank()) {
             tool.popAlert(Alert.AlertType.ERROR, "Comment can not be blank").showAndWait();
@@ -28,7 +28,7 @@ public class AddCommentPageController {
             da.addComment(targetStudent.getName(), comText);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            tool.popAlert(Alert.AlertType.ERROR, "Adding fail! \nReason: "+e.getMessage());
+            tool.popAlert(Alert.AlertType.ERROR, "Adding fail! \nReason: "+e.getMessage()).showAndWait();
         }
 
         targetStudent.addComment(" <" + tool.getTimeString() + ">\n" + comText);

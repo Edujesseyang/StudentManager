@@ -1,13 +1,11 @@
 package cs151.application.services;
 
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 
-public class Tools {
-    public Tools() {
+public class ControllerUtility {
+    public ControllerUtility() {
     }
 
     public Alert popAlert(Alert.AlertType type, String message) {
@@ -16,11 +14,6 @@ public class Tools {
         alert.setHeaderText(type.name());
         alert.setTitle("Attention");
         return alert;
-    }
-
-    public void setPageStyle(Scene scene) {
-        String stylePath = "/style/homePage.css";
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(stylePath)).toExternalForm());
     }
 
     public String getTimeString() {

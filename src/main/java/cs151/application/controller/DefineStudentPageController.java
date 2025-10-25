@@ -1,8 +1,8 @@
 package cs151.application.controller;
 
 import cs151.application.model.Student;
+import cs151.application.services.ControllerUtility;
 import cs151.application.services.DataAccessor;
-import cs151.application.services.Tools;
 import cs151.application.view.DefineStudentPage;
 import javafx.scene.control.*;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class DefineStudentPageController {
     private final DefineStudentPage page;
-    private final Tools tool = new Tools();
+    private final ControllerUtility tool = new ControllerUtility();
 
     public DefineStudentPageController(DefineStudentPage page) {
         this.page = page;
@@ -50,10 +50,9 @@ public class DefineStudentPageController {
                     try (DataAccessor da = new DataAccessor()) {
                         da.addStudent(std);
                     } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                        tool.popAlert(Alert.AlertType.ERROR, "Student is already represent");
+                        e.printStackTrace();
                     }
-                    tool.popAlert(Alert.AlertType.INFORMATION, "Student Added");
+                    tool.popAlert(Alert.AlertType.INFORMATION, "Student Added").showAndWait();
                 }
             }
         });
@@ -84,7 +83,7 @@ public class DefineStudentPageController {
         try(DataAccessor da = new DataAccessor()){
             isDuplicate = da.isPresent(name);
         } catch (Exception ignore){}
-        if(isDuplicate) tool.popAlert(Alert.AlertType.ERROR, "Student already exists");
+        if(isDuplicate) tool.popAlert(Alert.AlertType.ERROR, "Student already exists").showAndWait();
         return isDuplicate;
     }
 }

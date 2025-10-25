@@ -1,7 +1,7 @@
 package cs151.application.view;
 
 import cs151.application.controller.SearchPageController;
-import cs151.application.services.Tools;
+import cs151.application.services.ViewUtility;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,7 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class SearchStudentPage extends Stage {
-    private SearchPageController controller;
+    private final SearchPageController controller;
 
     public SearchStudentPage() {
         this.controller = new SearchPageController(this);
@@ -37,7 +37,7 @@ public class SearchStudentPage extends Stage {
         pageLayout.getStyleClass().add("sectionLayout");
 
         Scene scene = new Scene(pageLayout, 400, 200);
-        Tools tool = new Tools();
+        ViewUtility tool = new ViewUtility();
         tool.setPageStyle(scene);
         return scene;
     }

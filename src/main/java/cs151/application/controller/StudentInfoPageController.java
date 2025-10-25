@@ -6,7 +6,6 @@ import cs151.application.view.ListDisplay;
 import cs151.application.view.StudentInfoPage;
 import javafx.stage.Stage;
 
-
 public class StudentInfoPageController {
     private final StudentInfoPage page;
     private final Student std;

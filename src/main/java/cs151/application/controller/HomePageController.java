@@ -5,26 +5,18 @@ import cs151.application.view.DefineLanguagePage;
 import cs151.application.view.DefineStudentPage;
 import cs151.application.view.SearchStudentPage;
 import cs151.application.view.StudentsListPage;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomePageController {
     public HomePageController() {
-
     }
 
-    /**
-     * Create a define page stage and show it
-     */
     public void defineBtnAct() {
         DefineLanguagePage definePage = new DefineLanguagePage();
         definePage.show();
     }
 
-    /**
-     * create students list show stage and show it
-     */
     public void displayBtnAct() {
         List<String> studentList = new ArrayList<>();
         try (DataAccessor da = new DataAccessor()) {
@@ -43,7 +35,5 @@ public class HomePageController {
     public void searchBtnAct() {
         SearchStudentPage newPage = new SearchStudentPage();
         newPage.show();
-
     }
-
 }

@@ -1,20 +1,16 @@
 package cs151.application.controller;
 
 import cs151.application.model.Student;
+import cs151.application.services.ControllerUtility;
 import cs151.application.services.DataAccessor;
-import cs151.application.services.Tools;
 import cs151.application.view.StudentInfoPage;
 import cs151.application.view.StudentsListPage;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class StudentsListPageController {
     private final StudentsListPage page;
-    Tools tool = new Tools();
-
+    private final ControllerUtility tool = new ControllerUtility();
 
     public StudentsListPageController(StudentsListPage page) {
         this.page = page;
@@ -43,19 +39,11 @@ public class StudentsListPageController {
         } catch (Exception ignore) {
         }
         if (report) {
-            tool.popAlert(Alert.AlertType.INFORMATION, stdName + " is deleted successfully");
+            tool.popAlert(Alert.AlertType.INFORMATION, stdName + " is deleted").showAndWait();
         }
         Scene reloadPage = page.buildScene();
         page.setScene(reloadPage);
         page.show();
     }
 
-    public List<String> getStudentNameList() {
-        List<String> list = new ArrayList<>();
-        try (DataAccessor da = new DataAccessor()) {
-            list = da.getStudentNameList();
-        } catch (Exception ignore) {
-        }
-        return list;
-    }
 }

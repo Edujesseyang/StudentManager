@@ -1,7 +1,7 @@
 package cs151.application.view;
 
 import cs151.application.controller.HomePageController;
-import cs151.application.services.Tools;
+import cs151.application.services.ViewUtility;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,16 +11,17 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
-public class HomePageStage extends Stage {
+public class HomePage extends Stage {
     HomePageController control = new HomePageController();
-    Tools tool = new Tools();
+    ViewUtility tool = new ViewUtility();
 
 
-    public HomePageStage() {
+    public HomePage() {
         // create button and button action
         Button definePageBtn = new Button("Define programming languages");
         definePageBtn.setOnAction(e -> control.defineBtnAct());
 
+        // button for define a student
         Button defineStudentBtn = new Button("Define student");
         defineStudentBtn.setOnAction(e -> control.defineStudentAct());
 
@@ -35,7 +36,6 @@ public class HomePageStage extends Stage {
         // create welcome label
         Label welcomeText = new Label(" Welcome Back ");
         welcomeText.getStyleClass().add("title");
-
 
         // set page layout
         VBox btnLayout = new VBox(definePageBtn, defineStudentBtn, displayBtn, searchStudent);

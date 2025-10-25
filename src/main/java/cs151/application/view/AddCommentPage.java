@@ -2,7 +2,7 @@ package cs151.application.view;
 
 import cs151.application.controller.AddCommentPageController;
 import cs151.application.model.Student;
-import cs151.application.services.Tools;
+import cs151.application.services.ViewUtility;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -11,7 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class AddCommentPage extends Stage {
-    Tools tool = new Tools();
+    ViewUtility tool = new ViewUtility();
     Student targetStudent;
     TextArea commentText;
 

@@ -12,7 +12,7 @@ public class Student {
 
     private List<String> programmingLanguages; // coding language
     private List<String> databases;             // database skill
-    private List<String> comments;              // prof's comments
+    private final List<String> comments;              // prof's comments
     private boolean whitelist = true;
     private boolean blacklist = false;
 
@@ -102,8 +102,16 @@ public class Student {
         programmingLanguages.addAll(lang);
     }
 
+    public void addLanguage(String lang) {
+        programmingLanguages.add(lang);
+    }
+
     public void addDatabases(List<String> databasesList) {
         databases.addAll(databasesList);
+    }
+
+    public void addDatabase(String databaseName) {
+        databases.add(databaseName);
     }
 
     public void addComments(List<String> c) {
