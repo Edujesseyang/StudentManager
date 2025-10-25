@@ -6,8 +6,6 @@ import cs151.application.view.ListDisplay;
 import cs151.application.view.StudentInfoPage;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class StudentInfoPageController {
     private final StudentInfoPage page;
@@ -24,9 +22,7 @@ public class StudentInfoPageController {
     }
 
     public void dbBtnAct() {
-        List<String> dbList = new ArrayList<>();
-        dbList.add(std.getDatabases());
-        Stage showPage = new ListDisplay(dbList, "    Student's database skills: ");
+        Stage showPage = new ListDisplay(std.getDatabases(), "    Student's database skills: ");
         showPage.show();
     }
 

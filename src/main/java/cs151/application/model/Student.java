@@ -1,7 +1,6 @@
 package cs151.application.model;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class Student {
@@ -12,7 +11,7 @@ public class Student {
     private String preferredRole;  // front end/ back end etc.
 
     private List<String> programmingLanguages; // coding language
-    private String databases;             // database skill
+    private List<String> databases;             // database skill
     private List<String> comments;              // prof's comments
     private boolean whitelist = true;
     private boolean blacklist = false;
@@ -20,6 +19,7 @@ public class Student {
     public Student() {
         this.programmingLanguages = new ArrayList<>();
         this.comments = new ArrayList<>();
+        this.databases = new ArrayList<>();
     }
 
     public String getName() {
@@ -62,11 +62,11 @@ public class Student {
         this.programmingLanguages = programmingLanguages;
     }
 
-    public String getDatabases() {
+    public List<String> getDatabases() {
         return databases;
     }
 
-    public void setDatabases(String databases) {
+    public void setDatabases(List<String> databases) {
         this.databases = databases;
     }
 
@@ -102,13 +102,18 @@ public class Student {
         programmingLanguages.addAll(lang);
     }
 
+    public void addDatabases(List<String> databasesList) {
+        databases.addAll(databasesList);
+    }
+
     public void addComments(List<String> c) {
         comments.addAll(c);
     }
 
-    /**
-     * convert to string for test use
-     */
+    public void addComment(String comment) {
+        this.comments.add(comment);
+    }
+
     public String toString() {
         return "FullName : " + name +
                 "\nAcademicStatus : " + academicStatus +
@@ -121,15 +126,6 @@ public class Student {
                 "\nBlacklist : " + blacklist +
                 "\nComments : " + comments;
     }
-
-    /**
-     * make a string for all list that student skilled
-     */
-
-    public void addComment(String comment) {
-        this.comments.add(comment);
-    }
-
 
 
 }

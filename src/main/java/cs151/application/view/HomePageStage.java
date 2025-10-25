@@ -12,32 +12,33 @@ import javafx.stage.Stage;
 
 
 public class HomePageStage extends Stage {
-    Button definePageBtn;
-    Button displayBtn;
-    Button defineStudentBtn;
-    Label welcomeText;
     HomePageController control = new HomePageController();
     Tools tool = new Tools();
 
 
     public HomePageStage() {
         // create button and button action
-        definePageBtn = new Button("Define programming languages");
+        Button definePageBtn = new Button("Define programming languages");
         definePageBtn.setOnAction(e -> control.defineBtnAct());
 
-        defineStudentBtn = new Button("Define student");
+        Button defineStudentBtn = new Button("Define student");
         defineStudentBtn.setOnAction(e -> control.defineStudentAct());
 
         // create button for display students
-        displayBtn = new Button("Show all students");
+        Button displayBtn = new Button("Show all students");
         displayBtn.setOnAction(e -> control.displayBtnAct());
 
+        // Search Student
+        Button searchStudent = new Button("Search Student");
+        searchStudent.setOnAction(e ->control.searchBtnAct());
+
         // create welcome label
-        welcomeText = new Label(" Welcome Back ");
+        Label welcomeText = new Label(" Welcome Back ");
         welcomeText.getStyleClass().add("title");
 
+
         // set page layout
-        VBox btnLayout = new VBox(definePageBtn, defineStudentBtn, displayBtn);
+        VBox btnLayout = new VBox(definePageBtn, defineStudentBtn, displayBtn, searchStudent);
         btnLayout.getStyleClass().add("buttonLayout");
         btnLayout.setAlignment(Pos.CENTER);
 

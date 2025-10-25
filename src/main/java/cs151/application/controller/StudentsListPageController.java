@@ -25,19 +25,14 @@ public class StudentsListPageController {
     }
 
     public void selectAct(String stdName) {
-        Student target = getStudentByName(stdName);
-        StudentInfoPage infoPage = new StudentInfoPage(target);
-        infoPage.show();
-    }
-
-    public Student getStudentByName(String stdName) {
         Student std = new Student();
-        std.setName("controller issue");
         try (DataAccessor da = new DataAccessor()) {
             std = da.getStudent(stdName);
-        } catch (Exception ignore) {
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return std;
+        StudentInfoPage infoPage = new StudentInfoPage(std);
+        infoPage.show();
     }
 
     public void deleteAct(String stdName) {
@@ -50,7 +45,7 @@ public class StudentsListPageController {
         if (report) {
             tool.popAlert(Alert.AlertType.INFORMATION, stdName + " is deleted successfully");
         }
-        Scene reloadPage = page.buildScene(getStudentNameList());
+        Scene reloadPage = page.buildScene();
         page.setScene(reloadPage);
         page.show();
     }

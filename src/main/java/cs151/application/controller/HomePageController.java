@@ -1,8 +1,13 @@
 package cs151.application.controller;
 
+import cs151.application.services.DataAccessor;
 import cs151.application.view.DefineLanguagePage;
 import cs151.application.view.DefineStudentPage;
+import cs151.application.view.SearchStudentPage;
 import cs151.application.view.StudentsListPage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomePageController {
     public HomePageController() {
@@ -21,13 +26,24 @@ public class HomePageController {
      * create students list show stage and show it
      */
     public void displayBtnAct() {
-        StudentsListPage showPage = new StudentsListPage();
+        List<String> studentList = new ArrayList<>();
+        try (DataAccessor da = new DataAccessor()) {
+            studentList = da.getStudentNameList();
+        } catch (Exception ignore) {
+        }
+        StudentsListPage showPage = new StudentsListPage(studentList);
         showPage.show();
     }
 
     public void defineStudentAct() {
         DefineStudentPage showPage = new DefineStudentPage();
         showPage.show();
+    }
+
+    public void searchBtnAct() {
+        SearchStudentPage newPage = new SearchStudentPage();
+        newPage.show();
+
     }
 
 }

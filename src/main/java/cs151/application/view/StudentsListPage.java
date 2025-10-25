@@ -2,6 +2,9 @@ package cs151.application.view;
 
 import cs151.application.controller.StudentsListPageController;
 import cs151.application.services.Tools;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -11,37 +14,38 @@ import javafx.stage.Stage;
 import java.util.List;
 
 public class StudentsListPage extends Stage {
-
-    VBox studentListBox = new VBox();
     Tools tool = new Tools();
     private final StudentsListPageController controller;
+    private List<String> stdNames;
 
-    public StudentsListPage() {
+    public StudentsListPage(List<String> stdNames) {
         // set scene
         this.controller = new StudentsListPageController(this);
-
-        Scene pageScene = buildScene(controller.getStudentNameList());
+        this.stdNames = stdNames;
+        Scene pageScene = buildScene();
         this.setTitle("Student List");
         this.setScene(pageScene);
     }
 
-    public Scene buildScene(List<String> allStudent) {
+    public Scene buildScene() {
         // label
         Label labelText = new Label("   List Of Students   ");
         labelText.getStyleClass().add("subtitle");
 
-        // bloc
-        studentListBox = makeStdLine(allStudent);
-        studentListBox.getStyleClass().add("sectionLayout");
-
-        // student Pane
-        ScrollPane studentListPane = new ScrollPane(studentListBox);
-        studentListPane.setFitToWidth(true);
         // close button
         Button closeBtn = new Button("Close");
         closeBtn.setOnAction(e -> controller.closeBtnAction());
         HBox btnLayout = new HBox(closeBtn);
         btnLayout.getStyleClass().add("buttonLayout");
+
+        // make table view
+        TableView<String> studentTable = makeStdTable(stdNames);
+        VBox listBox = new VBox(studentTable);
+        listBox.getStyleClass().add("sectionLayout");
+
+        // student Pane
+        ScrollPane studentListPane = new ScrollPane(listBox);
+        studentListPane.setFitToWidth(true);
 
         VBox contentBox = new VBox(studentListPane);
         contentBox.getStyleClass().add("inputLayout");
@@ -53,25 +57,83 @@ public class StudentsListPage extends Stage {
         return result;
     }
 
-    private VBox makeStdLine(List<String> allStudent) {
-        int counter = 1;
-        VBox block = new VBox();
-        for (String std : allStudent) {
-            Label text = new Label(" Student " + (counter++) + ": ");
-            Label name = new Label("        " + std);
-            name.setPrefWidth(450);
+    private TableView<String> makeStdTable(List<String> stdNameList) {
+        TableView<String> table = new TableView<>();
+        ObservableList<String> data = FXCollections.observableArrayList(stdNameList);
+        table.setItems(data);
 
-            Button select = new Button("Detail");
-            select.setOnAction(event -> controller.selectAct(std));
+        // 1) student + counter
+        TableColumn<String, Void> idxCol = new TableColumn<>("student Count");
+        idxCol.setSortable(false);
+        idxCol.setCellFactory(col -> new TableCell<>() {
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty ? null : String.valueOf(getIndex() + 1));
+                setGraphic(null);
+            }
+        });
+        idxCol.setMinWidth(90);
 
-            Button delete = new Button("Remove");
-            delete.setOnAction(event -> controller.deleteAct(std));
+        // 2) stdName
+        TableColumn<String, String> nameCol = new TableColumn<>("Student Name");
+        nameCol.setCellValueFactory(cd -> new ReadOnlyStringWrapper(cd.getValue()));
+        nameCol.setMinWidth(220);
 
-            HBox nameLine = new HBox(name, select, delete);
-            VBox section = new VBox(text, nameLine, new Label(), new Separator());
-            block.getChildren().add(section);
-        }
-        return block;
+        // 3) viewBtn
+        TableColumn<String, Void> viewCol = new TableColumn<>("Click To View Details");
+        viewCol.setCellFactory(col -> new TableCell<>() {
+            private final Button btn = new Button("View");
+
+            {
+                btn.setOnAction(e -> {
+                    int row = getIndex();
+                    if (row >= 0 && row < table.getItems().size()) {
+                        String stdName = table.getItems().get(row);
+                        table.getSelectionModel().select(row);
+                        controller.selectAct(stdName);
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty ? null : btn);
+                setText(null);
+            }
+        });
+        viewCol.setMinWidth(90);
+
+        // 4) removeBtn
+        TableColumn<String, Void> removeCol = new TableColumn<>("Click To Remove");
+        removeCol.setCellFactory(col -> new TableCell<>() {
+            private final Button btn = new Button("Remove");
+
+            {
+                btn.setOnAction(e -> {
+                    int row = getIndex();
+                    if (row >= 0 && row < table.getItems().size()) {
+                        String stdName = table.getItems().get(row);
+                        table.getSelectionModel().select(row);
+                        controller.deleteAct(stdName);
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty ? null : btn);
+                setText(null);
+            }
+        });
+        removeCol.setMinWidth(90);
+
+        table.getColumns().setAll(idxCol, nameCol, viewCol, removeCol);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+        table.setFixedCellSize(40);
+        table.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        return table;
     }
-
 }

@@ -10,6 +10,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,7 +24,6 @@ public class DefineStudentPage extends Stage {
     private final List<CheckBox> langCheckBoxes = new ArrayList<>();
 
     // for database check box
-    private final List<String> dataList = new ArrayList<>(Arrays.asList("SQLite", "MySQL", "PostgresSQL", "MongoDB", "AWS", "Joins", "Indexing", "Transactions", "ACID", "Normalization", "Schema Design", "Primary Keys", "Foreign Keys", "Views", "Stored Procedures", "Query Optimization", "Execution Plans", "Replication", "Backup Strategies"));
     private final List<CheckBox> dataCheckBoxes = new ArrayList<>();
 
     public DefineStudentPage() {
@@ -83,6 +83,11 @@ public class DefineStudentPage extends Stage {
         VBox langSelectArea = buildSelectArea(languageList, "Select skilled programming languages: ", langCheckBoxes);
 
         // database select box  line 7
+        List<String> dataList = new ArrayList<>();
+        try (DataAccessor da = new DataAccessor()) {
+            dataList = da.getDatabaseList();
+        } catch (Exception ignore) {
+        }
         VBox dataSelectArea = buildSelectArea(dataList, "Select skilled database: ", dataCheckBoxes);
 
         // comment area line 8

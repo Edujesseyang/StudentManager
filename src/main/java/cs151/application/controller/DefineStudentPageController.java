@@ -5,7 +5,6 @@ import cs151.application.services.DataAccessor;
 import cs151.application.services.Tools;
 import cs151.application.view.DefineStudentPage;
 import javafx.scene.control.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +15,6 @@ public class DefineStudentPageController {
     public DefineStudentPageController(DefineStudentPage page) {
         this.page = page;
     }
-
 
     public void cancelAct() {
         page.close();
@@ -43,8 +41,8 @@ public class DefineStudentPageController {
                     std.setEmployed(employed.selectedProperty().get());
                     std.setJobDetails(jobInput.getText());
                     std.setPreferredRole(roleInput.getValue());
-                    std.setProgrammingLanguages(getResultOfSelectBoxes(langCheckBoxes));
-                    std.setDatabases(makeDbListFromSelectBox(dataCheckBoxes));
+                    std.setProgrammingLanguages(makeListFromCheckBox(langCheckBoxes));
+                    std.setDatabases(makeListFromCheckBox(dataCheckBoxes));
                     String comText = commentArea.getText();
                     if (!comText.isBlank()) {
                         std.addComment(" <" + tool.getTimeString() + ">\n" + comText);
@@ -59,10 +57,11 @@ public class DefineStudentPageController {
                 }
             }
         });
+
         page.close();
     }
 
-    public List<String> getResultOfSelectBoxes(List<CheckBox> cb) {
+    public List<String> makeListFromCheckBox(List<CheckBox> cb) {
         List<String> res = new ArrayList<>();
         for (CheckBox box : cb) {
             if (box.isSelected()) {
@@ -70,12 +69,6 @@ public class DefineStudentPageController {
             }
         }
         return res;
-    }
-
-    private String makeDbListFromSelectBox(List<CheckBox> cb) {
-        StringBuilder sb = new StringBuilder();
-        for (CheckBox box : cb) sb.append(box.getText()).append("   ");
-        return sb.toString();
     }
 
     private boolean isValid(String name) {
