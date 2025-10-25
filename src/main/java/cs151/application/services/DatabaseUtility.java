@@ -4,6 +4,10 @@ import cs151.application.model.Student;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,9 +15,10 @@ import java.util.List;
 public class DatabaseUtility {
     private final List<String> defaultDatabaseList = new ArrayList<>(Arrays.asList("SQLite", "MySQL", "PostgresSQL", "MongoDB", "AWS", "Joins", "Indexing", "Transactions", "ACID", "Normalization", "Schema Design", "Primary Keys", "Foreign Keys", "Views", "Stored Procedures", "Query Optimization", "Execution Plans", "Replication", "Backup Strategies"));
     private final List<String> defaultLanguages = new ArrayList<>(Arrays.asList("Java", "C++", "Python"));
+    private final Path path;
 
-    public DatabaseUtility() {
-
+    public DatabaseUtility(Path path) {
+        this.path = path;
     }
 
     public void initDatabaseSkillList() {
@@ -40,7 +45,8 @@ public class DatabaseUtility {
         }
     }
 
-    public void initDatabase() {
+    public void initDatabase() throws IOException {
+        Files.createDirectories(path.getParent());
         try (DataAccessor da = new DataAccessor()) {
             da.initDatabase();
         } catch (Exception e) {

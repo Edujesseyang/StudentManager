@@ -24,7 +24,6 @@ public class DataAccessor implements AutoCloseable {
     }
 
     public void initDatabase() throws Exception {
-        Files.createDirectories(path.getParent());
         conn.setAutoCommit(false);
         try (Statement st = conn.createStatement()) {
 
