@@ -15,18 +15,16 @@ import java.util.List;
 public class StudentsListPage extends Stage {
     private final ViewUtility tool = new ViewUtility();
     private final StudentsListPageController controller;
-    private final List<String> stdNames;
 
     public StudentsListPage(List<String> stdNames) {
         // set scene
         this.controller = new StudentsListPageController(this);
-        this.stdNames = stdNames;
-        Scene pageScene = buildScene();
+        Scene pageScene = buildScene(stdNames);
         this.setTitle("Student List");
         this.setScene(pageScene);
     }
 
-    public Scene buildScene() {
+    public Scene buildScene(List<String> stdNames) {
         // label
         Label labelText = new Label("   List Of Students   ");
         labelText.getStyleClass().add("subtitle");
@@ -115,6 +113,7 @@ public class StudentsListPage extends Stage {
                     if (row >= 0 && row < table.getItems().size()) {
                         String stdName = table.getItems().get(row);
                         table.getSelectionModel().select(row);
+                        System.out.println("Button click, deleting "+ stdName);
                         controller.deleteAct(stdName);
                     }
                 });

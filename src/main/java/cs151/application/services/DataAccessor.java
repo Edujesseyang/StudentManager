@@ -1,8 +1,6 @@
 package cs151.application.services;
 
 import cs151.application.model.Student;
-
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
@@ -54,16 +52,16 @@ public class DataAccessor implements AutoCloseable {
 
             st.execute("""
                         CREATE TABLE IF NOT EXISTS student_language_map(
-                            student_id INTEGER NOT NULL REFERENCES students(id),
-                            lang_id INTEGER NOT NULL REFERENCES languages(id),
+                            student_id INTEGER NOT NULL REFERENCES students(id) ON DELETE CASCADE,
+                            lang_id INTEGER NOT NULL REFERENCES languages(id) ON DELETE CASCADE,
                             PRIMARY KEY(student_id, lang_id)
                         )
                     """);
 
             st.execute("""
                         CREATE TABLE IF NOT EXISTS student_database_map(
-                            student_id INTEGER NOT NULL REFERENCES students(id),
-                            database_id INTEGER NOT NULL REFERENCES databases(id),
+                            student_id INTEGER NOT NULL REFERENCES students(id) ON DELETE CASCADE,
+                            database_id INTEGER NOT NULL REFERENCES databases(id) ON DELETE CASCADE,
                             PRIMARY KEY(student_id, database_id)
                         )
                     """);
@@ -245,15 +243,19 @@ public class DataAccessor implements AutoCloseable {
 
     public boolean deleteStudent(String stdName) throws SQLException {
         String sql = """
-                DELETE FROM students WHERE name = ? COLLATE NOCASE
+                DELETE FROM students WHERE name = ?
                 """;
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, stdName.trim());
-            int deleteLine = ps.executeUpdate();
-            if (deleteLine <= 0) return false;
-            System.out.println("Student " + stdName + " is deleted successful");
+            int rows = ps.executeUpdate();
+            if (rows > 0) {
+                System.out.println("Deleted student: " + stdName + " (rows=" + rows + ")");
+                return true;
+            } else {
+                System.out.println("No such student: " + stdName);
+                return false;
+            }
         }
-        return true;
     }
 
     public List<String> getLanguageListByStudent(long id) throws SQLException {

@@ -6,7 +6,9 @@ import cs151.application.services.DataAccessor;
 import cs151.application.view.StudentInfoPage;
 import cs151.application.view.StudentsListPage;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class StudentsListPageController {
     private final StudentsListPage page;
@@ -33,17 +35,26 @@ public class StudentsListPageController {
 
     public void deleteAct(String stdName) {
         page.close();
-        boolean report = false;
+        List<String> newList = new ArrayList<>();
         try (DataAccessor da = new DataAccessor()) {
-            report = da.deleteStudent(stdName);
-        } catch (Exception ignore) {
+            da.deleteStudent(stdName);
+            newList = da.getStudentNameList();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        if (report) {
-            tool.popAlert(Alert.AlertType.INFORMATION, stdName + " is deleted").showAndWait();
-        }
-        Scene reloadPage = page.buildScene();
+
+        Scene reloadPage = page.buildScene(newList);
         page.setScene(reloadPage);
         page.show();
     }
 
+    public List<String> getList() {
+        List<String> res = new ArrayList<>();
+        try (DataAccessor da = new DataAccessor()) {
+            res = da.getStudentNameList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
 }
