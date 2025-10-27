@@ -6,7 +6,6 @@ import cs151.application.services.DataAccessor;
 import cs151.application.view.StudentInfoPage;
 import cs151.application.view.StudentsListPage;
 import javafx.scene.Scene;
-
 import java.util.ArrayList;
 import java.util.List;
 

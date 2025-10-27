@@ -6,7 +6,6 @@ import java.nio.file.Paths;
 import java.sql.*;
 import java.util.*;
 
-
 public class DataAccessor implements AutoCloseable {
     private final Path path = Paths.get("localData", "database.db");
     private final String url = "jdbc:sqlite:" + path;
