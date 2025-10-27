@@ -4,7 +4,6 @@ import cs151.application.services.DatabaseUtility;
 import cs151.application.view.HomePage;
 import javafx.application.Application;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;

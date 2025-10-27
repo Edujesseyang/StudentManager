@@ -49,7 +49,7 @@ public class StudentsListPage extends Stage {
 
         // layout
         VBox pageLayout = new VBox(labelText, contentBox, btnLayout);
-        Scene result = new Scene(pageLayout, 800, 600);
+        Scene result = new Scene(pageLayout, 800, 700);
         tool.setPageStyle(result);
         return result;
     }
