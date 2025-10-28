@@ -94,7 +94,7 @@ public class DatabaseUtility {
         s3.addComment("He knows Kong Fu");
 
         Student s4 = new Student();
-        s4.setName("Jesse Yang");
+        s4.setName("Jimmy Doe");
         s4.setEmployed(false);
         s4.setAcademicStatus("Junior");
         s4.setPreferredRole("Back end");
