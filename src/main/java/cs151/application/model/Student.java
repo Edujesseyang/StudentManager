@@ -1,5 +1,7 @@
 package cs151.application.model;
 
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -118,8 +120,11 @@ public class Student {
         comments.addAll(c);
     }
 
-    public void addComment(String comment) {
-        this.comments.add(comment);
+    public String addComment(String comment) {
+        ZonedDateTime now = ZonedDateTime.now();
+        String timeStamp =  now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z"));
+        this.comments.add(" <" + timeStamp + ">\n" + comment);
+        return " <" + timeStamp + ">\n" + comment;
     }
 
     public String toString() {

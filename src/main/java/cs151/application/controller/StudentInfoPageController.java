@@ -1,10 +1,12 @@
 package cs151.application.controller;
 
 import cs151.application.model.Student;
-import cs151.application.view.AddCommentPage;
-import cs151.application.view.ListDisplay;
-import cs151.application.view.StudentInfoPage;
+import cs151.application.services.DataAccessor;
+import cs151.application.view.*;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class StudentInfoPageController {
     private final StudentInfoPage page;
@@ -25,13 +27,21 @@ public class StudentInfoPageController {
         showPage.show();
     }
 
-    public void addCommentAct() {
-        AddCommentPage addNewCommentPage = new AddCommentPage(std);
-        addNewCommentPage.show();
+    public void editStudentBtnAct() {
+        EditStudentPage editStudentPage = new EditStudentPage(std);
+        editStudentPage.show();
         page.close();
     }
 
     public void closeBtnAct() {
+        List<String> stdNameList = new ArrayList<>();
+        try (DataAccessor da = new DataAccessor()) {
+            stdNameList = da.getStudentNameList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        StudentsListPage listPage = new StudentsListPage(stdNameList);
+        listPage.show();
         page.close();
     }
 }

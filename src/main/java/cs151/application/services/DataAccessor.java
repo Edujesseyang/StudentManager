@@ -1,6 +1,7 @@
 package cs151.application.services;
 
 import cs151.application.model.Student;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
@@ -522,6 +523,51 @@ public class DataAccessor implements AutoCloseable {
                 while (res.next()) set.add(res.getLong(1));
             }
         }
+    }
+
+    public void deleteComment(String comment) throws SQLException {
+        String sql = """
+                DELETE FROM comments WHERE comment = ?
+                """;
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, comment);
+            ps.executeUpdate();
+        }
+    }
+
+    public void editStudent(String target, Student sample) throws SQLException {
+        long stdId = findStudentId(target);
+        String updateStd = """
+                UPDATE students SET name = ?, academic_status = ?, is_employed = ?, job_detail = ?, prefer_role = ? WHERE id = ?
+                """;
+        try (PreparedStatement ps = conn.prepareStatement(updateStd)) {
+            ps.setString(1, sample.getName());
+            ps.setString(2, sample.getAcademicStatus());
+            ps.setLong(3, sample.isEmployed() ? 1L : 0L);
+            ps.setString(4, sample.getJobDetails());
+            ps.setString(5, sample.getPreferredRole());
+            ps.setLong(6, stdId);
+            ps.executeUpdate();
+        }
+
+        String deletingLangs = """
+                DELETE FROM student_language_map WHERE student_id = ?
+                """;
+        try (PreparedStatement ps = conn.prepareStatement(deletingLangs)) {
+            ps.setLong(1, stdId);
+            ps.executeUpdate();
+        }
+
+        String deletingDatabaseSkills = """
+                DELETE FROM student_database_map WHERE student_id = ?
+                """;
+        try (PreparedStatement ps = conn.prepareStatement(deletingDatabaseSkills)) {
+            ps.setLong(1, stdId);
+            ps.executeUpdate();
+        }
+
+        insertStudentLangMap(stdId, sample.getProgrammingLanguages());
+        insertStudentDatabaseMap(stdId, sample.getDatabases());
     }
 
     @Override

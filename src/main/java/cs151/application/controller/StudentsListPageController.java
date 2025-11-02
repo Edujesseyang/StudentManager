@@ -1,7 +1,6 @@
 package cs151.application.controller;
 
 import cs151.application.model.Student;
-import cs151.application.services.ControllerUtility;
 import cs151.application.services.DataAccessor;
 import cs151.application.view.StudentInfoPage;
 import cs151.application.view.StudentsListPage;
@@ -11,8 +10,6 @@ import java.util.List;
 
 public class StudentsListPageController {
     private final StudentsListPage page;
-    private final ControllerUtility tool = new ControllerUtility();
-
     public StudentsListPageController(StudentsListPage page) {
         this.page = page;
     }
@@ -30,6 +27,7 @@ public class StudentsListPageController {
         }
         StudentInfoPage infoPage = new StudentInfoPage(std);
         infoPage.show();
+        page.close();
     }
 
     public void deleteAct(String stdName) {

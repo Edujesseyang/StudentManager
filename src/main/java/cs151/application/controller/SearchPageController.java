@@ -26,6 +26,7 @@ public class SearchPageController {
         }
         StudentsListPage newPage = new StudentsListPage(nameList);
         newPage.show();
+        page.close();
     }
 
     public void cancelAct() {

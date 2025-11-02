@@ -64,9 +64,10 @@ public class DatabaseUtility {
         s1.addDatabase("MongoDB");
         s1.addDatabase("AWS");
         s1.addLanguage("Java");
-        s1.setJobDetails("Sample Student");
+        s1.setJobDetails("Google, Project manager, security team");
         s1.addComment("Good sample student, number one");
         s1.addComment("Good coding style");
+        s1.addComment("Best student I have seem, he is going to be next coding master");
 
         Student s2 = new Student();
         s2.setName("Jenny Doe");
@@ -78,9 +79,11 @@ public class DatabaseUtility {
         s2.addDatabase("MySQL");
         s2.addLanguage("Java");
         s2.addLanguage("C++");
-        s2.setJobDetails("Sample Student manager");
+        s2.setJobDetails("Apple, junior developer");
         s2.addComment("She is good at front end coding");
         s2.addComment("Bad designer");
+        s2.addComment("She got a job offer from Apple!");
+        s2.addComment("She working hard on Node.js and React");
 
         Student s3 = new Student();
         s3.setName("Jackie Chen");
@@ -90,8 +93,11 @@ public class DatabaseUtility {
         s3.addDatabase("SQLite");
         s3.addDatabase("AWS");
         s3.addLanguage("Python");
-        s3.setJobDetails("Sample Student team leader");
+        s3.setJobDetails("Criminal Detector, Police Department, HongKong");
         s3.addComment("He knows Kong Fu");
+        s3.addComment("He doesn't like coding at all");
+        s3.addComment("He wants to be a movie star");
+        s3.addComment("He wants to change his major");
 
         Student s4 = new Student();
         s4.setName("Jimmy Doe");
@@ -103,16 +109,18 @@ public class DatabaseUtility {
         s4.addLanguage("Java");
         s4.addLanguage("C++");
         s4.addComment("Harding working but slow");
+        s4.addComment("Missing midterm exam");
+        s4.addComment("Grade was D+");
+        s4.addComment("HW didn't finish on time");
 
         Student s5 = new Student();
         s5.setName("Mr. CoCoulee");
-        s5.setEmployed(true);
+        s5.setEmployed(false);
         s5.setAcademicStatus("Junior");
         s5.setPreferredRole("Cyber security");
         s5.addDatabase("SQLite");
         s5.addLanguage("Java");
         s5.addLanguage("C++");
-        s3.setJobDetails("Sample Student");
         s5.addComment("He has good Java skills");
         s5.addComment("Smart, but play too hard");
         s5.addComment("Bad altitude");

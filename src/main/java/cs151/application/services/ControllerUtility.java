@@ -15,9 +15,4 @@ public class ControllerUtility {
         alert.setTitle("Attention");
         return alert;
     }
-
-    public String getTimeString() {
-        ZonedDateTime now = ZonedDateTime.now();
-        return now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z"));
-    }
 }

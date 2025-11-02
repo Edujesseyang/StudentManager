@@ -25,5 +25,4 @@ public class Main extends Application {
         HomePage homePage = new HomePage();
         homePage.show();
     }
-
 }

@@ -22,6 +22,7 @@ public class StudentInfoPage extends Stage {
         controller = new StudentInfoPageController(this, displaying);
         // title
         Label title = new Label("Information of Student");
+        title.getStyleClass().add("subtitle");
         HBox btnLayout = buildButtons();
         VBox section = buildSection(displaying);
         VBox pageLayout = new VBox(title, section, btnLayout);
@@ -32,7 +33,7 @@ public class StudentInfoPage extends Stage {
         this.setScene(pageScene);
     }
 
-    private VBox buildSection(Student displaying){
+    private VBox buildSection(Student displaying) {
         // basic info area
         HBox name = makeLine("Full name: ", displaying.getName());
         HBox edu = makeLine("Academic Status: ", displaying.getAcademicStatus());
@@ -56,7 +57,8 @@ public class StudentInfoPage extends Stage {
         Text nameInfo = new Text(data);
         return new HBox(name, nameInfo);
     }
-    private HBox buildLanguageArea(){
+
+    private HBox buildLanguageArea() {
         Label lang = new Label("Student skilled in: ");
         Button langBtn = new Button("Programming language list");
         langBtn.setOnAction(e -> controller.langBtnAct());
@@ -96,9 +98,9 @@ public class StudentInfoPage extends Stage {
     private HBox buildButtons() {
         Button closeBtn = new Button("Close");
         closeBtn.setOnAction(e -> controller.closeBtnAct());
-        Button addCommentBtn = new Button("Add New Comment");
-        addCommentBtn.setOnAction(e -> controller.addCommentAct());
-        HBox btnLayout = new HBox(addCommentBtn, closeBtn);
+        Button editStudentBtn = new Button("Edit");
+        editStudentBtn.setOnAction(e -> controller.editStudentBtnAct());
+        HBox btnLayout = new HBox(editStudentBtn, closeBtn);
         btnLayout.setAlignment(Pos.CENTER);
         btnLayout.getStyleClass().add("buttonLayout");
         return btnLayout;

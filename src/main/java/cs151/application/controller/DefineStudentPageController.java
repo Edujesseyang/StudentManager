@@ -45,7 +45,7 @@ public class DefineStudentPageController {
                     std.setDatabases(makeListFromCheckBox(dataCheckBoxes));
                     String comText = commentArea.getText();
                     if (!comText.isBlank()) {
-                        std.addComment(" <" + tool.getTimeString() + ">\n" + comText);
+                        std.addComment(comText);
                     }
                     try (DataAccessor da = new DataAccessor()) {
                         da.addStudent(std);

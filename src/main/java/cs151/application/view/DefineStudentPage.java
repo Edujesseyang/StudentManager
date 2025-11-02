@@ -23,6 +23,7 @@ public class DefineStudentPage extends Stage {
     private final List<CheckBox> langCheckBoxes = new ArrayList<>();
 
     // for database check box
+    private List<String> dataList = new ArrayList<>();
     private final List<CheckBox> dataCheckBoxes = new ArrayList<>();
 
     // role drop down
@@ -31,6 +32,7 @@ public class DefineStudentPage extends Stage {
     public DefineStudentPage() {
         try (DataAccessor da = new DataAccessor()) {
             languageList = da.getLanguageList();
+            dataList = da.getDatabaseList();
         } catch (Exception e) {
             System.out.println(Arrays.toString(e.getStackTrace()));
         }
@@ -54,7 +56,7 @@ public class DefineStudentPage extends Stage {
         ComboBox<String> statusInput = new ComboBox<>();
         statusInput.getItems().addAll("Freshman", "sophomore", "Junior", "Senior", "Graduate");
         statusInput.setPromptText("Choose academic status");
-        statusInput.setVisibleRowCount(4);
+        statusInput.setVisibleRowCount(5);
         HBox academicStatusLine = new HBox(academicStatus, statusInput);      // line 2
 
         // employment info line
@@ -85,11 +87,6 @@ public class DefineStudentPage extends Stage {
         VBox langSelectArea = buildSelectArea(languageList, "Select skilled programming languages: ", langCheckBoxes);
 
         // database select box  line 7
-        List<String> dataList = new ArrayList<>();
-        try (DataAccessor da = new DataAccessor()) {
-            dataList = da.getDatabaseList();
-        } catch (Exception ignore) {
-        }
         VBox dataSelectArea = buildSelectArea(dataList, "Select skilled database: ", dataCheckBoxes);
 
         // comment area line 8
