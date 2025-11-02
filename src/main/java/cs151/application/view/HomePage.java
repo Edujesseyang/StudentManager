@@ -10,7 +10,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-
 public class HomePage extends Stage {
     HomePageController control = new HomePageController();
     ViewUtility tool = new ViewUtility();

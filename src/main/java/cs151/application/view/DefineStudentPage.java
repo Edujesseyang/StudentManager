@@ -138,6 +138,4 @@ public class DefineStudentPage extends Stage {
 
         return selectArea;
     }
-
-
 }

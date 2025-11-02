@@ -143,19 +143,17 @@ public class DataAccessor implements AutoCloseable {
         return size;
     }
 
-    public boolean addLanguage(String langName) throws SQLException {
+    public boolean addLanguage(String langName) throws SQLException{
         String sql = """
                 INSERT INTO languages(lang_name)
                 VALUES (?)
                 ON CONFLICT(lang_name) DO NOTHING
                 """;
+
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, langName.trim());
-            ps.executeUpdate();
-        } catch (Exception e) {
-            return false;
+            return ps.executeUpdate() == 1;
         }
-        return true;
     }
 
     public boolean deleteLanguage(String langName) throws SQLException {

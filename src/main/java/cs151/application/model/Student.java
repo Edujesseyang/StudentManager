@@ -139,6 +139,4 @@ public class Student {
                 "\nBlacklist : " + blacklist +
                 "\nComments : " + comments;
     }
-
-
 }

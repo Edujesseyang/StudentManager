@@ -5,13 +5,11 @@ import cs151.application.services.DataAccessor;
 import cs151.application.view.SearchStudentPage;
 import cs151.application.view.StudentsListPage;
 import javafx.scene.control.Alert;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchPageController {
     private final SearchStudentPage page;
-
     public SearchPageController(SearchStudentPage page) {
         this.page = page;
     }
@@ -32,5 +30,4 @@ public class SearchPageController {
     public void cancelAct() {
         page.close();
     }
-
 }

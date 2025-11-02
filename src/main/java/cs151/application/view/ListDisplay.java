@@ -9,7 +9,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
-
 import java.util.List;
 
 public class ListDisplay extends Stage {
@@ -29,7 +28,6 @@ public class ListDisplay extends Stage {
         sectionLayout.getStyleClass().add("sectionLayout");
 
         VBox pageLayout = new VBox(sectionLayout);
-
 
         Scene pageScene = new Scene(pageLayout, 500, 200);
         tool.setPageStyle(pageScene);

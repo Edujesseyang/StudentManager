@@ -13,7 +13,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -74,7 +73,6 @@ public class EditStudentPage extends Stage {
         } else {
             notEmployed.setSelected(true);
         }
-
         HBox employLine = new HBox(employedText, employed, notEmployed); // line 3
 
         // job line
@@ -82,6 +80,9 @@ public class EditStudentPage extends Stage {
         TextField jobInput = new TextField(editingStudent.getJobDetails());
         HBox jobLine = new HBox(job, jobInput);
         jobLine.disableProperty().bind(notEmployed.selectedProperty());   // line 4
+        notEmployed.setOnAction(e -> {
+            if(notEmployed.isSelected()) jobInput.clear();
+        });
 
         // role line
         Label role = new Label("Preferred Role: ");
@@ -157,7 +158,6 @@ public class EditStudentPage extends Stage {
 
 
         VBox addCommentArea = new VBox(addCommentTextArea, addCommentBtn);
-
         VBox contentLayout = new VBox(form, addCommentArea, btnLayout);
         contentLayout.getStyleClass().add("sectionLayout");
 
@@ -187,5 +187,4 @@ public class EditStudentPage extends Stage {
         }
         return selectArea;
     }
-
 }

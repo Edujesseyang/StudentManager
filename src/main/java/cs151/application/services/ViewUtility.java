@@ -1,11 +1,9 @@
 package cs151.application.services;
 
 import javafx.scene.Scene;
-
 import java.util.Objects;
 
 public class ViewUtility {
-
     public ViewUtility(){}
 
     public void setPageStyle(Scene scene) {

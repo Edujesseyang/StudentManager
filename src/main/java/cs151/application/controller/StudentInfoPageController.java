@@ -4,7 +4,6 @@ import cs151.application.model.Student;
 import cs151.application.services.DataAccessor;
 import cs151.application.view.*;
 import javafx.stage.Stage;
-
 import java.util.ArrayList;
 import java.util.List;
 
