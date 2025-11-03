@@ -3,17 +3,24 @@ package cs151.application.controller;
 import cs151.application.model.Student;
 import cs151.application.services.ControllerUtility;
 import cs151.application.services.DataAccessor;
+import cs151.application.services.Logger;
 import cs151.application.view.DefineStudentPage;
 import javafx.scene.control.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class DefineStudentPageController {
     private final DefineStudentPage page;
     private final ControllerUtility tool = new ControllerUtility();
+    private final Logger logger = Logger.getInstance();
 
     public DefineStudentPageController(DefineStudentPage page) {
         this.page = page;
+    }
+
+    public void log(Exception e){
+        logger.log(e);;
     }
 
     public void cancelAct() {
@@ -50,7 +57,7 @@ public class DefineStudentPageController {
                     try (DataAccessor da = new DataAccessor()) {
                         da.addStudent(std);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(e);
                     }
                     tool.popAlert(Alert.AlertType.INFORMATION, "Student Added").showAndWait();
                 }
@@ -78,12 +85,14 @@ public class DefineStudentPageController {
         return true;
     }
 
-    private boolean isDuplicate(String name){
+    private boolean isDuplicate(String name) {
         boolean isDuplicate = false;
-        try(DataAccessor da = new DataAccessor()){
+        try (DataAccessor da = new DataAccessor()) {
             isDuplicate = da.isPresent(name);
-        } catch (Exception ignore){}
-        if(isDuplicate) tool.popAlert(Alert.AlertType.ERROR, "Student already exists").showAndWait();
+        } catch (Exception e) {
+            logger.log(e);
+        }
+        if (isDuplicate) tool.popAlert(Alert.AlertType.ERROR, "Student already exists").showAndWait();
         return isDuplicate;
     }
 }

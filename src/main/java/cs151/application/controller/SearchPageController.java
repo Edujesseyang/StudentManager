@@ -2,14 +2,17 @@ package cs151.application.controller;
 
 import cs151.application.services.ControllerUtility;
 import cs151.application.services.DataAccessor;
+import cs151.application.services.Logger;
 import cs151.application.view.SearchStudentPage;
 import cs151.application.view.StudentsListPage;
-import javafx.scene.control.Alert;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchPageController {
     private final SearchStudentPage page;
+    private final Logger logger = Logger.getInstance();
+
     public SearchPageController(SearchStudentPage page) {
         this.page = page;
     }
@@ -19,8 +22,8 @@ public class SearchPageController {
         List<String> nameList = new ArrayList<>();
         try (DataAccessor da = new DataAccessor()) {
             nameList = da.searchByKeyWords(keyword);
-        } catch (Exception ignore) {
-            tool.popAlert(Alert.AlertType.ERROR, "Database issue");
+        } catch (Exception e) {
+            logger.log(e);
         }
         StudentsListPage newPage = new StudentsListPage(nameList);
         newPage.show();

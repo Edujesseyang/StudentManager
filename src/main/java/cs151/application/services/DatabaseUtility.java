@@ -3,6 +3,7 @@ package cs151.application.services;
 import cs151.application.model.Student;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,6 +15,8 @@ public class DatabaseUtility {
     private final List<String> defaultDatabaseList = new ArrayList<>(Arrays.asList("SQLite", "MySQL", "PostgresSQL", "MongoDB", "AWS", "Joins", "Indexing", "Transactions", "ACID", "Normalization", "Schema Design", "Primary Keys", "Foreign Keys", "Views", "Stored Procedures", "Query Optimization", "Execution Plans", "Replication", "Backup Strategies"));
     private final List<String> defaultLanguages = new ArrayList<>(Arrays.asList("Java", "C++", "Python"));
     private final Path path;
+
+    private final Logger logger = Logger.getInstance();
 
     public DatabaseUtility(Path path) {
         this.path = path;
@@ -27,7 +30,7 @@ public class DatabaseUtility {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(e);
         }
     }
 
@@ -39,7 +42,7 @@ public class DatabaseUtility {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+           logger.log(e);
         }
     }
 
@@ -48,7 +51,7 @@ public class DatabaseUtility {
         try (DataAccessor da = new DataAccessor()) {
             da.initDatabase();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(e);
         }
     }
 
@@ -134,7 +137,7 @@ public class DatabaseUtility {
                             da.addStudent(s);
                         }
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(e);
                     }
                 }
         );

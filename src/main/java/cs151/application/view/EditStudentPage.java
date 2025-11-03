@@ -36,7 +36,7 @@ public class EditStudentPage extends Stage {
             languageList = da.getLanguageList();
             dataList = da.getDatabaseList();
         } catch (Exception e) {
-            e.printStackTrace();
+            controller.log(e);
         }
 
         controller = new EditStudentPageController(this, editingStudent);

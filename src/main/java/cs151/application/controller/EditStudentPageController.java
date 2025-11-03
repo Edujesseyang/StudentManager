@@ -3,6 +3,7 @@ package cs151.application.controller;
 import cs151.application.model.Student;
 import cs151.application.services.ControllerUtility;
 import cs151.application.services.DataAccessor;
+import cs151.application.services.Logger;
 import cs151.application.view.EditStudentPage;
 import cs151.application.view.StudentInfoPage;
 import javafx.geometry.Insets;
@@ -12,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -19,8 +21,9 @@ import java.util.Objects;
 public class EditStudentPageController {
     private final EditStudentPage page;
     private final ControllerUtility tool = new ControllerUtility();
-    private Student targetStudent;
-    private String oldName;
+    private final Student targetStudent;
+    private final String oldName;
+    private final Logger logger = Logger.getInstance();
 
     public EditStudentPageController(EditStudentPage page, Student targetStudent) {
         this.targetStudent = targetStudent;
@@ -28,12 +31,16 @@ public class EditStudentPageController {
         this.oldName = targetStudent.getName();
     }
 
+    public void log(Exception e) {
+        logger.log(e);
+    }
+
     public void cancelAct() {
         Student updatedStd = new Student();
         try (DataAccessor da = new DataAccessor()) {
             updatedStd = da.getStudent(targetStudent.getName());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(e);
         }
 
         StudentInfoPage newPage = new StudentInfoPage(updatedStd);
@@ -66,7 +73,7 @@ public class EditStudentPageController {
         try (DataAccessor da = new DataAccessor()) {
             da.editStudent(oldName, targetStudent);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(e);
         }
     }
 
@@ -80,7 +87,7 @@ public class EditStudentPageController {
         return res;
     }
 
-    public void addCommentAct(VBox commentAreaBox , TextArea comTextArea) {
+    public void addCommentAct(VBox commentAreaBox, TextArea comTextArea) {
         ControllerUtility tool = new ControllerUtility();
         String comText = comTextArea.getText();
         if (comText.isBlank()) {
@@ -92,7 +99,7 @@ public class EditStudentPageController {
         try (DataAccessor da = new DataAccessor()) {
             da.addComment(targetStudent.getName(), comWithTimeStemp);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.log(e);
         }
 
         TextArea text = new TextArea("Comment:  " + comWithTimeStemp + "\n");
@@ -131,7 +138,8 @@ public class EditStudentPageController {
         boolean isDuplicate = false;
         try (DataAccessor da = new DataAccessor()) {
             isDuplicate = da.isPresent(name);
-        } catch (Exception ignore) {
+        } catch (Exception e) {
+            logger.log(e);
         }
         if (isDuplicate) tool.popAlert(Alert.AlertType.ERROR, "Student already exists").showAndWait();
         return isDuplicate;
@@ -144,7 +152,7 @@ public class EditStudentPageController {
         try (DataAccessor da = new DataAccessor()) {
             da.deleteComment(comment);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(e);
         }
     }
 }

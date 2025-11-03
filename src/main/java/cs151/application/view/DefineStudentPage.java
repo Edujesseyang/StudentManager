@@ -18,6 +18,7 @@ public class DefineStudentPage extends Stage {
     private final DefineStudentPageController controller = new DefineStudentPageController(this);
     private final ViewUtility tool = new ViewUtility();
 
+
     // for language check box
     private List<String> languageList;
     private final List<CheckBox> langCheckBoxes = new ArrayList<>();
@@ -34,7 +35,7 @@ public class DefineStudentPage extends Stage {
             languageList = da.getLanguageList();
             dataList = da.getDatabaseList();
         } catch (Exception e) {
-            System.out.println(Arrays.toString(e.getStackTrace()));
+            controller.log(e);
         }
 
         Scene pageScene = buildScene();

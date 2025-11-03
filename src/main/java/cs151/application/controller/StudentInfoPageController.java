@@ -2,6 +2,7 @@ package cs151.application.controller;
 
 import cs151.application.model.Student;
 import cs151.application.services.DataAccessor;
+import cs151.application.services.Logger;
 import cs151.application.view.*;
 import javafx.stage.Stage;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 public class StudentInfoPageController {
     private final StudentInfoPage page;
     private final Student std;
+    private final Logger logger = Logger.getInstance();
 
     public StudentInfoPageController(StudentInfoPage page, Student std) {
         this.page = page;
@@ -37,7 +39,7 @@ public class StudentInfoPageController {
         try (DataAccessor da = new DataAccessor()) {
             stdNameList = da.getStudentNameList();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(e);
         }
         StudentsListPage listPage = new StudentsListPage(stdNameList);
         listPage.show();

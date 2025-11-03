@@ -2,6 +2,7 @@ package cs151.application.controller;
 
 import cs151.application.services.ControllerUtility;
 import cs151.application.services.DataAccessor;
+import cs151.application.services.Logger;
 import cs151.application.view.DefineLanguagePage;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -13,6 +14,7 @@ import java.util.List;
 public class DefineLanguagePageController {
     private final ControllerUtility tool = new ControllerUtility();
     private final DefineLanguagePage page;
+    private final Logger logger = Logger.getInstance();
 
     public DefineLanguagePageController(DefineLanguagePage page) {
         this.page = page;
@@ -31,13 +33,13 @@ public class DefineLanguagePageController {
                                 tool.popAlert(Alert.AlertType.ERROR, "Language has already defined!").showAndWait();
                             }
                         } catch (Exception e) {
-                            System.out.println(e.getMessage());
+                            logger.log(e);
                         }
                     }
                 });
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.log(e);
         }
 
         page.close();
@@ -55,7 +57,7 @@ public class DefineLanguagePageController {
                 return;
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+           logger.log(e);
         }
         page.close();
         Scene newScene = page.loadPage();
@@ -68,7 +70,7 @@ public class DefineLanguagePageController {
         try (DataAccessor da = new DataAccessor()) {
             res = da.getLanguageList();
         } catch (Exception e) {
-            e.printStackTrace();
+           logger.log(e);
         }
         return res;
     }
