@@ -5,6 +5,7 @@ import cs151.application.services.DataAccessor;
 import cs151.application.services.Logger;
 import cs151.application.view.*;
 import javafx.stage.Stage;
+
 import java.util.ArrayList;
 import java.util.List;
 

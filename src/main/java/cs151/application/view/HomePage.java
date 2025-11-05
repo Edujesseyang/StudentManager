@@ -30,7 +30,7 @@ public class HomePage extends Stage {
 
         // Search Student
         Button searchStudent = new Button("Search Student");
-        searchStudent.setOnAction(e ->control.searchBtnAct());
+        searchStudent.setOnAction(e -> control.searchBtnAct());
 
         // create welcome label
         Label welcomeText = new Label(" Welcome Back ");

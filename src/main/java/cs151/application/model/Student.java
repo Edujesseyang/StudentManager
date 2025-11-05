@@ -11,7 +11,6 @@ public class Student {
     private boolean employed;
     private String jobDetails;
     private String preferredRole;  // front end/ back end etc.
-
     private List<String> programmingLanguages; // coding language
     private List<String> databases;             // database skill
     private final List<String> comments;              // prof's comments

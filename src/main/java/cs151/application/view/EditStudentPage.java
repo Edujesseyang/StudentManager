@@ -13,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,14 +33,10 @@ public class EditStudentPage extends Stage {
 
     public EditStudentPage(Student std) {
         this.editingStudent = std;
-        try (DataAccessor da = new DataAccessor()) {
-            languageList = da.getLanguageList();
-            dataList = da.getDatabaseList();
-        } catch (Exception e) {
-            controller.log(e);
-        }
+        controller = new EditStudentPageController(this, std);
+        languageList = controller.getLangList();
+        dataList = controller.getDBList();
 
-        controller = new EditStudentPageController(this, editingStudent);
         Scene sc = buildScene();
         this.setScene(sc);
         this.show();
@@ -81,7 +78,7 @@ public class EditStudentPage extends Stage {
         HBox jobLine = new HBox(job, jobInput);
         jobLine.disableProperty().bind(notEmployed.selectedProperty());   // line 4
         notEmployed.setOnAction(e -> {
-            if(notEmployed.isSelected()) jobInput.clear();
+            if (notEmployed.isSelected()) jobInput.clear();
         });
 
         // role line

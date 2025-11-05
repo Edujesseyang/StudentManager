@@ -1,7 +1,6 @@
 package cs151.application.view;
 
 import cs151.application.controller.DefineStudentPageController;
-import cs151.application.services.DataAccessor;
 import cs151.application.services.ViewUtility;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -10,6 +9,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +17,6 @@ import java.util.List;
 public class DefineStudentPage extends Stage {
     private final DefineStudentPageController controller = new DefineStudentPageController(this);
     private final ViewUtility tool = new ViewUtility();
-
 
     // for language check box
     private List<String> languageList;
@@ -31,13 +30,8 @@ public class DefineStudentPage extends Stage {
     private final List<String> roleList = new ArrayList<>(Arrays.asList("Backend", "Frontend", "QA", "Security", "Database", "UI/UX", "DevOps", "Network", "IT support", "Other"));
 
     public DefineStudentPage() {
-        try (DataAccessor da = new DataAccessor()) {
-            languageList = da.getLanguageList();
-            dataList = da.getDatabaseList();
-        } catch (Exception e) {
-            controller.log(e);
-        }
-
+        languageList = controller.getLangList();
+        dataList = controller.getDBList();
         Scene pageScene = buildScene();
         this.setScene(pageScene);
         this.show();

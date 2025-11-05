@@ -27,7 +27,6 @@ public class Logger {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
     }
 
     public static Logger getInstance() {

@@ -18,10 +18,10 @@ public class SearchPageController {
     }
 
     public void searchAct(String keyword) {
-        ControllerUtility tool = new ControllerUtility();
         List<String> nameList = new ArrayList<>();
         try (DataAccessor da = new DataAccessor()) {
             nameList = da.searchByKeyWords(keyword);
+            logger.log("SEARCHING: '" + keyword + "'");
         } catch (Exception e) {
             logger.log(e);
         }

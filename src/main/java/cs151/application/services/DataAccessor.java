@@ -143,7 +143,7 @@ public class DataAccessor implements AutoCloseable {
         return size;
     }
 
-    public boolean addLanguage(String langName) throws SQLException{
+    public boolean addLanguage(String langName) throws SQLException {
         String sql = """
                 INSERT INTO languages(lang_name)
                 VALUES (?)
@@ -165,7 +165,6 @@ public class DataAccessor implements AutoCloseable {
             ps.setString(1, langName.trim());
             int deleteReport = ps.executeUpdate();
             if (deleteReport <= 0) return false;
-            System.out.println("LanguageId=" + deleteReport + " is deleted");
         }
         return true;
     }
@@ -214,13 +213,10 @@ public class DataAccessor implements AutoCloseable {
             }
         }
 
-        try {
-            res.addLanguages(getLanguageListByStudent(id));
-            res.addDatabases(getDatabaseListByStudent(id));
-            res.addComments(getCommentList(id));
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        res.addLanguages(getLanguageListByStudent(id));
+        res.addDatabases(getDatabaseListByStudent(id));
+        res.addComments(getCommentList(id));
+
         return res;
     }
 
@@ -247,10 +243,8 @@ public class DataAccessor implements AutoCloseable {
             ps.setString(1, stdName.trim());
             int rows = ps.executeUpdate();
             if (rows > 0) {
-                System.out.println("Deleted student: " + stdName + " (rows=" + rows + ")");
                 return true;
             } else {
-                System.out.println("No such student: " + stdName);
                 return false;
             }
         }

@@ -19,8 +19,24 @@ public class DefineStudentPageController {
         this.page = page;
     }
 
-    public void log(Exception e){
-        logger.log(e);;
+    public List<String> getLangList(){
+        List<String> languageList = new ArrayList<>();
+        try (DataAccessor da = new DataAccessor()) {
+            languageList = da.getLanguageList();
+        } catch (Exception e) {
+            logger.log(e);
+        }
+        return languageList;
+    }
+
+    public List<String> getDBList(){
+        List<String> dbList = new ArrayList<>();
+        try (DataAccessor da = new DataAccessor()) {
+            dbList = da.getDatabaseList();
+        } catch (Exception e) {
+            logger.log(e);
+        }
+        return dbList;
     }
 
     public void cancelAct() {
@@ -56,6 +72,7 @@ public class DefineStudentPageController {
                     }
                     try (DataAccessor da = new DataAccessor()) {
                         da.addStudent(std);
+                        logger.log("Student added: " + std.getName());
                     } catch (Exception e) {
                         logger.log(e);
                     }
@@ -80,6 +97,7 @@ public class DefineStudentPageController {
     private boolean isValid(String name) {
         if (name.isBlank()) {
             tool.popAlert(Alert.AlertType.ERROR, "Name can not be empty").showAndWait();
+            logger.log("ERROR: defining a student with empty name input");
             return false;
         }
         return true;
@@ -93,6 +111,7 @@ public class DefineStudentPageController {
             logger.log(e);
         }
         if (isDuplicate) tool.popAlert(Alert.AlertType.ERROR, "Student already exists").showAndWait();
+        logger.log("ERROR: fail to add a existed student");
         return isDuplicate;
     }
 }

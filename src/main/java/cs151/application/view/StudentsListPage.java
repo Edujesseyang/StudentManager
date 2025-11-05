@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 import java.util.List;
 
 public class StudentsListPage extends Stage {
@@ -113,7 +114,6 @@ public class StudentsListPage extends Stage {
                     if (row >= 0 && row < table.getItems().size()) {
                         String stdName = table.getItems().get(row);
                         table.getSelectionModel().select(row);
-                        System.out.println("Button click, deleting "+ stdName);
                         controller.deleteAct(stdName);
                     }
                 });

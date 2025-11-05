@@ -31,8 +31,24 @@ public class EditStudentPageController {
         this.oldName = targetStudent.getName();
     }
 
-    public void log(Exception e) {
-        logger.log(e);
+    public List<String> getLangList(){
+        List<String> languageList = new ArrayList<>();
+        try (DataAccessor da = new DataAccessor()) {
+            languageList = da.getLanguageList();
+        } catch (Exception e) {
+            logger.log(e);
+        }
+        return languageList;
+    }
+
+    public List<String> getDBList(){
+        List<String> dbList = new ArrayList<>();
+        try (DataAccessor da = new DataAccessor()) {
+            dbList = da.getDatabaseList();
+        } catch (Exception e) {
+            logger.log(e);
+        }
+        return dbList;
     }
 
     public void cancelAct() {
@@ -63,6 +79,7 @@ public class EditStudentPageController {
                     targetStudent.setDatabases(makeListFromCheckBox(dataCheckBoxes));
                     storeData();
                     tool.popAlert(Alert.AlertType.INFORMATION, "Change Saved").showAndWait();
+                    logger.log("Student: " + name + "'s information has changed");
                 }
             }
         });
@@ -92,12 +109,14 @@ public class EditStudentPageController {
         String comText = comTextArea.getText();
         if (comText.isBlank()) {
             tool.popAlert(Alert.AlertType.ERROR, "Comment can not be blank").showAndWait();
+            logger.log("ERROR: fail to add blank comment");
             return;
         }
 
         String comWithTimeStemp = targetStudent.addComment(comText);
         try (DataAccessor da = new DataAccessor()) {
             da.addComment(targetStudent.getName(), comWithTimeStemp);
+            logger.log("New comment added to student " + targetStudent.getName());
         } catch (Exception e) {
             logger.log(e);
         }
@@ -128,6 +147,7 @@ public class EditStudentPageController {
     private boolean isValid(String name) {
         if (name.isBlank()) {
             tool.popAlert(Alert.AlertType.ERROR, "Name can not be empty").showAndWait();
+            logger.log("ERROR: fail to give a student an empty name");
             return false;
         }
         return true;
@@ -142,6 +162,7 @@ public class EditStudentPageController {
             logger.log(e);
         }
         if (isDuplicate) tool.popAlert(Alert.AlertType.ERROR, "Student already exists").showAndWait();
+        logger.log("ERROR: fail to change a student name because the new name is existed");
         return isDuplicate;
     }
 
@@ -151,6 +172,7 @@ public class EditStudentPageController {
 
         try (DataAccessor da = new DataAccessor()) {
             da.deleteComment(comment);
+            logger.log("1 comment has deleted from student" + targetStudent.getName());
         } catch (Exception e) {
             logger.log(e);
         }

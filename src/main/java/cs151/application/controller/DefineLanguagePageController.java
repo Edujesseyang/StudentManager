@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +32,9 @@ public class DefineLanguagePageController {
                         try {
                             if (!da.addLanguage(programLanguageName.getText())) {
                                 tool.popAlert(Alert.AlertType.ERROR, "Language has already defined!").showAndWait();
+                                logger.log("ERROR: fail to add a existed language");
                             }
+                            logger.log("Added language: " + programLanguageName.getText());
                         } catch (Exception e) {
                             logger.log(e);
                         }
@@ -52,12 +55,14 @@ public class DefineLanguagePageController {
         try (DataAccessor da = new DataAccessor()) {
             if (da.deleteLanguage(programLanguageName.getText())) {
                 tool.popAlert(Alert.AlertType.INFORMATION, "Delete successful").showAndWait();
+                logger.log("Deleted language: " + programLanguageName.getText());
             } else {
                 tool.popAlert(Alert.AlertType.ERROR, "Can not find the language").showAndWait();
+                logger.log("ERROR: finding an non-existed language");
                 return;
             }
         } catch (Exception e) {
-           logger.log(e);
+            logger.log(e);
         }
         page.close();
         Scene newScene = page.loadPage();
@@ -70,7 +75,7 @@ public class DefineLanguagePageController {
         try (DataAccessor da = new DataAccessor()) {
             res = da.getLanguageList();
         } catch (Exception e) {
-           logger.log(e);
+            logger.log(e);
         }
         return res;
     }
