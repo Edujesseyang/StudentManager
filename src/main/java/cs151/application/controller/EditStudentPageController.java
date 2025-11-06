@@ -140,7 +140,6 @@ public class EditStudentPageController {
         clear.setOnAction(e -> deleteCommentBtnAct(comWithTimeStemp, wrapper));
         commentAreaBox.getChildren().add(wrapper);
 
-        tool.popAlert(Alert.AlertType.INFORMATION, "Added successfully").showAndWait();
         comTextArea.clear();
     }
 
