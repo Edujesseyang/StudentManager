@@ -1,7 +1,6 @@
 module cs151project {
     requires javafx.controls;
     requires javafx.fxml;
-    requires com.google.gson;
     requires javafx.graphics;
     requires java.sql;
     requires org.xerial.sqlitejdbc;
