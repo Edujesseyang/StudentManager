@@ -1,73 +1,33 @@
 # CS151 Term Project - Version 0.8
 ## **Students' Knowledgebase for Faculties**
 
-## Team Info
-- **Team Number:** 21  
-  - Julian Christian Simmons 
-  - Ryan Monazzami 
-  - Daniel Khant 
-  - Jesse Yang
-
 ---
 
-## Project Description
+# Project Description
 This project is a desktop application designed for faculty members to record and manage students’ information such as programming skills, academic status, and evaluation notes.
 
-## Version (**v0.8**)  
-It focuses on implementing the **"Edit student"** page described in the project problem statement (Section 2.12).
-Contribution:
-  - Julian Christian Simmons (controller of comment page)  
-  - Ryan Monazzami (readMe files and UML graph)  
-  - Daniel Khant (UI/UX design)
-  - Jesse Yang (adding/Deleting comment behaviors)
+## Version List:
+### Version (**v0.8**):  
+It focuses on implementing the **"Edit student"** page.
 
-## Version (**v0.7**)  
-It focuses on implementing the **"Edit student"** page described in the project problem statement (Section 2.12).
-Contribution:
-  - Julian Christian Simmons (controller of edit page)  
-  - Ryan Monazzami (data update behavoirs)  
-  - Daniel Khant (UI/UX design)
-  - Jesse Yang (edit page)
+### Version (**v0.7**):  
+It focuses on implementing the **"Edit student"** page.
 
-## Version (**v0.6**)
-It focuses on implementing the **"Search for keywords"** page described in the project problem statement (Section 2.2).
-Contribution:
-  - Julian Christian Simmons (UI design, search bar design)  
-  - Ryan Monazzami (searching behaviors)  
-  - Daniel Khant (initialization of samples)
-  - Jesse Yang (rebuild and data accessor implement)
+### Version (**v0.6**):
+It focuses on implementing the **"Search for keywords"** page.
 
-## Version (**v0.5**)
-It focuses on implementing the **"Define Student "** page described in the project problem statement (Section 2.2).
-Contribution:
-  - Julian Christian Simmons (UI design, sorting student method)  
-  - Ryan Monazzami (addCommentPage and behaviors)  
-  - Daniel Khant (Code documentation, testing, cleanup)
-  - Jesse Yang (defineStudentPage)
+### Version (**v0.5**):
+It focuses on implementing the **"Define Student "** page.
 
-## Version (**v0.4**)
+### Version (**v0.4**):
 It focuses on implementing **"All Programming Languages"** page as well as permanently storing the programming languages info entered.
-  - Julian Christian Simmons (showProgrammingLangauges and bugs fixing)  
-  - Ryan Monazzami (adding behaviors for student class)  
-  - Daniel Khant (file IO system design)
-  - Jesse Yang (data storing behaviors implement)
-    
-## Version (**v0.3**)
-It focuses on implementing the **"Define Programming Languages"** page described in the project problem statement (Section 2.1.1, item 2).
-Contribution:
-  - Julian Christian Simmons (refine defineLanguagePage and bugs fixing)  
-  - Ryan Monazzami (adding behaviors for student class)  
-  - Daniel Khant (file IO system design)
-  - Jesse Yang (data storing behaviors implement)
+   
+### Version (**v0.3**):
+It focuses on implementing the **"Define Programming Languages"** page.
 
-## Version (**v0.2**)
-It focuses on implementing the **"Define Programming Languages"** page described in the project problem statement (Section 2.1.1, item 1).
-Contribution:
-  - Julian Christian Simmons (defineLanguagePage)  
-  - Ryan Monazzami (studentListPage)  
-  - Daniel Khant (StudentList dataStucture)
-  - Jesse Yang (homepage)
-    
+### Version (**v0.2**):
+It focuses on implementing the **"Define Programming Languages"** page.
+ 
 ---
 ## Technical Spec: 
 
@@ -76,13 +36,12 @@ Contribution:
 - **Build Tool:** Maven  
 - **JDK:** ZuluFX 21 (verified working under Zulu 23)  
 - **Database:** SQLite
-- **Database libary:** JDBC
+- **Database library:** JDBC
 - **Main Class:** `cs151.application.Main`
 - **Style:** CSS
 
 ### UML
-![UML](https://github.com/CS151-Group-21/version0.7-withLogger/blob/main/CS151v0.7.png?raw=true)
-
+![UML](https://private-user-images.githubusercontent.com/142279444/514820478-23bcfaac-f002-4e34-bdb0-2be5bdb3dc82.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjMyNTQ2MjEsIm5iZiI6MTc2MzI1NDMyMSwicGF0aCI6Ii8xNDIyNzk0NDQvNTE0ODIwNDc4LTIzYmNmYWFjLWYwMDItNGUzNC1iZGIwLTJiZTViZGIzZGM4Mi5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUxMTE2JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MTExNlQwMDUyMDFaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT04NDI4Yzg4NzVkZTBiN2UzYWRmN2Q1OTcwNzY1MjBjMGM0ZDVjYWI3N2YzNmJiYTI2MDQ5OWQ5NjViYjljMjZkJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.sV2pjwjeHiRDLyh5Xh8mPw9dze4aPSA55ca4qYqdVoM)
 
 ### Package Structure
 ```text
