@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -134,6 +135,19 @@ public class StudentsListPage extends Stage {
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
         table.setFixedCellSize(40);
         table.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        table.setRowFactory(tv -> {
+            TableRow<String> row = new TableRow<>();
+            row.setOnMouseClicked(e -> {
+                if (e.getClickCount() == 2
+                        && e.getButton() == MouseButton.PRIMARY
+                        && !row.isEmpty()) {
+                    String stdName = row.getItem();
+                    controller.selectAct(stdName);   // behavior
+                    e.consume();
+                }
+            });
+            return row;
+        });
         return table;
     }
 }
