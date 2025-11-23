@@ -10,10 +10,12 @@ public class StudentInfoPageController {
     private final StudentInfoPage page;
     private final Student std;
     private final List<String> prevShowingStdList;
+    private final String prevPageTitle;
 
-    public StudentInfoPageController(StudentInfoPage page, Student std, List<String> prevShowingStdList) {
+    public StudentInfoPageController(StudentInfoPage page, Student std, List<String> prevShowingStdList, String prevPageTitle) {
         this.page = page;
         this.std = std;
+        this.prevPageTitle = prevPageTitle;
         this.prevShowingStdList = prevShowingStdList;
     }
 
@@ -28,13 +30,13 @@ public class StudentInfoPageController {
     }
 
     public void editStudentBtnAct() {
-        EditStudentPage editStudentPage = new EditStudentPage(std, prevShowingStdList);
+        EditStudentPage editStudentPage = new EditStudentPage(std, prevShowingStdList, prevPageTitle);
         editStudentPage.show();
         page.close();
     }
 
     public void closeBtnAct() {
-        StudentsListPage listPage = new StudentsListPage(prevShowingStdList);
+        StudentsListPage listPage = new StudentsListPage(prevShowingStdList, prevPageTitle);
         listPage.show();
         page.close();
     }

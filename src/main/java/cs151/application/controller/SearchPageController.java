@@ -24,7 +24,7 @@ public class SearchPageController {
         } catch (Exception e) {
             logger.log("<<__Debug__>> : " + e.getMessage());
         }
-        StudentsListPage newPage = new StudentsListPage(nameList);
+        StudentsListPage newPage = new StudentsListPage(nameList, "Search Result");
         newPage.show();
         page.close();
     }

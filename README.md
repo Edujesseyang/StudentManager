@@ -1,4 +1,4 @@
-# CS151 Term Project - Version 0.8
+# CS151 Term Project - Version 0.9
 ## **Students' Knowledgebase for Faculties**
 
 ---
@@ -7,6 +7,9 @@
 This project is a desktop application designed for faculty members to record and manage students’ information such as programming skills, academic status, and evaluation notes.
 
 ## Version List:
+### Version (**v0.8**):
+It focuses on implementing the **"Report"** page with **"Black List"**/**"White List"** feature.
+
 ### Version (**v0.8**):  
 It focuses on implementing the **"Edit student"** page.
 
@@ -56,6 +59,7 @@ src/
     │       │   ├── HomePageController.java
     │       │   ├── SearchPageController.java
     │       │   ├── StudentInfoPageController.java
+    │       │   ├── ReportPageController.java
     │       │   └── StudentsListPageController.java
     │       ├── model/
     │       │   └── Student.java
@@ -63,6 +67,7 @@ src/
     │       │   ├── ControllerUtility.java
     │       │   ├── DataAccessor.java
     │       │   ├── DatabaseUtility.java
+    │       │   ├── Logger.java
     │       │   └── ViewUtility.java
     │       ├── view/
     │       │   ├── EditStudentPage.java
@@ -72,6 +77,7 @@ src/
     │       │   ├── ListDisplay.java
     │       │   ├── SearchStudentPage.java
     │       │   ├── StudentInfoPage.java
+    │       │   ├── ReportPage.java
     │       │   └── StudentsListPage.java
     │       ├── Main.java
     │       └── module-info.java

@@ -20,7 +20,7 @@ public class ReportPageController {
         } catch (Exception e) {
             logger.log("<<__Debug__>> : " + e.getMessage());
         }
-        StudentsListPage listPage = new StudentsListPage(blackListNames);
+        StudentsListPage listPage = new StudentsListPage(blackListNames, "Black List");
         listPage.show();
     }
 
@@ -31,7 +31,7 @@ public class ReportPageController {
         } catch (Exception e) {
             logger.log("<<__Debug__>> : " + e.getMessage());
         }
-        StudentsListPage listPage = new StudentsListPage(whiteListNames);
+        StudentsListPage listPage = new StudentsListPage(whiteListNames, "White List");
         listPage.show();
     }
 

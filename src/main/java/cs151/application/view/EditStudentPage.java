@@ -30,9 +30,9 @@ public class EditStudentPage extends Stage {
     private final List<CheckBox> dataCheckBoxes = new ArrayList<>();
     private final List<String> roleList = new ArrayList<>(Arrays.asList("Backend", "Frontend", "QA", "Security", "Database", "UI/UX", "DevOps", "Network", "IT support", "Other"));
 
-    public EditStudentPage(Student std, List<String> prevShowing) {
+    public EditStudentPage(Student std, List<String> prevShowing, String prevPageTitle) {
         this.editingStudent = std;
-        controller = new EditStudentPageController(this, std, prevShowing);
+        controller = new EditStudentPageController(this, std, prevShowing, prevPageTitle);
         languageList = controller.getLangList();
         dataList = controller.getDBList();
 

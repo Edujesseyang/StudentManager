@@ -17,22 +17,26 @@ import java.util.Objects;
 public class StudentInfoPage extends Stage {
 
     private final StudentInfoPageController controller;
+    private final Student displaying;
 
+    public StudentInfoPage(Student displaying, List<String> prevShowingStdList, String prevPageTile) {
+        this.controller = new StudentInfoPageController(this, displaying, prevShowingStdList, prevPageTile);
+        this.displaying = displaying;
 
-    public StudentInfoPage(Student displaying, List<String> prevShowingStdList) {
-        controller = new StudentInfoPageController(this, displaying, prevShowingStdList);
+        Scene pageScene = buildScene();
+        ViewUtility tool = new ViewUtility();
+        tool.setPageStyle(pageScene);
+        this.setTitle("Student Information");
+        this.setScene(pageScene);
+    }
 
-        // title
+    private Scene buildScene(){
         Label title = new Label("Information of Student");
         title.getStyleClass().add("subtitle");
         HBox btnLayout = buildButtons();
         VBox section = buildSection(displaying);
         VBox pageLayout = new VBox(title, section, btnLayout);
-        Scene pageScene = new Scene(pageLayout, 800, 900);
-        ViewUtility tool = new ViewUtility();
-        tool.setPageStyle(pageScene);
-        this.setTitle("Student Information");
-        this.setScene(pageScene);
+        return new Scene(pageLayout, 800, 900);
     }
 
     private VBox buildSection(Student displaying) {

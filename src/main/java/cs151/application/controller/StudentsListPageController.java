@@ -32,7 +32,7 @@ public class StudentsListPageController {
         } catch (Exception e) {
             logger.log("<<__Debug__>> : " + e.getMessage());
         }
-        StudentInfoPage infoPage = new StudentInfoPage(std, stdNames);
+        StudentInfoPage infoPage = new StudentInfoPage(std, stdNames, page.getTitle());
         infoPage.show();
         page.close();
     }

@@ -9,10 +9,15 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class ReportPage extends Stage {
-    private final ViewUtility tool = new ViewUtility();
     private final ReportPageController controller = new ReportPageController();
 
     public ReportPage() {
+        Scene sc = buildScene();
+        ViewUtility tool = new ViewUtility();
+        tool.setPageStyle(sc);
+        this.setScene(sc);
+    }
+    private Scene buildScene(){
         Label title = new Label("Select Report Type:");
 
         Button blackListBtn = new Button("Get all student in black list");
@@ -24,8 +29,6 @@ public class ReportPage extends Stage {
         VBox layout = new VBox(title, blackListBtn, whiteListBtn);
 
         layout.getStyleClass().add("sectionLayout");
-        Scene sc = new Scene(layout, 300, 200);
-        tool.setPageStyle(sc);
-        this.setScene(sc);
+        return new Scene(layout, 300, 200);
     }
 }

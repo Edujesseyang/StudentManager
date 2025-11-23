@@ -23,7 +23,7 @@ public class Main extends Application {
             initializer.initDefaultLanguages();
             initializer.initSampleStudents();
         }
-        HomePage homePage = new HomePage();
+        Stage homePage = new HomePage();
         homePage.show();
     }
 }

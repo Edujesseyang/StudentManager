@@ -3,18 +3,19 @@ package cs151.application.controller;
 import cs151.application.services.DataAccessor;
 import cs151.application.services.Logger;
 import cs151.application.view.*;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomePageController {
+public class HomePageController{
     private final Logger logger = Logger.getInstance();
 
     public HomePageController() {
     }
 
     public void defineBtnAct() {
-        DefineLanguagePage definePage = new DefineLanguagePage();
+        Stage definePage = new DefineLanguagePage();
         definePage.show();
     }
 
@@ -25,22 +26,22 @@ public class HomePageController {
         } catch (Exception e) {
             logger.log("<<__Debug__>> : " + e.getMessage());
         }
-        StudentsListPage showPage = new StudentsListPage(studentList);
+        StudentsListPage showPage = new StudentsListPage(studentList, "All Students");
         showPage.show();
     }
 
     public void defineStudentAct() {
-        DefineStudentPage showPage = new DefineStudentPage();
+        Stage showPage = new DefineStudentPage();
         showPage.show();
     }
 
     public void searchBtnAct() {
-        SearchStudentPage newPage = new SearchStudentPage();
+        Stage newPage = new SearchStudentPage();
         newPage.show();
     }
 
     public void reportBtnAct() {
-        ReportPage newPage = new ReportPage();
+        Stage newPage = new ReportPage();
         newPage.show();
 
     }

@@ -18,18 +18,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class EditStudentPageController {
+public class EditStudentPageController{
     private final EditStudentPage page;
     private final ControllerUtility tool = new ControllerUtility();
     private final Student targetStudent;
     private final String oldName;
     private final Logger logger = Logger.getInstance();
     private final List<String> prevShowing;
+    private final String prevPageTitle;
 
-    public EditStudentPageController(EditStudentPage page, Student targetStudent, List<String> prevShowing) {
+    public EditStudentPageController(EditStudentPage page, Student targetStudent, List<String> prevShowing, String prevPageTitle) {
         this.targetStudent = targetStudent;
         this.prevShowing = prevShowing;
         this.page = page;
+        this.prevPageTitle = prevPageTitle;
         this.oldName = targetStudent.getName();
     }
 
@@ -54,7 +56,7 @@ public class EditStudentPageController {
     }
 
     public void cancelAct() {
-        StudentInfoPage newPage = new StudentInfoPage(targetStudent, prevShowing);
+        StudentInfoPage newPage = new StudentInfoPage(targetStudent, prevShowing, prevPageTitle);
         newPage.show();
         page.close();
     }
