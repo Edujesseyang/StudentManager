@@ -2,10 +2,7 @@ package cs151.application.controller;
 
 import cs151.application.services.DataAccessor;
 import cs151.application.services.Logger;
-import cs151.application.view.DefineLanguagePage;
-import cs151.application.view.DefineStudentPage;
-import cs151.application.view.SearchStudentPage;
-import cs151.application.view.StudentsListPage;
+import cs151.application.view.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +23,7 @@ public class HomePageController {
         try (DataAccessor da = new DataAccessor()) {
             studentList = da.getStudentNameList();
         } catch (Exception e) {
-            logger.log(e);
+            logger.log("<<__Debug__>> : " + e.getMessage());
         }
         StudentsListPage showPage = new StudentsListPage(studentList);
         showPage.show();
@@ -40,5 +37,11 @@ public class HomePageController {
     public void searchBtnAct() {
         SearchStudentPage newPage = new SearchStudentPage();
         newPage.show();
+    }
+
+    public void reportBtnAct() {
+        ReportPage newPage = new ReportPage();
+        newPage.show();
+
     }
 }

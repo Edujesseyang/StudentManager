@@ -11,14 +11,17 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.List;
 import java.util.Objects;
 
 public class StudentInfoPage extends Stage {
 
     private final StudentInfoPageController controller;
 
-    public StudentInfoPage(Student displaying) {
-        controller = new StudentInfoPageController(this, displaying);
+
+    public StudentInfoPage(Student displaying, List<String> prevShowingStdList) {
+        controller = new StudentInfoPageController(this, displaying, prevShowingStdList);
+
         // title
         Label title = new Label("Information of Student");
         title.getStyleClass().add("subtitle");
@@ -39,13 +42,13 @@ public class StudentInfoPage extends Stage {
         HBox employment = makeLine("Is student employed: ", displaying.isEmployed() ? "Yes" : "No");
         HBox job = makeLine("Employment details: ", (Objects.equals(displaying.getJobDetails(), "") ? "N/A" : displaying.getJobDetails()));
         HBox preferRole = makeLine("Preferred Professional Role: ", Objects.equals(displaying.getPreferredRole(), "") ? "N/A" : displaying.getPreferredRole());
-
+        HBox blackList = makeLine("Student is in ", displaying.isBlacklist() ? "Black List" : "White List");
         // language area
         HBox langLayout = buildLanguageArea();
 
         // comment area
         VBox commentBox = buildCommentArea(displaying);
-        VBox section = new VBox(name, edu, employment, job, preferRole, langLayout, commentBox);
+        VBox section = new VBox(name, edu, employment, job, preferRole, langLayout, blackList, commentBox);
         section.getStyleClass().add("sectionLayout");
         section.setSpacing(20);
         return section;

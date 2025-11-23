@@ -13,8 +13,10 @@ import java.util.List;
 public class StudentsListPageController {
     private final StudentsListPage page;
     private final Logger logger = Logger.getInstance();
+    private final List<String> stdNames;
 
-    public StudentsListPageController(StudentsListPage page) {
+    public StudentsListPageController(StudentsListPage page, List<String> stdNames) {
+        this.stdNames = stdNames;
         this.page = page;
     }
 
@@ -26,10 +28,11 @@ public class StudentsListPageController {
         Student std = new Student();
         try (DataAccessor da = new DataAccessor()) {
             std = da.getStudent(stdName);
+            logger.log("<<INFO>> : displaying student '" + stdName + "'");
         } catch (Exception e) {
-            logger.log(e);
+            logger.log("<<__Debug__>> : " + e.getMessage());
         }
-        StudentInfoPage infoPage = new StudentInfoPage(std);
+        StudentInfoPage infoPage = new StudentInfoPage(std, stdNames);
         infoPage.show();
         page.close();
     }
@@ -40,8 +43,9 @@ public class StudentsListPageController {
         try (DataAccessor da = new DataAccessor()) {
             da.deleteStudent(stdName);
             newList = da.getStudentNameList();
+            logger.log("<<WARNING>> : deleting student '" + stdName + "'");
         } catch (Exception e) {
-            logger.log(e);
+            logger.log("<<__Debug__>> : " + e.getMessage());
         }
 
         Scene reloadPage = page.buildScene(newList);
@@ -54,7 +58,7 @@ public class StudentsListPageController {
         try (DataAccessor da = new DataAccessor()) {
             res = da.getStudentNameList();
         } catch (Exception e) {
-            logger.log(e);
+            logger.log("<<__Debug__>> : " + e.getMessage());
         }
         return res;
     }

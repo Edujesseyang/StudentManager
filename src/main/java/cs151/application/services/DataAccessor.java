@@ -32,7 +32,8 @@ public class DataAccessor implements AutoCloseable {
                             academic_status TEXT,
                             is_employed INTEGER DEFAULT 0 CHECK (is_employed IN (0,1)),
                             job_detail TEXT,
-                            prefer_role TEXT
+                            prefer_role TEXT,
+                            black_list INTEGER DEFAULT 0 CHECK (black_list IN (0,1))
                         )
                     """);
 
@@ -192,7 +193,7 @@ public class DataAccessor implements AutoCloseable {
         Student res = new Student();
         res.setName("lets do this");
         String sqlComment = """
-                SELECT id, name, academic_status, is_employed, job_detail, prefer_role
+                SELECT id, name, academic_status, is_employed, job_detail, prefer_role, black_list
                 FROM students
                 WHERE name = ?
                 LIMIT 1
@@ -209,6 +210,7 @@ public class DataAccessor implements AutoCloseable {
                 res.setEmployed(set.getInt("is_employed") != 0);
                 res.setJobDetails(set.getString("job_detail"));
                 res.setPreferredRole(set.getString("prefer_role"));
+                res.setBlacklist(set.getInt("black_list") == 1);
                 id = set.getInt("id");
             }
         }
@@ -335,8 +337,8 @@ public class DataAccessor implements AutoCloseable {
 
         long newId = -1;
         String sql = """
-                INSERT INTO students(name, academic_status, is_employed, job_detail, prefer_role)
-                VALUES (?, ?, ?, ?, ?)
+                INSERT INTO students(name, academic_status, is_employed, job_detail, prefer_role, black_list)
+                VALUES (?, ?, ?, ?, ?, ?)
                 """;
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -345,6 +347,7 @@ public class DataAccessor implements AutoCloseable {
             ps.setInt(3, (std.isEmployed() ? 1 : 0));
             ps.setString(4, std.getJobDetails());
             ps.setString(5, std.getPreferredRole());
+            ps.setInt(6, std.isBlacklist() ? 1 : 0);
             ps.executeUpdate();
             try (ResultSet gk = ps.getGeneratedKeys()) {
                 if (gk.next()) newId = gk.getLong(1);
@@ -528,9 +531,9 @@ public class DataAccessor implements AutoCloseable {
     }
 
     public void editStudent(String target, Student sample) throws SQLException {
-        long stdId = findStudentId(target);
+        Long stdId = findStudentId(target);
         String updateStd = """
-                UPDATE students SET name = ?, academic_status = ?, is_employed = ?, job_detail = ?, prefer_role = ? WHERE id = ?
+                UPDATE students SET name = ?, academic_status = ?, is_employed = ?, job_detail = ?, prefer_role = ?, black_list = ? WHERE id = ?
                 """;
         try (PreparedStatement ps = conn.prepareStatement(updateStd)) {
             ps.setString(1, sample.getName());
@@ -538,7 +541,8 @@ public class DataAccessor implements AutoCloseable {
             ps.setLong(3, sample.isEmployed() ? 1L : 0L);
             ps.setString(4, sample.getJobDetails());
             ps.setString(5, sample.getPreferredRole());
-            ps.setLong(6, stdId);
+            ps.setInt(6, sample.isBlacklist() ? 1 : 0);
+            ps.setLong(7, stdId);
             ps.executeUpdate();
         }
 
@@ -561,6 +565,37 @@ public class DataAccessor implements AutoCloseable {
         insertStudentLangMap(stdId, sample.getProgrammingLanguages());
         insertStudentDatabaseMap(stdId, sample.getDatabases());
     }
+
+    public List<String> getBlackList() throws SQLException {
+        List<String> nameList = new ArrayList<>();
+        String sql = """
+                SELECT name FROM students WHERE black_list = 1
+                """;
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            try (ResultSet set = ps.executeQuery()) {
+                while (set.next()) {
+                    nameList.add(set.getString("name"));
+                }
+            }
+        }
+        return nameList;
+    }
+
+    public List<String> getWhiteList() throws SQLException {
+        List<String> nameList = new ArrayList<>();
+        String sql = """
+                SELECT name FROM students WHERE black_list = 0
+                """;
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            try (ResultSet set = ps.executeQuery()) {
+                while (set.next()) {
+                    nameList.add(set.getString("name"));
+                }
+            }
+        }
+        return nameList;
+    }
+
 
     @Override
     public void close() throws Exception {

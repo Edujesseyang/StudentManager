@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 public class SearchStudentPage extends Stage {
     private final SearchPageController controller;
 
+
     public SearchStudentPage() {
         this.controller = new SearchPageController(this);
         Scene pageScene = buildScene();

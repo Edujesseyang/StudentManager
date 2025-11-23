@@ -24,7 +24,7 @@ public class DefineStudentPageController {
         try (DataAccessor da = new DataAccessor()) {
             languageList = da.getLanguageList();
         } catch (Exception e) {
-            logger.log(e);
+            logger.log("<<__Debug__>> : " + e.getMessage());
         }
         return languageList;
     }
@@ -34,7 +34,7 @@ public class DefineStudentPageController {
         try (DataAccessor da = new DataAccessor()) {
             dbList = da.getDatabaseList();
         } catch (Exception e) {
-            logger.log(e);
+            logger.log("<<__Debug__>> : " + e.getMessage());
         }
         return dbList;
     }
@@ -53,7 +53,7 @@ public class DefineStudentPageController {
         page.show();
     }
 
-    public void saveAct(TextField nameInput, ComboBox<String> statusInput, RadioButton employed, TextField jobInput, ComboBox<String> roleInput, List<CheckBox> langCheckBoxes, List<CheckBox> dataCheckBoxes, TextArea commentArea) {
+    public void saveAct(TextField nameInput, ComboBox<String> statusInput, RadioButton employed, TextField jobInput, ComboBox<String> roleInput, List<CheckBox> langCheckBoxes, List<CheckBox> dataCheckBoxes, TextArea commentArea, ComboBox<String> blackWhiteList) {
         tool.popAlert(Alert.AlertType.CONFIRMATION, "Are you sure to submit?").showAndWait().ifPresent(responds -> {
             if (responds == ButtonType.OK) {
                 String name = nameInput.getText();
@@ -66,17 +66,17 @@ public class DefineStudentPageController {
                     std.setPreferredRole(roleInput.getValue());
                     std.setProgrammingLanguages(makeListFromCheckBox(langCheckBoxes));
                     std.setDatabases(makeListFromCheckBox(dataCheckBoxes));
+                    std.setBlacklist(blackWhiteList.getValue().equals("Black List"));
                     String comText = commentArea.getText();
                     if (!comText.isBlank()) {
                         std.addComment(comText);
                     }
                     try (DataAccessor da = new DataAccessor()) {
                         da.addStudent(std);
-                        logger.log("Student added: " + std.getName());
+                        logger.log("<<WARNING>> : Student added: " + std.getName());
                     } catch (Exception e) {
-                        logger.log(e);
+                        logger.log("<<__Debug__>> : " + e.getMessage());
                     }
-                    tool.popAlert(Alert.AlertType.INFORMATION, "Student Added").showAndWait();
                 }
             }
         });
@@ -97,7 +97,7 @@ public class DefineStudentPageController {
     private boolean isValid(String name) {
         if (name.isBlank()) {
             tool.popAlert(Alert.AlertType.ERROR, "Name can not be empty").showAndWait();
-            logger.log("ERROR: defining a student with empty name input");
+            logger.log("<<ERROR>> : defining a student with empty name input");
             return false;
         }
         return true;
@@ -108,10 +108,10 @@ public class DefineStudentPageController {
         try (DataAccessor da = new DataAccessor()) {
             isDuplicate = da.isPresent(name);
         } catch (Exception e) {
-            logger.log(e);
+            logger.log("<<__Debug__>> : " + e.getMessage());
         }
         if (isDuplicate) tool.popAlert(Alert.AlertType.ERROR, "Student already exists").showAndWait();
-        logger.log("ERROR: fail to add a existed student");
+        logger.log("<<ERROR>> : fail to add a existed student");
         return isDuplicate;
     }
 }

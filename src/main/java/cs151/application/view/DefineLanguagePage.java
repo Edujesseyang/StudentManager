@@ -10,6 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 import java.util.List;
 
 public class DefineLanguagePage extends Stage {
@@ -27,7 +28,7 @@ public class DefineLanguagePage extends Stage {
         Label infoLabel = new Label("   Define a Student Programming Language   ");
 
         // create info input box
-        TextField  programLanguageName = new TextField();
+        TextField programLanguageName = new TextField();
         programLanguageName.setPromptText("Enter programming languages name");
 
         // showing area to show all languages

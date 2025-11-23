@@ -32,12 +32,16 @@ public class HomePage extends Stage {
         Button searchStudent = new Button("Search Student");
         searchStudent.setOnAction(e -> control.searchBtnAct());
 
+        Button reportBtn = new Button("Get Report");
+        reportBtn.setOnAction(e -> control.reportBtnAct());
+
         // create welcome label
         Label welcomeText = new Label(" Welcome Back ");
         welcomeText.getStyleClass().add("title");
 
+
         // set page layout
-        VBox btnLayout = new VBox(definePageBtn, defineStudentBtn, displayBtn, searchStudent);
+        VBox btnLayout = new VBox(definePageBtn, defineStudentBtn, displayBtn, searchStudent, reportBtn);
         btnLayout.getStyleClass().add("buttonLayout");
         btnLayout.setAlignment(Pos.CENTER);
 

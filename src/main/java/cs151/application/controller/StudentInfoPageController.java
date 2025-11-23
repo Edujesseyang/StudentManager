@@ -1,22 +1,20 @@
 package cs151.application.controller;
 
 import cs151.application.model.Student;
-import cs151.application.services.DataAccessor;
-import cs151.application.services.Logger;
 import cs151.application.view.*;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class StudentInfoPageController {
     private final StudentInfoPage page;
     private final Student std;
-    private final Logger logger = Logger.getInstance();
+    private final List<String> prevShowingStdList;
 
-    public StudentInfoPageController(StudentInfoPage page, Student std) {
+    public StudentInfoPageController(StudentInfoPage page, Student std, List<String> prevShowingStdList) {
         this.page = page;
         this.std = std;
+        this.prevShowingStdList = prevShowingStdList;
     }
 
     public void langBtnAct() {
@@ -30,19 +28,13 @@ public class StudentInfoPageController {
     }
 
     public void editStudentBtnAct() {
-        EditStudentPage editStudentPage = new EditStudentPage(std);
+        EditStudentPage editStudentPage = new EditStudentPage(std, prevShowingStdList);
         editStudentPage.show();
         page.close();
     }
 
     public void closeBtnAct() {
-        List<String> stdNameList = new ArrayList<>();
-        try (DataAccessor da = new DataAccessor()) {
-            stdNameList = da.getStudentNameList();
-        } catch (Exception e) {
-            logger.log(e);
-        }
-        StudentsListPage listPage = new StudentsListPage(stdNameList);
+        StudentsListPage listPage = new StudentsListPage(prevShowingStdList);
         listPage.show();
         page.close();
     }

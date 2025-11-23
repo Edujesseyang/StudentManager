@@ -19,7 +19,7 @@ public class StudentsListPage extends Stage {
 
     public StudentsListPage(List<String> stdNames) {
         // set scene
-        this.controller = new StudentsListPageController(this);
+        this.controller = new StudentsListPageController(this, stdNames);
         Scene pageScene = buildScene(stdNames);
         this.setTitle("Student List");
         this.setScene(pageScene);
@@ -104,9 +104,9 @@ public class StudentsListPage extends Stage {
         viewCol.setMinWidth(90);
 
         // 4) removeBtn
-        TableColumn<String, Void> removeCol = new TableColumn<>("Click to remove");
+        TableColumn<String, Void> removeCol = new TableColumn<>("Click to delete");
         removeCol.setCellFactory(col -> new TableCell<>() {
-            private final Button btn = new Button("Remove");
+            private final Button btn = new Button("Delete");
 
             {
                 btn.setOnAction(e -> {

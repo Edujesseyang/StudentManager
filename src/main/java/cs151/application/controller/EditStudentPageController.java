@@ -24,48 +24,43 @@ public class EditStudentPageController {
     private final Student targetStudent;
     private final String oldName;
     private final Logger logger = Logger.getInstance();
+    private final List<String> prevShowing;
 
-    public EditStudentPageController(EditStudentPage page, Student targetStudent) {
+    public EditStudentPageController(EditStudentPage page, Student targetStudent, List<String> prevShowing) {
         this.targetStudent = targetStudent;
+        this.prevShowing = prevShowing;
         this.page = page;
         this.oldName = targetStudent.getName();
     }
 
-    public List<String> getLangList(){
+    public List<String> getLangList() {
         List<String> languageList = new ArrayList<>();
         try (DataAccessor da = new DataAccessor()) {
             languageList = da.getLanguageList();
         } catch (Exception e) {
-            logger.log(e);
+            logger.log("<<__Debug__>> : " + e.getMessage());
         }
         return languageList;
     }
 
-    public List<String> getDBList(){
+    public List<String> getDBList() {
         List<String> dbList = new ArrayList<>();
         try (DataAccessor da = new DataAccessor()) {
             dbList = da.getDatabaseList();
         } catch (Exception e) {
-            logger.log(e);
+            logger.log("<<__Debug__>> : " + e.getMessage());
         }
         return dbList;
     }
 
     public void cancelAct() {
-        Student updatedStd = new Student();
-        try (DataAccessor da = new DataAccessor()) {
-            updatedStd = da.getStudent(targetStudent.getName());
-        } catch (Exception e) {
-            logger.log(e);
-        }
-
-        StudentInfoPage newPage = new StudentInfoPage(updatedStd);
+        StudentInfoPage newPage = new StudentInfoPage(targetStudent, prevShowing);
         newPage.show();
         page.close();
     }
 
 
-    public void saveAct(TextField nameInput, ComboBox<String> statusInput, RadioButton employed, TextField jobInput, ComboBox<String> roleInput, List<CheckBox> langCheckBoxes, List<CheckBox> dataCheckBoxes) {
+    public void saveAct(TextField nameInput, ComboBox<String> statusInput, RadioButton employed, TextField jobInput, ComboBox<String> roleInput, List<CheckBox> langCheckBoxes, List<CheckBox> dataCheckBoxes, ComboBox<String> blackList) {
         tool.popAlert(Alert.AlertType.CONFIRMATION, "Are you sure to submit?").showAndWait().ifPresent(responds -> {
             if (responds == ButtonType.OK) {
                 String name = nameInput.getText();
@@ -77,9 +72,10 @@ public class EditStudentPageController {
                     targetStudent.setPreferredRole(roleInput.getValue());
                     targetStudent.setProgrammingLanguages(makeListFromCheckBox(langCheckBoxes));
                     targetStudent.setDatabases(makeListFromCheckBox(dataCheckBoxes));
+                    targetStudent.setBlacklist(blackList.getValue().equals("Black List"));
                     storeData();
                     tool.popAlert(Alert.AlertType.INFORMATION, "Change Saved").showAndWait();
-                    logger.log("Student: " + name + "'s information has changed");
+                    logger.log("<<WARNING>> : Student: " + name + "'s information has changed");
                 }
             }
         });
@@ -90,7 +86,7 @@ public class EditStudentPageController {
         try (DataAccessor da = new DataAccessor()) {
             da.editStudent(oldName, targetStudent);
         } catch (Exception e) {
-            logger.log(e);
+            logger.log("<<__Debug__>> : " + e.getMessage());
         }
     }
 
@@ -109,16 +105,16 @@ public class EditStudentPageController {
         String comText = comTextArea.getText();
         if (comText.isBlank()) {
             tool.popAlert(Alert.AlertType.ERROR, "Comment can not be blank").showAndWait();
-            logger.log("ERROR: fail to add blank comment");
+            logger.log("<<ERROR>> : fail to add blank comment");
             return;
         }
 
         String comWithTimeStemp = targetStudent.addComment(comText);
         try (DataAccessor da = new DataAccessor()) {
             da.addComment(targetStudent.getName(), comWithTimeStemp);
-            logger.log("New comment added to student " + targetStudent.getName());
+            logger.log("<<INFO>> : New comment added to student " + targetStudent.getName());
         } catch (Exception e) {
-            logger.log(e);
+            logger.log("<<__Debug__>> : " + e.getMessage());
         }
 
         TextArea text = new TextArea("Comment:  " + comWithTimeStemp + "\n");
@@ -146,7 +142,7 @@ public class EditStudentPageController {
     private boolean isValid(String name) {
         if (name.isBlank()) {
             tool.popAlert(Alert.AlertType.ERROR, "Name can not be empty").showAndWait();
-            logger.log("ERROR: fail to give a student an empty name");
+            logger.log("<<ERROR>> : fail to give a student an empty name");
             return false;
         }
         return true;
@@ -158,10 +154,10 @@ public class EditStudentPageController {
         try (DataAccessor da = new DataAccessor()) {
             isDuplicate = da.isPresent(name);
         } catch (Exception e) {
-            logger.log(e);
+            logger.log("<<__Debug__>> : " + e.getMessage());
         }
         if (isDuplicate) tool.popAlert(Alert.AlertType.ERROR, "Student already exists").showAndWait();
-        logger.log("ERROR: fail to change a student name because the new name is existed");
+        logger.log("<<ERROR>> : fail to change a student name because the new name is existed");
         return isDuplicate;
     }
 
@@ -171,9 +167,9 @@ public class EditStudentPageController {
 
         try (DataAccessor da = new DataAccessor()) {
             da.deleteComment(comment);
-            logger.log("1 comment has deleted from student" + targetStudent.getName());
+            logger.log("<<WARNING>> : one comment has deleted from student" + targetStudent.getName());
         } catch (Exception e) {
-            logger.log(e);
+            logger.log("<<__Debug__>> : " + e.getMessage());
         }
     }
 }

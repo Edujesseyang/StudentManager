@@ -1,6 +1,5 @@
 package cs151.application.controller;
 
-import cs151.application.services.ControllerUtility;
 import cs151.application.services.DataAccessor;
 import cs151.application.services.Logger;
 import cs151.application.view.SearchStudentPage;
@@ -21,9 +20,9 @@ public class SearchPageController {
         List<String> nameList = new ArrayList<>();
         try (DataAccessor da = new DataAccessor()) {
             nameList = da.searchByKeyWords(keyword);
-            logger.log("SEARCHING: '" + keyword + "'");
+            logger.log("<<INFO>> : SEARCHING: '" + keyword + "'");
         } catch (Exception e) {
-            logger.log(e);
+            logger.log("<<__Debug__>> : " + e.getMessage());
         }
         StudentsListPage newPage = new StudentsListPage(nameList);
         newPage.show();

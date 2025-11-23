@@ -84,6 +84,14 @@ public class DefineStudentPage extends Stage {
         // database select box  line 7
         VBox dataSelectArea = buildSelectArea(dataList, "Select skilled database: ", dataCheckBoxes);
 
+        // Black list
+        Label blackWhiteListLabel = new Label("Put this student in:");
+        ComboBox<String> blackWhiteList = new ComboBox<>();
+        blackWhiteList.getItems().addAll("While List", "Black List");
+        blackWhiteList.setPromptText("Select");
+        blackWhiteList.getSelectionModel().select("White List");
+        HBox blackOrWhiteListLine = new HBox(blackWhiteListLabel, blackWhiteList);
+
         // comment area line 8
         Label commentLabel = new Label("Write comment:");
         TextArea commentArea = new TextArea();
@@ -94,11 +102,11 @@ public class DefineStudentPage extends Stage {
         VBox commentBox = new VBox(commentLabel, commentArea);
 
         // layout the form area
-        VBox form = new VBox(nameLine, academicStatusLine, employLine, jobLine, roleLine, langSelectArea, dataSelectArea, commentBox);
+        VBox form = new VBox(nameLine, academicStatusLine, employLine, jobLine, roleLine, langSelectArea, dataSelectArea,blackOrWhiteListLine, commentBox);
         form.setSpacing(10);
         // buttons area
         Button saveBtn = new Button("Save");
-        saveBtn.setOnAction(e -> controller.saveAct(nameInput, statusInput, employed, jobInput, roleInput, langCheckBoxes, dataCheckBoxes, commentArea));
+        saveBtn.setOnAction(e -> controller.saveAct(nameInput, statusInput, employed, jobInput, roleInput, langCheckBoxes, dataCheckBoxes, commentArea, blackWhiteList));
         Button clearBtn = new Button("Clear");
         clearBtn.setOnAction(e -> controller.clearAct());
         Button cancelBtn = new Button("Cancel");

@@ -83,14 +83,6 @@ public class Student {
         return comments;
     }
 
-    public boolean isWhitelist() {
-        return whitelist;
-    }
-
-    public void setWhitelist(boolean whitelist) {
-        this.whitelist = whitelist;
-    }
-
     public boolean isBlacklist() {
         return blacklist;
     }

@@ -1,6 +1,5 @@
 package cs151.application.services;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,7 +24,7 @@ public class Logger {
                         StandardOpenOption.TRUNCATE_EXISTING);
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Logger Error : " + e.getMessage());
         }
     }
 
@@ -41,7 +40,7 @@ public class Logger {
             Files.writeString(file, timeStamp + Arrays.toString(e.getStackTrace()) + "\n", StandardCharsets.UTF_8,
                     StandardOpenOption.APPEND);
         } catch (Exception error) {
-            System.out.println(error.getMessage());
+            System.out.println("Logger Error : " + error.getMessage());
         }
     }
 
@@ -53,7 +52,7 @@ public class Logger {
             Files.writeString(file, timeStamp + msg + "\n", StandardCharsets.UTF_8,
                     StandardOpenOption.APPEND);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Logger Error : " + e.getMessage());
         }
 
     }

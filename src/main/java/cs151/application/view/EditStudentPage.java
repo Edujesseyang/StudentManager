@@ -2,7 +2,6 @@ package cs151.application.view;
 
 import cs151.application.controller.EditStudentPageController;
 import cs151.application.model.Student;
-import cs151.application.services.DataAccessor;
 import cs151.application.services.ViewUtility;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,21 +18,21 @@ import java.util.Arrays;
 import java.util.List;
 
 public class EditStudentPage extends Stage {
-    private Student editingStudent;   // target student
-    private EditStudentPageController controller;
+    private final Student editingStudent;   // target student
+    private final EditStudentPageController controller;
 
     // for language check box
-    private List<String> languageList;
+    private final List<String> languageList;
     private final List<CheckBox> langCheckBoxes = new ArrayList<>();
 
     // for database check box
-    private List<String> dataList = new ArrayList<>();
+    private final List<String> dataList;
     private final List<CheckBox> dataCheckBoxes = new ArrayList<>();
     private final List<String> roleList = new ArrayList<>(Arrays.asList("Backend", "Frontend", "QA", "Security", "Database", "UI/UX", "DevOps", "Network", "IT support", "Other"));
 
-    public EditStudentPage(Student std) {
+    public EditStudentPage(Student std, List<String> prevShowing) {
         this.editingStudent = std;
-        controller = new EditStudentPageController(this, std);
+        controller = new EditStudentPageController(this, std, prevShowing);
         languageList = controller.getLangList();
         dataList = controller.getDBList();
 
@@ -94,6 +93,14 @@ public class EditStudentPage extends Stage {
         // database select box  line 7
         VBox dataSelectArea = buildSelectArea(dataList, "Select skilled database: ", dataCheckBoxes, editingStudent.getDatabases());
 
+        // Black list
+        Label blackWhiteListLabel = new Label("Put this student in:");
+        ComboBox<String> blackWhiteList = new ComboBox<>();
+        blackWhiteList.getItems().addAll("While List", "Black List");
+        blackWhiteList.setPromptText("Select");
+        blackWhiteList.getSelectionModel().select(editingStudent.isBlacklist() ? "Black List" : "White List");
+        HBox blackOrWhiteListLine = new HBox(blackWhiteListLabel, blackWhiteList);
+
         // comment area line 8
         VBox commentAreaBox = new VBox();
         commentAreaBox.setSpacing(5);
@@ -141,12 +148,12 @@ public class EditStudentPage extends Stage {
         addCommentBtn.setOnAction(e -> controller.addCommentAct(commentAreaBox, addCommentTextArea));
 
         // layout the form area
-        VBox form = new VBox(nameLine, academicStatusLine, employLine, jobLine, roleLine, langSelectArea, dataSelectArea, commentBox);
+        VBox form = new VBox(nameLine, academicStatusLine, employLine, jobLine, roleLine, langSelectArea, dataSelectArea, blackOrWhiteListLine, commentBox);
         form.setSpacing(10);
 
         // buttons area
         Button saveBtn = new Button("Save");
-        saveBtn.setOnAction(e -> controller.saveAct(nameInput, statusInput, employed, jobInput, roleInput, langCheckBoxes, dataCheckBoxes));
+        saveBtn.setOnAction(e -> controller.saveAct(nameInput, statusInput, employed, jobInput, roleInput, langCheckBoxes, dataCheckBoxes, blackWhiteList));
         Button cancelBtn = new Button("Cancel");
         cancelBtn.setOnAction(e -> controller.cancelAct());
         HBox btnLayout = new HBox(saveBtn, cancelBtn);
