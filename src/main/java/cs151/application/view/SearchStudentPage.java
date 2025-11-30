@@ -10,17 +10,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class SearchStudentPage extends Stage {
+public class SearchStudentPage extends Stage implements View{
     private final SearchPageController controller;
 
     public SearchStudentPage() {
         this.controller = new SearchPageController(this);
         Scene pageScene = buildScene();
         this.setScene(pageScene);
-        this.show();
     }
 
-    private Scene buildScene() {
+    public Scene buildScene() {
         Label title = new Label("Search for a student");
         TextField input = new TextField();
         input.setPromptText("Enter the student name: ");

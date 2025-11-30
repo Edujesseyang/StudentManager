@@ -2,17 +2,17 @@ package cs151.application.controller;
 
 import cs151.application.services.DataAccessor;
 import cs151.application.services.Logger;
-import cs151.application.view.SearchStudentPage;
 import cs151.application.view.StudentsListPage;
+import cs151.application.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchPageController {
-    private final SearchStudentPage page;
+    private final View page;
     private final Logger logger = Logger.getInstance();
 
-    public SearchPageController(SearchStudentPage page) {
+    public SearchPageController(View page) {
         this.page = page;
     }
 
@@ -24,7 +24,7 @@ public class SearchPageController {
         } catch (Exception e) {
             logger.log("<<__Debug__>> : " + e.getMessage());
         }
-        StudentsListPage newPage = new StudentsListPage(nameList, "Search Result");
+        View newPage = new StudentsListPage(nameList, "Search Result");
         newPage.show();
         page.close();
     }

@@ -10,12 +10,19 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class HomePage extends Stage {
-    HomePageController control = new HomePageController();
-    ViewUtility tool = new ViewUtility();
-
+public class HomePage extends Stage implements View {
+    private final HomePageController control = new HomePageController();
 
     public HomePage() {
+        Scene pageScene = buildScene();
+        ViewUtility tool = new ViewUtility();
+        tool.setPageStyle(pageScene);
+
+        this.setTitle("Home Page");
+        this.setScene(pageScene);
+    }
+
+    public Scene buildScene() {
         // create button and button action
         Button definePageBtn = new Button("Define programming languages");
         definePageBtn.setOnAction(e -> control.defineBtnAct());
@@ -50,11 +57,7 @@ public class HomePage extends Stage {
 
         // set scene
         BorderPane root = new BorderPane(pageLayout);
-        Scene pageScene = new Scene(root, 800, 600);
-        tool.setPageStyle(pageScene);
-
-        this.setTitle("Home Page");
-        this.setScene(pageScene);
+        return new Scene(root, 800, 600);
     }
 
 }

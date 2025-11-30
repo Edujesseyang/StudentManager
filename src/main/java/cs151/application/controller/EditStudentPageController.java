@@ -4,8 +4,8 @@ import cs151.application.model.Student;
 import cs151.application.services.ControllerUtility;
 import cs151.application.services.DataAccessor;
 import cs151.application.services.Logger;
-import cs151.application.view.EditStudentPage;
 import cs151.application.view.StudentInfoPage;
+import cs151.application.view.View;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class EditStudentPageController{
-    private final EditStudentPage page;
+    private final View page;
     private final ControllerUtility tool = new ControllerUtility();
     private final Student targetStudent;
     private final String oldName;
@@ -27,7 +27,7 @@ public class EditStudentPageController{
     private final List<String> prevShowing;
     private final String prevPageTitle;
 
-    public EditStudentPageController(EditStudentPage page, Student targetStudent, List<String> prevShowing, String prevPageTitle) {
+    public EditStudentPageController(View page, Student targetStudent, List<String> prevShowing, String prevPageTitle) {
         this.targetStudent = targetStudent;
         this.prevShowing = prevShowing;
         this.page = page;
@@ -56,7 +56,7 @@ public class EditStudentPageController{
     }
 
     public void cancelAct() {
-        StudentInfoPage newPage = new StudentInfoPage(targetStudent, prevShowing, prevPageTitle);
+        View newPage = new StudentInfoPage(targetStudent, prevShowing, prevPageTitle);
         newPage.show();
         page.close();
     }

@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import java.util.List;
 import java.util.Objects;
 
-public class StudentInfoPage extends Stage {
+public class StudentInfoPage extends Stage implements View{
 
     private final StudentInfoPageController controller;
     private final Student displaying;
@@ -30,7 +30,7 @@ public class StudentInfoPage extends Stage {
         this.setScene(pageScene);
     }
 
-    private Scene buildScene(){
+    public Scene buildScene(){
         Label title = new Label("Information of Student");
         title.getStyleClass().add("subtitle");
         HBox btnLayout = buildButtons();

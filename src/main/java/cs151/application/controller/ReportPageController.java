@@ -3,14 +3,15 @@ package cs151.application.controller;
 import cs151.application.services.DataAccessor;
 import cs151.application.services.Logger;
 import cs151.application.view.StudentsListPage;
+import cs151.application.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReportPageController {
-    Logger logger = Logger.getInstance();
+    private final Logger logger = Logger.getInstance();
 
-    public ReportPageController(){
+    public ReportPageController() {
     }
 
     public void showBlackList() {
@@ -20,7 +21,7 @@ public class ReportPageController {
         } catch (Exception e) {
             logger.log("<<__Debug__>> : " + e.getMessage());
         }
-        StudentsListPage listPage = new StudentsListPage(blackListNames, "Black List");
+        View listPage = new StudentsListPage(blackListNames, "Black List");
         listPage.show();
     }
 
@@ -31,7 +32,7 @@ public class ReportPageController {
         } catch (Exception e) {
             logger.log("<<__Debug__>> : " + e.getMessage());
         }
-        StudentsListPage listPage = new StudentsListPage(whiteListNames, "White List");
+        View listPage = new StudentsListPage(whiteListNames, "White List");
         listPage.show();
     }
 

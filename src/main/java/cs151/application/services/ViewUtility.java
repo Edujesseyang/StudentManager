@@ -9,7 +9,7 @@ public class ViewUtility {
     }
 
     public void setPageStyle(Scene scene) {
-        String stylePath = "/style/homePage.css";
+        String stylePath = "/style/style1.css";
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(stylePath)).toExternalForm());
     }
 }

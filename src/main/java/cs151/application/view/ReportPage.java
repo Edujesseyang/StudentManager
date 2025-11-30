@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class ReportPage extends Stage {
+public class ReportPage extends Stage implements View {
     private final ReportPageController controller = new ReportPageController();
 
     public ReportPage() {
@@ -17,7 +17,8 @@ public class ReportPage extends Stage {
         tool.setPageStyle(sc);
         this.setScene(sc);
     }
-    private Scene buildScene(){
+
+    public Scene buildScene() {
         Label title = new Label("Select Report Type:");
 
         Button blackListBtn = new Button("Get all student in black list");

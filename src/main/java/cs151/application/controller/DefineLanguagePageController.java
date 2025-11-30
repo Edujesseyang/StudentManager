@@ -3,7 +3,7 @@ package cs151.application.controller;
 import cs151.application.services.ControllerUtility;
 import cs151.application.services.DataAccessor;
 import cs151.application.services.Logger;
-import cs151.application.view.DefineLanguagePage;
+import cs151.application.view.View;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -14,10 +14,10 @@ import java.util.List;
 
 public class DefineLanguagePageController {
     private final ControllerUtility tool = new ControllerUtility();
-    private final DefineLanguagePage page;
+    private final View page;
     private final Logger logger = Logger.getInstance();
 
-    public DefineLanguagePageController(DefineLanguagePage page) {
+    public DefineLanguagePageController(View page) {
         this.page = page;
     }
 
@@ -46,7 +46,7 @@ public class DefineLanguagePageController {
         }
 
         page.close();
-        Scene newScene = page.loadPage();
+        Scene newScene = page.buildScene();
         page.setScene(newScene);
         page.show();
     }
@@ -65,7 +65,7 @@ public class DefineLanguagePageController {
             logger.log("<<__Debug__>> : " + e.getMessage());
         }
         page.close();
-        Scene newScene = page.loadPage();
+        Scene newScene = page.buildScene();
         page.setScene(newScene);
         page.show();
     }

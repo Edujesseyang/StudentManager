@@ -14,21 +14,23 @@ import javafx.stage.Stage;
 
 import java.util.List;
 
-public class StudentsListPage extends Stage {
+public class StudentsListPage extends Stage implements View{
     private final ViewUtility tool = new ViewUtility();
     private final StudentsListPageController controller;
     private final String title;
+    private final List<String> stdNames;
 
     public StudentsListPage(List<String> stdNames, String title) {
         // set scene
         this.title = title;
         this.controller = new StudentsListPageController(this, stdNames);
-        Scene pageScene = buildScene(stdNames);
+        this.stdNames = stdNames;
+        Scene pageScene = buildScene();
         this.setTitle(title);
         this.setScene(pageScene);
     }
 
-    public Scene buildScene(List<String> stdNames) {
+    public Scene buildScene() {
         // label
         Label labelText = new Label(title);
         labelText.getStyleClass().add("subtitle");

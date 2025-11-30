@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DefineStudentPage extends Stage {
+public class DefineStudentPage extends Stage implements View{
     private final DefineStudentPageController controller = new DefineStudentPageController(this);
     private final ViewUtility tool = new ViewUtility();
 
@@ -34,7 +34,6 @@ public class DefineStudentPage extends Stage {
         dataList = controller.getDBList();
         Scene pageScene = buildScene();
         this.setScene(pageScene);
-        this.show();
     }
 
     public Scene buildScene() {

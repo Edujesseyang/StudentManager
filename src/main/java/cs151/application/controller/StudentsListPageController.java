@@ -4,18 +4,18 @@ import cs151.application.model.Student;
 import cs151.application.services.DataAccessor;
 import cs151.application.services.Logger;
 import cs151.application.view.StudentInfoPage;
-import cs151.application.view.StudentsListPage;
+import cs151.application.view.View;
 import javafx.scene.Scene;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class StudentsListPageController {
-    private final StudentsListPage page;
+    private final View page;
     private final Logger logger = Logger.getInstance();
     private final List<String> stdNames;
 
-    public StudentsListPageController(StudentsListPage page, List<String> stdNames) {
+    public StudentsListPageController(View page, List<String> stdNames) {
         this.stdNames = stdNames;
         this.page = page;
     }
@@ -32,24 +32,22 @@ public class StudentsListPageController {
         } catch (Exception e) {
             logger.log("<<__Debug__>> : " + e.getMessage());
         }
-        StudentInfoPage infoPage = new StudentInfoPage(std, stdNames, page.getTitle());
+        View infoPage = new StudentInfoPage(std, stdNames, page.getTitle());
         infoPage.show();
         page.close();
     }
 
     public void deleteAct(String stdName) {
         page.close();
-        List<String> newList = new ArrayList<>();
         try (DataAccessor da = new DataAccessor()) {
             da.deleteStudent(stdName);
-            newList = da.getStudentNameList();
             logger.log("<<WARNING>> : deleting student '" + stdName + "'");
         } catch (Exception e) {
             logger.log("<<__Debug__>> : " + e.getMessage());
         }
-
-        Scene reloadPage = page.buildScene(newList);
-        page.setScene(reloadPage);
+        stdNames.remove(stdName);
+        Scene newScene = page.buildScene();
+        page.setScene(newScene);
         page.show();
     }
 

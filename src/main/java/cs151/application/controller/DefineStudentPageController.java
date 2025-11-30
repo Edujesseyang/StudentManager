@@ -4,22 +4,22 @@ import cs151.application.model.Student;
 import cs151.application.services.ControllerUtility;
 import cs151.application.services.DataAccessor;
 import cs151.application.services.Logger;
-import cs151.application.view.DefineStudentPage;
+import cs151.application.view.View;
 import javafx.scene.control.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DefineStudentPageController {
-    private final DefineStudentPage page;
+    private final View page;
     private final ControllerUtility tool = new ControllerUtility();
     private final Logger logger = Logger.getInstance();
 
-    public DefineStudentPageController(DefineStudentPage page) {
+    public DefineStudentPageController(View page) {
         this.page = page;
     }
 
-    public List<String> getLangList(){
+    public List<String> getLangList() {
         List<String> languageList = new ArrayList<>();
         try (DataAccessor da = new DataAccessor()) {
             languageList = da.getLanguageList();
@@ -29,7 +29,7 @@ public class DefineStudentPageController {
         return languageList;
     }
 
-    public List<String> getDBList(){
+    public List<String> getDBList() {
         List<String> dbList = new ArrayList<>();
         try (DataAccessor da = new DataAccessor()) {
             dbList = da.getDatabaseList();
@@ -110,8 +110,11 @@ public class DefineStudentPageController {
         } catch (Exception e) {
             logger.log("<<__Debug__>> : " + e.getMessage());
         }
-        if (isDuplicate) tool.popAlert(Alert.AlertType.ERROR, "Student already exists").showAndWait();
-        logger.log("<<ERROR>> : fail to add a existed student");
+        if (isDuplicate) {
+            tool.popAlert(Alert.AlertType.ERROR, "Student already exists").showAndWait();
+            logger.log("<<ERROR>> : fail to add a existed student");
+        }
+
         return isDuplicate;
     }
 }

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class EditStudentPage extends Stage {
+public class EditStudentPage extends Stage implements View{
     private final Student editingStudent;   // target student
     private final EditStudentPageController controller;
 
@@ -32,13 +32,12 @@ public class EditStudentPage extends Stage {
 
     public EditStudentPage(Student std, List<String> prevShowing, String prevPageTitle) {
         this.editingStudent = std;
-        controller = new EditStudentPageController(this, std, prevShowing, prevPageTitle);
-        languageList = controller.getLangList();
-        dataList = controller.getDBList();
+        this.controller = new EditStudentPageController(this, std, prevShowing, prevPageTitle);
+        this.languageList = controller.getLangList();
+        this.dataList = controller.getDBList();
 
         Scene sc = buildScene();
         this.setScene(sc);
-        this.show();
     }
 
     public Scene buildScene() {

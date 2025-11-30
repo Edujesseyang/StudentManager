@@ -13,17 +13,17 @@ import javafx.stage.Stage;
 
 import java.util.List;
 
-public class DefineLanguagePage extends Stage {
+public class DefineLanguagePage extends Stage implements View{
     private final DefineLanguagePageController controller = new DefineLanguagePageController(this);
     private final ViewUtility tool = new ViewUtility();
 
     public DefineLanguagePage() {
-        Scene pageScene = loadPage();
+        Scene pageScene = buildScene();
         this.setTitle("Define Programming Language");
         this.setScene(pageScene);
     }
 
-    public Scene loadPage() {
+    public Scene buildScene() {
         // create label
         Label infoLabel = new Label("   Define a Student Programming Language   ");
 
